@@ -2,13 +2,16 @@ from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
 
+from kami.backend.client import BackendClient
 from kami.bot.keyboards.start import StartCallback, build_start_keyboard
 
 router = Router()
 
 
 @router.message(Command(commands=["start"]))
-async def handle_start(message: Message) -> None:
+async def handle_start(
+    message: Message,
+) -> None:
     """
     Handler for /start command.
 
@@ -25,6 +28,7 @@ async def handle_start(message: Message) -> None:
 async def handle_find_more(
     callback: CallbackQuery,
     callback_data: StartCallback,
+    backend_client: BackendClient,
 ) -> None:
     """
     Handler for "Find more" button.
@@ -35,6 +39,9 @@ async def handle_find_more(
 
     await callback.message.answer(  # type: ignore[union-attr]
         text=f"Welcome to {callback_data.bot_name}",
+    )
+    await callback.message.answer(  # type: ignore[union-attr]
+        text=backend_client.get_example(),
     )
     await callback.answer()
 
