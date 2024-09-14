@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+
+  kami-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - kami-network
+    env_file:
+      - ".env"
+    volumes:
+      - .:/project
+    init: true
+
+networks:
+  kami-network:
+    name: kami-network
+    driver: bridge

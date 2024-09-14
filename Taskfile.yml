@@ -1,0 +1,29 @@
+version: "3"
+
+output: "prefixed"
+
+tasks:
+
+  run:
+    aliases:
+      - r
+    cmds:
+      - docker compose up --build -d {{.CLI_ARGS}}
+    desc: run docker-compose
+    interactive: true
+
+  down:
+    aliases:
+      - d
+    cmds:
+      - docker compose down --remove-orphans {{.CLI_ARGS}}
+    desc: run docker-compose
+    interactive: true
+
+  log:
+    aliases:
+      - l
+    cmds:
+      - docker compose logs -f {{.CLI_ARGS}}
+    desc: run docker-compose
+    interactive: true

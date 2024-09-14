@@ -1,0 +1,45 @@
+from aiogram import Router
+from aiogram.filters import Command
+from aiogram.types import CallbackQuery, Message
+
+from kami.bot.keyboards.start import StartCallback, build_start_keyboard
+
+router = Router()
+
+
+@router.message(Command(commands=["start"]))
+async def handle_start(message: Message) -> None:
+    """
+    Handler for /start command.
+
+    :param message: Message from telegram.
+    """
+
+    await message.answer(
+        text="Hello World!",
+        reply_markup=build_start_keyboard(bot_name="KamilaBOT"),
+    )
+
+
+@router.message(Command(commands=["start"]))
+async def handle_find_more(
+    callback: CallbackQuery,
+    callback_data: StartCallback,
+) -> None:
+    """
+    Handler for "Find more" button.
+
+    :param callback: Callback query from button.
+    :param callback_data: Callback data object.
+    """
+
+    await callback.message.answer(  # type: ignore[union-attr]
+        text=f"Welcome to {callback_data.bot_name}",
+    )
+    await callback.answer()
+
+
+def register_start() -> None:
+    """Register start handlers"""
+
+    router.callback_query.register(handle_find_more, StartCallback.filter())
