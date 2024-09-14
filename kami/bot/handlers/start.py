@@ -2,7 +2,7 @@ from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
 
-from kami.backend.client import BackendClient
+from kami.backend.presentation.client import BackendClient
 from kami.bot.keyboards.start import StartCallback, build_start_keyboard
 
 router = Router()
@@ -20,7 +20,7 @@ async def handle_start(
 
     await message.answer(
         text="Hello World!",
-        reply_markup=build_start_keyboard(bot_name="KamilaBOT"),
+        reply_markup=build_start_keyboard(bot_name="KamiBOT"),
     )
 
 
@@ -36,6 +36,11 @@ async def handle_find_more(
     :param callback: Callback query from button.
     :param callback_data: Callback data object.
     """
+
+    await backend_client.create_dialog(topic="Super Topic")
+    await callback.message.answer(  # type: ignore[union-attr]
+        text="Dialog was created!",
+    )
 
     await callback.message.answer(  # type: ignore[union-attr]
         text=f"Welcome to {callback_data.bot_name}",

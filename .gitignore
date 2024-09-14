@@ -5,7 +5,7 @@ __pycache__/
 static/
 .local/
 .ruff_cache
-telegram-bot-api-data/
+tests_old/
 
 # C extensions
 *.so

@@ -1,6 +1,28 @@
 version: '3.9'
 services:
 
+  kami-db:
+    container_name: kami-db
+    image: postgres:13.2-alpine
+    networks:
+      - kami-network
+    restart: always
+    ports:
+      - '${KAMI_BOT_DB_PORT}:${KAMI_BOT_DB_PORT}'
+    environment:
+      POSTGRES_USER: ${KAMI_BOT_DB_USER}
+      POSTGRES_PASSWORD: ${KAMI_BOT_DB_PASS}
+      POSTGRES_DB: ${KAMI_BOT_DB_NAME}
+      PGPORT: ${KAMI_BOT_DB_PORT}
+    volumes:
+      - kami_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${KAMI_BOT_DB_USER} -d ${KAMI_BOT_DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
   kami-bot:
     build:
       context: .
@@ -12,8 +34,19 @@ services:
     volumes:
       - .:/project
     init: true
+    depends_on:
+      kami-db:
+        condition: service_healthy
+    environment:
+      KAMI_BOT_DB_HOST: "kami-db"
+      DEBUG_MODE: true
+      stdin_open: true
+    tty: true
 
 networks:
   kami-network:
     name: kami-network
     driver: bridge
+
+volumes:
+  kami_db_data:

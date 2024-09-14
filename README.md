@@ -23,6 +23,16 @@ poetry run mypy .
 pre-commit run --all-files
 ```
 
+### Create migration:
+```
+poetry run alembic revision --autogenerate -m 'migration name'
+```
+
+### Run migrations:
+```
+poetry run alembic upgrade head
+```
+
 ### Run in Docker:
 ```
 docker compose up --build -d

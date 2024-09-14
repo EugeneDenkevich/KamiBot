@@ -3,7 +3,7 @@ from typing import Any, Awaitable, Callable, Dict
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
 
-from kami.backend.client import BackendClient
+from kami.backend.presentation.dependencies import get_backend_client
 
 
 class CustomMiddleware(BaseMiddleware):
@@ -24,5 +24,5 @@ class CustomMiddleware(BaseMiddleware):
         :return: Result of the event handling.
         """
 
-        data["backend_client"] = BackendClient()
+        data["backend_client"] = await get_backend_client()
         return await handler(event, data)
