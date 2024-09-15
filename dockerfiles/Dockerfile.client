@@ -37,6 +37,6 @@ COPY --from=builder-base $VENV_PATH $VENV_PATH
 WORKDIR /project
 COPY . .
 
-RUN chmod +x /project/scripts/entypoint.sh
+RUN chmod +x /project/scripts/entypoint.client.sh
 
-ENTRYPOINT [ "/project/scripts/entypoint.sh" ]
+ENTRYPOINT [ "/project/scripts/entypoint.client.sh" ]

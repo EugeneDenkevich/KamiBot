@@ -27,3 +27,11 @@ tasks:
       - docker compose logs -f {{.CLI_ARGS}}
     desc: run docker-compose
     interactive: true
+
+  migration:
+    aliases:
+      - m
+    cmds:
+      - poetry run alembic revision --autogenerate -m {{.CLI_ARGS}}
+    desc: run docker-compose
+    interactive: true

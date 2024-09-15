@@ -1,8 +1,8 @@
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand
 
-from kami.bot.handlers.start import register_start
-from kami.bot.middlewaries.custom_middlewaries import CustomMiddleware
+from kami.bot_client.handlers.start import register_start
+from kami.bot_client.middlewaries.custom_middlewaries import CustomMiddleware
 
 
 async def set_commands(bot: Bot) -> None:

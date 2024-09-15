@@ -23,10 +23,10 @@ services:
       retries: 5
       start_period: 5s
 
-  kami-bot:
+  kami-bot-client:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: dockerfiles/Dockerfile.client
     networks:
       - kami-network
     env_file:
@@ -40,7 +40,27 @@ services:
     environment:
       KAMI_BOT_DB_HOST: "kami-db"
       DEBUG_MODE: true
-      stdin_open: true
+    stdin_open: true
+    tty: true
+
+  kami-bot-admin:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile.admin
+    networks:
+      - kami-network
+    env_file:
+      - ".env"
+    volumes:
+      - .:/project
+    init: true
+    depends_on:
+      kami-db:
+        condition: service_healthy
+    environment:
+      KAMI_BOT_DB_HOST: "kami-db"
+      DEBUG_MODE: true
+    stdin_open: true
     tty: true
 
 networks:

@@ -5,7 +5,8 @@ from sqlalchemy import URL
 class Settings(BaseSettings):
     """Settings for project"""
 
-    bot_token: str = ""
+    bot_client_token: str = ""
+    bot_admin_token: str = ""
 
     db_host: str = ""
     db_port: int = 5432

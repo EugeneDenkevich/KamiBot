@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
 
 from kami.backend.presentation.client import BackendClient
-from kami.bot.keyboards.start import StartCallback, build_start_keyboard
+from kami.bot_admin.keyboards.start import StartCallback, build_start_keyboard
 
 router = Router()
 

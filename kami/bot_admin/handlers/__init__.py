@@ -2,7 +2,7 @@
 
 from aiogram import Dispatcher
 
-from kami.bot.handlers.start import router as start_router
+from kami.bot_admin.handlers.start import router as start_router
 
 
 def setup_routers(dispatcher: Dispatcher) -> None:
