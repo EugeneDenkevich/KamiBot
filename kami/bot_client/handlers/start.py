@@ -1,6 +1,7 @@
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
+from aiogram.utils.i18n import gettext as _
 
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.keyboards.start import StartCallback, build_start_keyboard
@@ -19,12 +20,16 @@ async def handle_start(
     """
 
     await message.answer(
-        text="Hello World!",
+        text=_("Hello World!"),
+        reply_markup=build_start_keyboard(bot_name="KamiBOT"),
+    )
+    await message.answer(
+        text=_("And hello again!"),
         reply_markup=build_start_keyboard(bot_name="KamiBOT"),
     )
 
 
-@router.message(Command(commands=["start"]))
+@router.callback_query(StartCallback.filter())
 async def handle_find_more(
     callback: CallbackQuery,
     callback_data: StartCallback,
@@ -39,19 +44,13 @@ async def handle_find_more(
 
     await backend_client.create_dialog(topic="Super Topic")
     await callback.message.answer(  # type: ignore[union-attr]
-        text="Dialog was created!",
+        text=_("Dialog was created!"),
     )
 
     await callback.message.answer(  # type: ignore[union-attr]
-        text=f"Welcome to {callback_data.bot_name}",
+        text=_("Welcome to {bot_name}").format(bot_name=callback_data.bot_name),
     )
     await callback.message.answer(  # type: ignore[union-attr]
         text=backend_client.get_example(),
     )
     await callback.answer()
-
-
-def register_start() -> None:
-    """Register start handlers"""
-
-    router.callback_query.register(handle_find_more, StartCallback.filter())

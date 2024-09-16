@@ -1,0 +1,40 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-09-16 23:29+0300\n"
+"PO-Revision-Date: 2024-09-16 18:54+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: kami/bot_client/handlers/start.py:23
+msgid "Hello World!"
+msgstr "Привет Мир!"
+
+#: kami/bot_client/handlers/start.py:27
+msgid "And hello again!"
+msgstr "И снова привет!"
+
+#: kami/bot_client/handlers/start.py:47
+msgid "Dialog was created!"
+msgstr "Диалог создан!"
+
+#: kami/bot_client/handlers/start.py:51
+msgid "Welcome to {bot_name}"
+msgstr "Добро пожаловать в {bot_name}"
+
+#: kami/bot_client/keyboards/start.py:23
+msgid "Find more!"
+msgstr "Узнать больше!"

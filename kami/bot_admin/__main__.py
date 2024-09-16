@@ -11,7 +11,12 @@ def main() -> None:
     setup_logging()
     settings = get_settings()
 
-    asyncio.run(run_bot(bot_token=settings.bot_admin_token))
+    asyncio.run(
+        run_bot(
+            bot_token=settings.bot_admin_token,
+            language=settings.language,
+        ),
+    )
 
 
 if __name__ == "__main__":

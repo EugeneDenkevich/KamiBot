@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     db_pass: str = ""
     db_name: str = ""
 
+    language: str = "en"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="KAMI_BOT_",

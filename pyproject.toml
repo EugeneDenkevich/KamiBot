@@ -13,6 +13,7 @@ sqlalchemy = "2.0.34"
 alembic = "1.13.2"
 asyncpg = "0.29.0"
 py-mon = "2.0.5"
+babel = "2.16.0"
 
 [tool.poetry.group.linters.dependencies]
 pre-commit = "3.7.1"

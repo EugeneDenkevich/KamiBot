@@ -1,5 +1,6 @@
 from aiogram.filters.callback_data import CallbackData
 from aiogram.types import InlineKeyboardMarkup
+from aiogram.utils.i18n import gettext as _
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
@@ -19,7 +20,7 @@ def build_start_keyboard(bot_name: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
 
     builder.button(
-        text="Find more!",
+        text=_("Find more!"),
         callback_data=StartCallback(bot_name=bot_name).pack(),
     )
 
