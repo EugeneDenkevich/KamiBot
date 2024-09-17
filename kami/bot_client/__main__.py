@@ -14,7 +14,7 @@ def main() -> None:
     asyncio.run(
         run_bot(
             bot_token=settings.bot_client_token,
-            language=settings.language,
+            language=settings.client_language,
         ),
     )
 

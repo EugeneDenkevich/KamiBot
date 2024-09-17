@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-16 23:29+0300\n"
+"POT-Creation-Date: 2024-09-17 16:24+0300\n"
 "PO-Revision-Date: 2024-09-16 18:54+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -26,11 +26,15 @@ msgstr ""
 msgid "And hello again!"
 msgstr ""
 
-#: kami/bot_client/handlers/start.py:47
-msgid "Dialog was created!"
+#: kami/bot_client/handlers/start.py:31
+msgid "Hello one more time!"
 msgstr ""
 
 #: kami/bot_client/handlers/start.py:51
+msgid "Dialog was created!"
+msgstr ""
+
+#: kami/bot_client/handlers/start.py:55
 msgid "Welcome to {bot_name}"
 msgstr ""
 

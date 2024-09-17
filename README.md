@@ -68,7 +68,7 @@ await message.answer(
     text=_("Hello World!"),
 )
 ```
-**Using in text with waribles:**
+**Using in text with varibles:**
 ```
 from aiogram.utils.i18n import gettext as _
 

@@ -40,7 +40,7 @@ services:
     environment:
       KAMI_BOT_DB_HOST: "kami-db"
       DEBUG_MODE: true
-      KAMI_BOT_LANGUAGE: "ru"
+      KAMI_BOT_CLIENT_LANGUAGE: ${KAMI_BOT_CLIENT_LANGUAGE}
     stdin_open: true
     tty: true
 
@@ -61,7 +61,7 @@ services:
     environment:
       KAMI_BOT_DB_HOST: "kami-db"
       DEBUG_MODE: true
-      KAMI_BOT_LANGUAGE: "en"
+      KAMI_BOT_ADMIN_LANGUAGE: ${KAMI_BOT_ADMIN_LANGUAGE}
     stdin_open: true
     tty: true
 

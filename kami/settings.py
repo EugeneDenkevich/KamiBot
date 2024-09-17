@@ -14,7 +14,8 @@ class Settings(BaseSettings):
     db_pass: str = ""
     db_name: str = ""
 
-    language: str = "en"
+    client_language: str = "en"
+    admin_language: str = "en"
 
     model_config = SettingsConfigDict(
         env_file=".env",

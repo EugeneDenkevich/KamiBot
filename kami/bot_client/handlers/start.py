@@ -27,6 +27,10 @@ async def handle_start(
         text=_("And hello again!"),
         reply_markup=build_start_keyboard(bot_name="KamiBOT"),
     )
+    await message.answer(
+        text=_("Hello one more time!"),
+        reply_markup=build_start_keyboard(bot_name="KamiBOT"),
+    )
 
 
 @router.callback_query(StartCallback.filter())
