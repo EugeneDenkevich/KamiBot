@@ -1,0 +1,20 @@
+FROM python:3.11-alpine
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+RUN apk update && \
+    apk upgrade && \
+    apk add sshpass && \
+	apk add openssh
+
+WORKDIR /project
+
+RUN pip install pydantic-settings
+
+COPY ../scripts ./scripts
+COPY ../vpn ./vpn
+
+RUN chmod +x ./scripts/entrypoint.vpn.sh
+
+ENTRYPOINT [ "./scripts/entrypoint.vpn.sh" ]
