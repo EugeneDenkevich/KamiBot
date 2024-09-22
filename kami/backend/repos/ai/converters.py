@@ -12,6 +12,6 @@ def ai_db_to_entity(ai: AITable) -> AI:
 
     return AI(
         id=ai.id,
-        gpt_api_key=str(ai.chat_gpt_api_key),
-        elevenlabs_api_key=str(ai.elevenlabs_api_key)
+        gpt_api_key=str(ai.gpt_api_key),
+        elevenlabs_api_key=str(ai.elevenlabs_api_key),
     )

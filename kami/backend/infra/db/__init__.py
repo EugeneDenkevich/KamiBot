@@ -1,6 +1,8 @@
 """DB infrastructure"""
 
 from kami.backend.infra.db.base import Base
+from kami.backend.infra.db.tables.ai import AITable
 from kami.backend.infra.db.tables.dialog import DialogTable
+from kami.backend.infra.db.tables.lang_test import LangTestTable
 
-__all__ = ("Base", "DialogTable")
+__all__ = ("Base", "DialogTable", "LangTestTable", "AITable")

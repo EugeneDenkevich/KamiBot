@@ -8,5 +8,5 @@ def get_gpt_client(vpn_client: Optional[httpx.AsyncClient] = None) -> AsyncOpenA
 
     return AsyncOpenAI(
         api_key="",
-        http_client=vpn_client
+        http_client=vpn_client,
     )
