@@ -7,12 +7,12 @@ from httpx import AsyncClient
 def get_elevenlabs_client(vpn_client: Optional[AsyncClient] = None) -> ElevenLabs:
     """
     Get ElevenLabs Client
-    
+
     :param vpn_client: VPN client.
     :return: ElevenLabs client.
     """
 
     return ElevenLabs(
         api_key="",
-        http_client=vpn_client
+        httpx_client=vpn_client,
     )

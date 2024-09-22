@@ -1,3 +1,5 @@
+from typing import Union
+
 from kami.backend.domain.dialog.models import Dialog
 from kami.backend.domain.lang_test.enums import RateEnum
 from kami.backend.domain.lang_test.models import QuestT
@@ -37,7 +39,7 @@ class BackendClient():
     async def save_reply(
         self,
         tg_id: str,
-        reply: str,
+        reply: Union[str, bytes],
     ) -> None:
         async with self.ucf.save_reply() as save_reply:
             return await save_reply(tg_id=tg_id, reply=reply)

@@ -22,3 +22,4 @@ class LangTestPromtEnum(StrEnum):
 
     LANG_TEST = "lang_test"
     LANG_TEST_RESULT = "lang_test_result"
+    LANG_TEST_REPLY = "lang_test_reply"
