@@ -4,9 +4,9 @@ from httpx import AsyncClient
 from openai import AsyncOpenAI
 
 
-def get_gpt_client(vpn_client: Optional[AsyncClient] = None) -> AsyncOpenAI:
+def get_whisper_client(vpn_client: Optional[AsyncClient] = None) -> AsyncOpenAI:
     """
-    Get ChatGPT Client
+    Get Whisper Client
     
     :param vpn_client: VPN client.
     :return: Async OpenAI client.
@@ -14,5 +14,5 @@ def get_gpt_client(vpn_client: Optional[AsyncClient] = None) -> AsyncOpenAI:
         
     return AsyncOpenAI(
         api_key="",
-        http_client=vpn_client,
+        http_client=vpn_client
     )

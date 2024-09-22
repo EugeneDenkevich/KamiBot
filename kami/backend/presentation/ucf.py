@@ -1,9 +1,11 @@
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
+from elevenlabs.client import ElevenLabs
 from openai import AsyncOpenAI
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
+from kami.backend.domain.ai.usecases import VoiceToVoiceUseCase
 from kami.backend.domain.dialog.services import DialogService
 from kami.backend.domain.dialog.usecases import CreateDialogUseCase
 from kami.backend.domain.lang_test.services import LangTestService
@@ -14,6 +16,8 @@ from kami.backend.domain.lang_test.usecases import (
     StartTestUseCase,
 )
 from kami.backend.gateways.chat_gpt.gateway import GPTGateway
+from kami.backend.gateways.elevenlabs.gateway import ElevenLabsGateway
+from kami.backend.gateways.whisper.gateway import WhisperGateway
 from kami.backend.repos.ai.repo import AIRepo
 from kami.backend.repos.dialog.repo import DialogRepo
 from kami.backend.repos.lang_test.repo import LangTestRepo
@@ -25,9 +29,13 @@ class UseCaseFactory:
         self,
         session_factory: async_sessionmaker[AsyncSession],
         gpt_client: AsyncOpenAI,
+        whisper_client: AsyncOpenAI,
+        elevenlabs_client: ElevenLabs,
     ):
         self.session_factory = session_factory
         self.gpt_client = gpt_client
+        self.whisper_client = whisper_client
+        self.elevenlabs_client = elevenlabs_client
 
     @asynccontextmanager
     async def create_dialog(self) -> AsyncIterator[CreateDialogUseCase]:
@@ -71,4 +79,14 @@ class UseCaseFactory:
                 lang_test_repo=LangTestRepo(session=session),
                 ai_repo=AIRepo(session=session),
                 gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
+            )
+
+    @asynccontextmanager
+    async def voice_to_voice(self) -> AsyncIterator[VoiceToVoiceUseCase]:
+        async with self.session_factory() as session:
+            yield VoiceToVoiceUseCase(
+                gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
+                whisper_gateway=WhisperGateway(whisper_client=self.whisper_client),
+                elevenlabs_gateway=ElevenLabsGateway(elevenlabs_gateway=self.elevenlabs_client),
+                ai_repo=AIRepo(session=session)
             )
