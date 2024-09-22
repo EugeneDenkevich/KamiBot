@@ -48,3 +48,10 @@ class BackendClient():
     ) -> RateEnum:
         async with self.ucf.rate_lang_level() as rate_lang_level:
             return await rate_lang_level(tg_id=tg_id)
+
+    async def voice_to_voice(
+        self,
+        voice: bytes,
+    ) -> RateEnum:
+        async with self.ucf.voice_to_voice() as voice_to_voice:
+            return await voice_to_voice(voice=voice)
