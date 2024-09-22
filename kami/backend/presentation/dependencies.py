@@ -1,3 +1,5 @@
+from kami.backend.infra.gpt.client_gpt import get_gpt_client
+from kami.backend.infra.vpn.vpn_client import get_vpn_client
 from kami.backend.presentation.client import BackendClient
 from kami.backend.presentation.ucf import UseCaseFactory
 from kami.backend.repos.dependencies import get_async_engine, get_async_sessionmaker
@@ -11,9 +13,12 @@ async def get_ucf() -> UseCaseFactory:
     engine_factory = get_async_engine(settings=settings)
     engine = await anext(engine_factory)
     session_factory = await get_async_sessionmaker(engine)
+    vpn_client = get_vpn_client(vpn_host=settings.vpn_host, vpn_port=settings.vpn_port)
+    gpt_client = get_gpt_client(vpn_client=vpn_client)
 
     return UseCaseFactory(
         session_factory=session_factory,
+        gpt_client=gpt_client,
     )
 
 

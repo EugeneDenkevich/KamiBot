@@ -15,7 +15,7 @@ ENV PATH="$POETRY_HOME/bin:$VENV_PATH/bin:$PATH"
 
 #-------------BASE-------------------------
 FROM python-base as builder-base
-LABEL name=kami-bot-admin
+LABEL name=kami-bot-migrator
 
 RUN set -eux \
 	&& apk add --no-cache \
@@ -37,6 +37,6 @@ COPY --from=builder-base $VENV_PATH $VENV_PATH
 WORKDIR /project
 COPY . .
 
-RUN chmod +x /project/scripts/entypoint.admin.sh
+RUN chmod +x /project/scripts/entypoint.migrator.sh
 
-ENTRYPOINT [ "/project/scripts/entypoint.admin.sh" ]
+ENTRYPOINT [ "/project/scripts/entypoint.migrator.sh" ]

@@ -1,4 +1,3 @@
-import uuid
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -31,6 +30,3 @@ class AIRepo():
             raise AINotFoundError()
 
         return ai_db_to_entity(ai)
-        
-
-

@@ -14,7 +14,7 @@ class AITable(Base):
     id: Mapped[UUID] = mapped_column(Uuid, primary_key=True)
     """ID."""
 
-    chat_gpt_api_key: Mapped[UUID] = mapped_column(String, nullable=False)
+    gpt_api_key: Mapped[UUID] = mapped_column(String, nullable=False)
     """ChatGPT api key"""
 
     elevenlabs_api_key: Mapped[UUID] = mapped_column(String, nullable=False)
