@@ -69,6 +69,9 @@ class UseCaseFactory:
             yield SaveReplyUseCase(
                 lang_test_service=LangTestService(),
                 lang_test_repo=LangTestRepo(session=session),
+                gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
+                whisper_gateway=WhisperGateway(whisper_client=self.whisper_client),
+                ai_repo=AIRepo(session=session),
             )
 
     @asynccontextmanager
@@ -87,6 +90,8 @@ class UseCaseFactory:
             yield VoiceToVoiceUseCase(
                 gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
                 whisper_gateway=WhisperGateway(whisper_client=self.whisper_client),
-                elevenlabs_gateway=ElevenLabsGateway(elevenlabs_gateway=self.elevenlabs_client),
-                ai_repo=AIRepo(session=session)
+                elevenlabs_gateway=ElevenLabsGateway(
+                    elevenlabs_gateway=self.elevenlabs_client,
+                ),
+                ai_repo=AIRepo(session=session),
             )

@@ -1,6 +1,9 @@
+import json
+from typing import Union, cast
 
 from kami.backend.domain.lang_test.enums import LangTestPromtEnum, RateEnum
 from kami.backend.domain.lang_test.exceptions import (
+    LangTastCreationFailedError,
     NoCurrentQuestionError,
     NoQuestionsError,
     NoRepliesError,
@@ -8,6 +11,7 @@ from kami.backend.domain.lang_test.exceptions import (
 from kami.backend.domain.lang_test.models import QuestT
 from kami.backend.domain.lang_test.services import LangTestService
 from kami.backend.gateways.chat_gpt.gateway import GPTGateway
+from kami.backend.gateways.whisper.gateway import WhisperGateway
 from kami.backend.repos.ai.repo import AIRepo
 from kami.backend.repos.lang_test.repo import LangTestRepo
 from kami.common import get_prompt
@@ -48,6 +52,9 @@ class StartTestUseCase():
             api_key=ai.gpt_api_key,
             prompt=get_prompt(LangTestPromtEnum.LANG_TEST),
         )
+
+        if not gpt_answer.startswith("["):
+            raise LangTastCreationFailedError()
 
         lang_test = self.lang_test_service.create_lang_test(
             tg_id=tg_id,
@@ -95,11 +102,17 @@ class SaveReplyUseCase():
         self,
         lang_test_service: LangTestService,
         lang_test_repo: LangTestRepo,
+        gpt_gateway: GPTGateway,
+        whisper_gateway: WhisperGateway,
+        ai_repo: AIRepo,
     ) -> None:
         self.lang_test_service = lang_test_service
         self.lang_test_repo = lang_test_repo
+        self.gpt_gateway = gpt_gateway
+        self.whisper_gateway = whisper_gateway
+        self.ai_repo = ai_repo
 
-    async def __call__(self, tg_id: str, reply: str) -> None:
+    async def __call__(self, tg_id: str, reply: Union[str, bytes]) -> None:
         """
         Save reply from user.
 
@@ -112,8 +125,35 @@ class SaveReplyUseCase():
         if not lang_test.current_question:
             raise NoCurrentQuestionError()
 
-        self.lang_test_service.append_reply(lang_test=lang_test, reply=reply)
+        gpt_answer = None
+        if isinstance(reply, bytes):
+            ai = await self.ai_repo.get_ai()
+
+            text_reply =  await self.whisper_gateway.audio_to_text(
+                api_key=ai.gpt_api_key,
+                voice=reply,
+            )
+
+            gpt_answer = await self.gpt_gateway.get_answer(
+                api_key=ai.gpt_api_key,
+                prompt=(
+                    get_prompt(LangTestPromtEnum.LANG_TEST_REPLY)
+                    .replace(
+                        "<<questions>>",
+                        json.dumps(lang_test.questions, ensure_ascii=False),
+                    )
+                    .replace(
+                        "<<reply>>", text_reply,
+                    )
+                ),
+            )
+
+        self.lang_test_service.append_reply(
+            lang_test=lang_test,
+            reply=gpt_answer if gpt_answer else cast(str, reply),
+        )
         self.lang_test_service.clear_current_queston(lang_test=lang_test)
+
         await self.lang_test_repo.update_lang_test(lang_test=lang_test)
 
 

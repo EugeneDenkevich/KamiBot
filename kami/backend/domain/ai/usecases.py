@@ -8,22 +8,22 @@ class VoiceToVoiceUseCase:
     """Use case to receive answer from ChatGPT"""
 
     def __init__(
-        self, 
-        gpt_gateway: GPTGateway, 
-        whisper_gateway: WhisperGateway, 
-        elevenlabs_gateway: ElevenLabsGateway, 
-        ai_repo: AIRepo
-        ) -> None:
+        self,
+        gpt_gateway: GPTGateway,
+        whisper_gateway: WhisperGateway,
+        elevenlabs_gateway: ElevenLabsGateway,
+        ai_repo: AIRepo,
+    ) -> None:
 
         self.gpt_gateway = gpt_gateway
         self.whisper_gateway = whisper_gateway
         self.elevenlabs_gateway = elevenlabs_gateway
         self.ai_repo = ai_repo
-    
+
     async def __call__(self, voice: bytes) -> bytes:
         """
         Use case to receive answer from ChatGPT
-        
+
         :param voice: Prompt for ChatGPT.
         :return: Answer in voice form..
         """

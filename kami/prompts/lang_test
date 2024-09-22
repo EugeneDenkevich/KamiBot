@@ -53,7 +53,6 @@
   }
 ]
 
-
 [
   {
     "question": "Какой вариант правильный: \"I ____ already finished my homework.\"",
@@ -102,7 +101,6 @@
   }
 ]
 
-
 [
   {
     "question": "Выберите правильный вариант: \"I ____ to the cinema last weekend.\"",
@@ -150,3 +148,5 @@
     "correct_answer": "a"
   }
 ]
+
+Это важно: для создания теста используй только структуру из примеров: List[Dict[str, Union[str, Dict[str, str]]]].
