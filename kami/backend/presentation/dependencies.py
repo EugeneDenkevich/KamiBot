@@ -15,7 +15,10 @@ async def get_ucf() -> UseCaseFactory:
     engine_factory = get_async_engine(settings=settings)
     engine = await anext(engine_factory)
     session_factory = await get_async_sessionmaker(engine)
-    vpn_client = get_vpn_client(vpn_host=settings.vpn_host, vpn_port=settings.vpn_port)
+    vpn_client = get_vpn_client(
+        vpn_host=settings.vpn_host,
+        vpn_port=settings.vpn_port,
+    )
     gpt_client = get_gpt_client(vpn_client=vpn_client)
     whisper_client = get_whisper_client(vpn_client=vpn_client)
     elevenlabs_client = get_elevenlabs_client(vpn_client=vpn_client)

@@ -1,3 +1,5 @@
+from typing import Any, Coroutine
+
 from kami.backend.gateways.chat_gpt.gateway import GPTGateway
 from kami.backend.gateways.elevenlabs.gateway import ElevenLabsGateway
 from kami.backend.gateways.whisper.gateway import WhisperGateway
@@ -20,7 +22,7 @@ class VoiceToVoiceUseCase:
         self.elevenlabs_gateway = elevenlabs_gateway
         self.ai_repo = ai_repo
 
-    async def __call__(self, voice: bytes) -> bytes:
+    async def __call__(self, voice: bytes) -> Coroutine[Any, Any, bytes]:
         """
         Use case to receive answer from ChatGPT
 
