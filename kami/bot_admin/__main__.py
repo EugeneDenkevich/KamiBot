@@ -1,7 +1,7 @@
 import asyncio
 
+from kami.bot_admin.run import run_bot
 from kami.logging_settings import setup_logging
-from kami.run import run_bot
 from kami.settings import get_settings
 
 

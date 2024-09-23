@@ -1,31 +1,137 @@
-Составь 5 вопросов для теста уровня английского языка на русском языке.
+Составь 6 вопросов для теста уровня английского языка.
+В начале сделай тесты легкими (A1-A2), в середине сделай средней сложности (B1-B2), а в конце сложными (C1-C2).
 К каждому вопросу добавь несколько вариантов ответа в виде словаря, где ключом будет буква (a, b, c...), а значением — сам вариант ответа.
 Также укажи правильный ответ отдельно в поле correct_answer, где значением будет буква правильного ответа.
 Напиши на русском.
-Больше ничего не пиши, только эти 5 вопросов.
-Вот примеры тестов:
+Больше ничего не пиши, только эти 6 вопросов.
+Вот примеры твоих ответов:
 
 [
   {
-    "question": "Выберите правильную форму глагола: \"She ____ to the store yesterday.\"",
+    "question": "Выберите правильный вариант: \"I ____ already seen that movie.\"",
     "options": {
-      "a": "goes",
-      "b": "went",
-      "c": "is going"
-    },
-    "correct_answer": "b"
-  },
-  {
-    "question": "Как перевести на английский: \"Я люблю читать книги\"?",
-    "options": {
-      "a": "I love to read books",
-      "b": "I am loving to read books",
-      "c": "I read books love"
+      "a": "have",
+      "b": "had",
+      "c": "am"
     },
     "correct_answer": "a"
   },
   {
-    "question": "Укажите правильный предлог: \"The cat is sitting ____ the table.\"",
+    "question": "Какой из следующих вариантов является правильным: \"If I ____ you, I would accept the offer.\"",
+    "options": {
+      "a": "were",
+      "b": "was",
+      "c": "am"
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question": "Как перевести на английский: \"Мы давно не виделись\"?",
+    "options": {
+      "a": "We haven’t seen each other for a long time",
+      "b": "We don’t see each other since a long time",
+      "c": "We didn’t see each other for a long time"
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question": "Выберите правильный вариант: \"She would have passed the exam if she ____ harder.\"",
+    "options": {
+      "a": "studied",
+      "b": "has studied",
+      "c": "studies"
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question": "Какое слово лучше всего подходит для завершения предложения: \"Not only ____ he a great musician, but he is also a talented painter.\"",
+    "options": {
+      "a": "is",
+      "b": "was",
+      "c": "does"
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question": "Выберите правильный вариант: \"Were I to know her address, I ____ send her an invitation.\"",
+    "options": {
+      "a": "would",
+      "b": "will",
+      "c": "might"
+    },
+    "correct_answer": "a"
+  }
+]
+
+[
+  {
+    "question": "Выберите правильный вариант: \"They ____ going to the concert tonight.\"",
+    "options": {
+      "a": "are",
+      "b": "is",
+      "c": "am"
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question": "Какой вариант правильный: \"He plays the guitar very ____\"?",
+    "options": {
+      "a": "good",
+      "b": "well",
+      "c": "better"
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question": "Как перевести на английский: \"У тебя есть время поговорить?\"?",
+    "options": {
+      "a": "Do you have time to talk?",
+      "b": "Have you time to talk?",
+      "c": "You have time for talk?"
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question": "Выберите правильный вариант: \"She has lived here ____ 2010.\"",
+    "options": {
+      "a": "since",
+      "b": "for",
+      "c": "during"
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question": "Какое слово лучше всего подходит для завершения предложения: \"The results of the experiment were not as we ____.\"",
+    "options": {
+      "a": "expected",
+      "b": "expect",
+      "c": "expecting"
+    },
+    "correct_answer": "a"
+  },
+  {
+    "question": "Выберите правильный вариант: \"Had I been aware of the situation, I ____ acted differently.\"",
+    "options": {
+      "a": "would have",
+      "b": "will have",
+      "c": "might have"
+    },
+    "correct_answer": "a"
+  }
+]
+
+[
+  {
+    "question": "Выберите правильный вариант: \"She ____ a new dress for the party.\"",
+    "options": {
+      "a": "buyed",
+      "b": "bought",
+      "c": "buy"
+    },
+    "correct_answer": "b"
+  },
+  {
+    "question": "Какой вариант правильный: \"The book is ____ the table.\"?",
     "options": {
       "a": "on",
       "b": "in",
@@ -34,119 +140,45 @@
     "correct_answer": "a"
   },
   {
-    "question": "Выберите правильный вариант: \"They ____ dinner when I called them.\"",
+    "question": "Как перевести на английский: \"Ты часто гуляешь в парке?\"?",
     "options": {
-      "a": "was having",
-      "b": "were having",
-      "c": "had"
-    },
-    "correct_answer": "b"
-  },
-  {
-    "question": "Как сказать по-английски: \"У него есть собака\"?",
-    "options": {
-      "a": "He have a dog",
-      "b": "He is having a dog",
-      "c": "He has a dog"
-    },
-    "correct_answer": "c"
-  }
-]
-
-[
-  {
-    "question": "Какой вариант правильный: \"I ____ already finished my homework.\"",
-    "options": {
-      "a": "am",
-      "b": "have",
-      "c": "has"
-    },
-    "correct_answer": "b"
-  },
-  {
-    "question": "Выберите правильный вариант: \"They ____ tennis every Saturday.\"",
-    "options": {
-      "a": "play",
-      "b": "plays",
-      "c": "are play"
+      "a": "Do you often walk in the park?",
+      "b": "Are you often walking in the park?",
+      "c": "Do you walk often in the park?"
     },
     "correct_answer": "a"
   },
   {
-    "question": "Как перевести на английский: \"Она сейчас готовит ужин\"?",
+    "question": "Выберите правильный вариант: \"If I had known about the meeting, I ____ gone.\"",
     "options": {
-      "a": "She is cooking dinner now",
-      "b": "She cooks dinner now",
-      "c": "She cooking dinner now"
+      "a": "would have",
+      "b": "will have",
+      "c": "might have"
     },
     "correct_answer": "a"
   },
   {
-    "question": "Выберите правильный предлог: \"The book is ____ the table.\"",
+    "question": "Какое слово лучше всего подходит для завершения предложения: \"He is looking forward to ____ you soon.\"",
     "options": {
-      "a": "on",
-      "b": "at",
-      "c": "in"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Как правильно перевести: \"Мы не были в Париже\"?",
-    "options": {
-      "a": "We was not in Paris",
-      "b": "We were not in Paris",
-      "c": "We are not in Paris"
-    },
-    "correct_answer": "b"
-  }
-]
-
-[
-  {
-    "question": "Выберите правильный вариант: \"I ____ to the cinema last weekend.\"",
-    "options": {
-      "a": "go",
-      "b": "went",
-      "c": "going"
+      "a": "see",
+      "b": "seeing",
+      "c": "saw"
     },
     "correct_answer": "b"
   },
   {
-    "question": "Как сказать по-английски: \"Он умеет плавать\"?",
+    "question": "Выберите правильный вариант: \"Should you need any assistance, please do not hesitate to contact me.\"",
     "options": {
-      "a": "He can swim",
-      "b": "He is swim",
-      "c": "He can swims"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Как перевести на английский: \"Я работаю каждый день\"?",
-    "options": {
-      "a": "I working every day",
-      "b": "I work every day",
-      "c": "I am work every day"
+      "a": "If you will need",
+      "b": "If you need",
+      "c": "Should you needing"
     },
     "correct_answer": "b"
-  },
-  {
-    "question": "Укажите правильный предлог: \"The dog is lying ____ the sofa.\"",
-    "options": {
-      "a": "in",
-      "b": "under",
-      "c": "on"
-    },
-    "correct_answer": "b"
-  },
-  {
-    "question": "Выберите правильную форму глагола: \"She ____ already finished her report.\"",
-    "options": {
-      "a": "has",
-      "b": "have",
-      "c": "is"
-    },
-    "correct_answer": "a"
   }
 ]
 
 Это важно: для создания теста используй только структуру из примеров: List[Dict[str, Union[str, Dict[str, str]]]].
+Это важно: вопросов должно быть 6. Уровень сложности должен расти от A1 до C2 равномерно от вопроса к вопросу.
+Пожалуйста, не смешивай языки.
+В тестах не должно быть смешений языков внутри одного элемента, например, когда часть предложения на русском, а часть — на английском.
+Важно: твой ответ должен иметь структуру структуру из примеров: List[Dict[str, Union[str, Dict[str, str]]]]

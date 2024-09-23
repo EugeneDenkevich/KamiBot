@@ -1,8 +1,9 @@
-from typing import Union
+from typing import Any, Coroutine, Union
 
 from kami.backend.domain.dialog.models import Dialog
 from kami.backend.domain.lang_test.enums import RateEnum
 from kami.backend.domain.lang_test.models import QuestT
+from kami.backend.presentation.exceptions import StartTestError
 from kami.backend.presentation.ucf import UseCaseFactory
 
 
@@ -27,14 +28,17 @@ class BackendClient():
         tg_id: str,
     ) -> None:
         async with self.ucf.start_test() as start_test:
-            return await start_test(tg_id=tg_id)
+            try:
+                return await start_test(tg_id=tg_id)
+            except Exception:
+                raise StartTestError()
 
-    async def ask_one_or_none(
+    async def ask_one(
         self,
         tg_id: str,
     ) -> QuestT:
-        async with self.ucf.ask_one_or_none() as ask_one_or_none:
-            return await ask_one_or_none(tg_id=tg_id)
+        async with self.ucf.ask_one() as ask_one:
+            return await ask_one(tg_id=tg_id)
 
     async def save_reply(
         self,
@@ -54,6 +58,6 @@ class BackendClient():
     async def voice_to_voice(
         self,
         voice: bytes,
-    ) -> RateEnum:
+    ) -> Coroutine[Any, Any, bytes]:
         async with self.ucf.voice_to_voice() as voice_to_voice:
             return await voice_to_voice(voice=voice)

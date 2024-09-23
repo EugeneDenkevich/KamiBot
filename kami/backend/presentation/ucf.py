@@ -10,7 +10,7 @@ from kami.backend.domain.dialog.services import DialogService
 from kami.backend.domain.dialog.usecases import CreateDialogUseCase
 from kami.backend.domain.lang_test.services import LangTestService
 from kami.backend.domain.lang_test.usecases import (
-    AskOneOrNoneUseCase,
+    AskOne,
     RateLangLevelUseCase,
     SaveReplyUseCase,
     StartTestUseCase,
@@ -56,9 +56,9 @@ class UseCaseFactory:
             )
 
     @asynccontextmanager
-    async def ask_one_or_none(self) -> AsyncIterator[AskOneOrNoneUseCase]:
+    async def ask_one(self) -> AsyncIterator[AskOne]:
         async with self.session_factory() as session:
-            yield AskOneOrNoneUseCase(
+            yield AskOne(
                 lang_test_service=LangTestService(),
                 lang_test_repo=LangTestRepo(session=session),
             )
@@ -91,7 +91,7 @@ class UseCaseFactory:
                 gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
                 whisper_gateway=WhisperGateway(whisper_client=self.whisper_client),
                 elevenlabs_gateway=ElevenLabsGateway(
-                    elevenlabs_gateway=self.elevenlabs_client,
+                    elevenlabs_client=self.elevenlabs_client,
                 ),
                 ai_repo=AIRepo(session=session),
             )

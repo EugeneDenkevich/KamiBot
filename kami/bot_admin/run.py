@@ -1,6 +1,6 @@
 from aiogram import Bot, Dispatcher
 
-from kami.bot_client.common.setup_bot import (
+from kami.bot_admin.common.setup_bot import (
     set_commands,
     setup_dispatcher,
     setup_i18n,
@@ -20,7 +20,6 @@ async def run_bot(bot_token: str, language: str) -> None:
     dispatcher = Dispatcher()
 
     await set_commands(bot)
-
     setup_routers(dispatcher)
 
     setup_dispatcher(dispatcher)

@@ -64,8 +64,8 @@ class StartTestUseCase():
         await self.lang_test_repo.save_lang_test(lang_test=lang_test)
 
 
-class AskOneOrNoneUseCase():
-    """Use case for getting question for user or None of no questions"""
+class AskOne():
+    """Use case for getting question for user"""
 
     def __init__(
         self,
@@ -77,10 +77,10 @@ class AskOneOrNoneUseCase():
 
     async def __call__(self, tg_id: str) -> QuestT:
         """
-        Get question for user or None.
+        Get question for user.
 
         :param tg_id: Telegram id.
-        :return: Question for user or None.
+        :return: Question for user.
         """
 
         lang_test = await self.lang_test_repo.get_lang_test(tg_id=tg_id)

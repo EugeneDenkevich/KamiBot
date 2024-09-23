@@ -12,7 +12,4 @@ def get_elevenlabs_client(vpn_client: Optional[AsyncClient] = None) -> ElevenLab
     :return: ElevenLabs client.
     """
 
-    return ElevenLabs(
-        api_key="",
-        httpx_client=vpn_client,
-    )
+    return ElevenLabs(api_key="")

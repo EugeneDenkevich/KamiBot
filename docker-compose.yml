@@ -41,6 +41,8 @@ services:
       KAMI_BOT_DB_HOST: "kami-db"
       DEBUG_MODE: true
       KAMI_BOT_CLIENT_LANGUAGE: ${KAMI_BOT_CLIENT_LANGUAGE}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     stdin_open: true
     tty: true
 
@@ -62,6 +64,8 @@ services:
       KAMI_BOT_DB_HOST: "kami-db"
       DEBUG_MODE: true
       KAMI_BOT_ADMIN_LANGUAGE: ${KAMI_BOT_ADMIN_LANGUAGE}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     stdin_open: true
     tty: true
 
@@ -88,7 +92,7 @@ services:
     build:
       context: .
       dockerfile: ./dockerfiles/Dockerfile.vpn
-    container_name: ar-vpn
+    container_name: kami-vpn
     environment:
       KAMI_VPN_PORT: ${KAMI_VPN_PORT}
     network_mode: host
