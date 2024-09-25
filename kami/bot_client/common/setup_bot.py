@@ -17,7 +17,7 @@ async def set_commands(bot: Bot) -> None:
     await bot.set_my_commands([
         BotCommand(command="start", description="Start from this"),
         BotCommand(command="lang_test", description="Start language test"),
-        BotCommand(command="dialogue", description="Start dialogue"),
+        BotCommand(command="dialog", description="Start dialog"),
     ])
 
 
