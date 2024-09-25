@@ -1,48 +1,40 @@
-import io
+from typing import AsyncIterator
 
-import pyttsx3
-from elevenlabs.client import ElevenLabs
+from kami.backend.infra.elevenlabs.client_elevenlabs import AsyncElevenLabsClient
 
 
 class ElevenLabsGateway:
     """Gateway for ElevenLabs service"""
 
-    def __init__(self, elevenlabs_client: ElevenLabs) -> None:
+    def __init__(self, elevenlabs_client: AsyncElevenLabsClient) -> None:
         self.elevenlabs_client = elevenlabs_client
-    
-    # async def get_audio(self, api_key: str, text: str, voice_id: str) -> bytes:
-    #     """
-    #     Converting text to voice using ElevenLabs.
-        
-    #     :param api_key: API key for ElevenLabs.
-    #     :param prompt: Text to speech for ElevenLabs.
-    #     :param voice_id: Client's voice ID.
-    #     :return: Voiced audio.
-    #     """
 
-    #     self.elevenlabs_client.api_key = api_key
+    async def get_audio(self, api_key: str, text: str) -> bytes:
+        """
+        Converting text to voice using ElevenLabs.
 
-    #     audio = self.elevenlabs_client.generate(
-    #         text=text,
-    #         voice=voice_id,
-    #         model="eleven_multilingual_v2"
-    #     )
+        :param api_key: API key for ElevenLabs.
+        :param text: Text to speech for ElevenLabs.
+        :return: Voiced audio.
+        """
+
+        response = await self.elevenlabs_client(api_key=api_key).generate(
+            text=text,
+            model="eleven_multilingual_v2",
+        )
+
+        return await self._response_to_audio(response=response)
+
+    async def _response_to_audio(self, response: AsyncIterator[bytes]) -> bytes:
+        """
+        Convert response from elevelnabs to bytes.
 
 
+        :param response: Response from elevenlabs
+        """
 
-    #     return audio
+        audio = b""
+        async for audio_chunk in response:
+            audio += audio_chunk
 
-    async def get_audio(self, text: str) -> bytes:
-
-        engine = pyttsx3.init()
-
-        audio_bytes = io.BytesIO()
-
-        engine.setProperty("audioDestination", audio_bytes)
-
-        engine.say(text)
-        engine.runAndWait()
-
-        audio_bytes.seek(0)
-
-        return audio_bytes.read()
+        return audio

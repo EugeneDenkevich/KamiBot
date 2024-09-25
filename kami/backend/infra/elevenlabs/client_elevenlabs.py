@@ -1,15 +1,25 @@
-from typing import Optional
 
-from elevenlabs.client import ElevenLabs
-from httpx import AsyncClient
+from elevenlabs.client import AsyncElevenLabs
 
 
-def get_elevenlabs_client(vpn_client: Optional[AsyncClient] = None) -> ElevenLabs:
+class AsyncElevenLabsClient:
+    """Wrapper for asyn elevenlabs client"""
+
+    def __call__(self, api_key: str) -> AsyncElevenLabs:
+        """
+        Get async client for elevenlabs.
+
+        :param api_key: Api key for elevenlabs.
+        """
+
+        return AsyncElevenLabs(api_key=api_key)
+
+
+def get_elevenlabs_client() -> AsyncElevenLabsClient:
     """
-    Get ElevenLabs Client
+    Get AsyncElevenLabs Client
 
-    :param vpn_client: VPN client.
-    :return: ElevenLabs client.
+    :return: AsyncElevenLabs client.
     """
 
-    return ElevenLabs(api_key="")
+    return AsyncElevenLabsClient()

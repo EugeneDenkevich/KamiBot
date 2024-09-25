@@ -1,9 +1,8 @@
-from typing import Any, Coroutine, Union
+from typing import Union
 
 from kami.backend.domain.dialog.models import Dialog
 from kami.backend.domain.lang_test.enums import RateEnum
 from kami.backend.domain.lang_test.models import QuestT
-from kami.backend.presentation.exceptions import StartTestError
 from kami.backend.presentation.ucf import UseCaseFactory
 
 
@@ -18,20 +17,18 @@ class BackendClient():
 
     async def create_dialog(
         self,
+        tg_id: str,
         topic: str,
     ) -> Dialog:
         async with self.ucf.create_dialog() as create_dialog:
-            return await create_dialog(topic=topic)
+            return await create_dialog(tg_id=tg_id, topic=topic)
 
     async def start_test(
         self,
         tg_id: str,
     ) -> None:
         async with self.ucf.start_test() as start_test:
-            try:
-                return await start_test(tg_id=tg_id)
-            except Exception:
-                raise StartTestError()
+            return await start_test(tg_id=tg_id)
 
     async def ask_one(
         self,
@@ -55,9 +52,25 @@ class BackendClient():
         async with self.ucf.rate_lang_level() as rate_lang_level:
             return await rate_lang_level(tg_id=tg_id)
 
-    async def voice_to_voice(
+    async def continue_dialogue(
+        self,
+        tg_id: str,
+        voice: bytes,
+    ) -> bytes:
+        async with self.ucf.continue_dialogue() as continue_dialogue:
+            return await continue_dialogue(tg_id=tg_id, voice=voice)
+
+    async def start_dialog(
+        self,
+        tg_id: str,
+        topic: str,
+    ) -> bytes:
+        async with self.ucf.start_dialog() as start_dialog:
+            return await start_dialog(tg_id=tg_id, topic=topic)
+
+    async def voice_to_text(
         self,
         voice: bytes,
-    ) -> Coroutine[Any, Any, bytes]:
-        async with self.ucf.voice_to_voice() as voice_to_voice:
-            return await voice_to_voice(voice=voice)
+    ) -> str:
+        async with self.ucf.voice_to_text() as voice_to_text:
+            return await voice_to_text(voice=voice)
