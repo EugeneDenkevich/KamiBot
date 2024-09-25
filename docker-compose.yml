@@ -39,7 +39,7 @@ services:
         condition: service_completed_successfully
     environment:
       KAMI_BOT_DB_HOST: "kami-db"
-      DEBUG_MODE: true
+      DEBUG_MODE: false
       KAMI_BOT_CLIENT_LANGUAGE: ${KAMI_BOT_CLIENT_LANGUAGE}
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -62,7 +62,7 @@ services:
         condition: service_completed_successfully
     environment:
       KAMI_BOT_DB_HOST: "kami-db"
-      DEBUG_MODE: true
+      DEBUG_MODE: false
       KAMI_BOT_ADMIN_LANGUAGE: ${KAMI_BOT_ADMIN_LANGUAGE}
     extra_hosts:
       - "host.docker.internal:host-gateway"

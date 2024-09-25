@@ -17,8 +17,9 @@ class Settings(BaseSettings):
     client_language: str = "en"
     admin_language: str = "en"
 
-    vpn_host: str = "localhost"
-    vpn_port: int = 1082
+    context_limit: int = 5
+
+    vpn_conn_string: str = ""
 
     model_config = SettingsConfigDict(
         env_file=".env",

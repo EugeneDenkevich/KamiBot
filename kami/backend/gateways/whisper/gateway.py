@@ -29,7 +29,7 @@ class WhisperGateway:
         while attempt <= max_tries:
             try:
                 audio_file = BytesIO(voice)
-                audio_file.name = "voice.ogg"
+                audio_file.name = "voice.mp3"
 
                 response = await self.whisper_client.audio.transcriptions.create(
                     file=audio_file,

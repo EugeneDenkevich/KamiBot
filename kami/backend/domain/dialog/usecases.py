@@ -1,3 +1,4 @@
+
 from kami.backend.domain.dialog.models import Dialog
 from kami.backend.domain.dialog.services import DialogService
 from kami.backend.repos.dialog.repo import DialogRepo
@@ -14,7 +15,11 @@ class CreateDialogUseCase():
         self.dialog_service = dialog_service
         self.dialog_repo = dialog_repo
 
-    async def __call__(self, topic: str) -> Dialog:
+    async def __call__(
+        self,
+        tg_id: str,
+        topic: str,
+    ) -> Dialog:
         """
         Create Dialog.
 
@@ -23,7 +28,10 @@ class CreateDialogUseCase():
         :return: Dialog.
         """
 
-        dialog = self.dialog_service.create_dialog(topic=topic)
+        dialog = self.dialog_service.create_dialog(
+            tg_id=tg_id,
+            topic=topic,
+        )
 
         await self.dialog_repo.save_dialog(dialog)
 

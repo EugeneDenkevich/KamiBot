@@ -8,7 +8,6 @@ from aiogram.utils.i18n import gettext as _
 
 from kami.backend.domain.lang_test.exceptions import NoQuestionsError
 from kami.backend.presentation.client import BackendClient
-from kami.backend.presentation.exceptions import StartTestError
 from kami.bot_client.common.utils import get_voice_reply, parse_question
 from kami.bot_client.keyboards.lang_test import (
     StartLangTestCallback,
@@ -63,13 +62,9 @@ async def handle_lang_test(
 
     try:
         await backend_client.start_test(tg_id=tg_id)
-    except StartTestError:
+    except Exception:
         await state.clear()
-        await callback.message.answer(  # type: ignore[union-attr]
-            text=_(
-                "Error while test creating try again: {command}.",
-            ).format(command="/lang_test"),
-        )
+        raise
 
     await callback.message.answer(  # type: ignore[union-attr]
         text=_("Test was created."),
