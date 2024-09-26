@@ -88,16 +88,6 @@ services:
       kami-db:
         condition: service_healthy
 
-  kami-vpn:
-    build:
-      context: .
-      dockerfile: ./dockerfiles/Dockerfile.vpn
-    container_name: kami-vpn
-    environment:
-      KAMI_VPN_PORT: ${KAMI_VPN_PORT}
-    network_mode: host
-    init: true
-
 networks:
   kami-network:
     name: kami-network

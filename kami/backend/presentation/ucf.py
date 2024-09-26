@@ -5,12 +5,16 @@ from openai import AsyncOpenAI
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from kami.backend.domain.ai.usecases import (
-    ContinueDialogueUseCase,
+    ContinueDialogUseCase,
+    ReturnToDialogUseCase,
     StartDialogUseCase,
     VoiceToTextUseCase,
 )
 from kami.backend.domain.dialog.services import DialogService
-from kami.backend.domain.dialog.usecases import CreateDialogUseCase
+from kami.backend.domain.dialog.usecases import (
+    CreateDialogUseCase,
+    GetDialogUseCase,
+)
 from kami.backend.domain.lang_test.services import LangTestService
 from kami.backend.domain.lang_test.usecases import (
     AskOne,
@@ -48,6 +52,13 @@ class UseCaseFactory:
         async with self.session_factory() as session:
             yield CreateDialogUseCase(
                 dialog_service=DialogService(),
+                dialog_repo=DialogRepo(session=session),
+            )
+
+    @asynccontextmanager
+    async def get_dialog(self) -> AsyncIterator[GetDialogUseCase]:
+        async with self.session_factory() as session:
+            yield GetDialogUseCase(
                 dialog_repo=DialogRepo(session=session),
             )
 
@@ -102,9 +113,9 @@ class UseCaseFactory:
             )
 
     @asynccontextmanager
-    async def continue_dialogue(self) -> AsyncIterator[ContinueDialogueUseCase]:
+    async def continue_dialog(self) -> AsyncIterator[ContinueDialogUseCase]:
         async with self.session_factory() as session:
-            yield ContinueDialogueUseCase(
+            yield ContinueDialogUseCase(
                 gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
                 whisper_gateway=WhisperGateway(whisper_client=self.whisper_client),
                 elevenlabs_gateway=ElevenLabsGateway(
@@ -122,4 +133,16 @@ class UseCaseFactory:
             yield VoiceToTextUseCase(
                 whisper_gateway=WhisperGateway(whisper_client=self.whisper_client),
                 ai_repo=AIRepo(session=session),
+            )
+
+    @asynccontextmanager
+    async def return_to_dialog(self) -> AsyncIterator[ReturnToDialogUseCase]:
+        async with self.session_factory() as session:
+            yield ReturnToDialogUseCase(
+                gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
+                elevenlabs_gateway=ElevenLabsGateway(
+                    elevenlabs_client=self.elevenlabs_client,
+                ),
+                ai_repo=AIRepo(session=session),
+                dialog_repo=DialogRepo(session=session),
             )

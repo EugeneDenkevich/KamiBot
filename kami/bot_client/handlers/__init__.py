@@ -2,7 +2,7 @@
 
 from aiogram import Dispatcher
 
-from kami.bot_client.handlers.dialogue import router as dialogue_router
+from kami.bot_client.handlers.dialog import router as dialogue_router
 from kami.bot_client.handlers.lang_test import router as lang_test_router
 from kami.bot_client.handlers.start import router as start_router
 

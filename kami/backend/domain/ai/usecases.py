@@ -1,5 +1,6 @@
 
 import json
+from typing import Optional, Tuple
 
 from kami.backend.domain.ai.enums import DialoguePromtEnum
 from kami.backend.domain.dialog.services import DialogService
@@ -11,7 +12,57 @@ from kami.backend.repos.dialog.repo import DialogRepo
 from kami.common import get_prompt
 
 
-class ContinueDialogueUseCase:
+class StartDialogUseCase:
+    """Use case to receive answer from ChatGPT"""
+
+    def __init__(
+        self,
+        gpt_gateway: GPTGateway,
+        elevenlabs_gateway: ElevenLabsGateway,
+        ai_repo: AIRepo,
+        dialog_repo: DialogRepo,
+        dialog_service: DialogService,
+    ) -> None:
+
+        self.gpt_gateway = gpt_gateway
+        self.elevenlabs_gateway = elevenlabs_gateway
+        self.ai_repo = ai_repo
+        self.dialog_repo = dialog_repo
+        self.dialog_service = dialog_service
+
+    async def __call__(self, tg_id: str, topic: str) -> bytes:
+        """
+        Use case to receive answer from ChatGPT
+
+        :param voice: Voice for ChatGPT.
+        :return: Answer in voice form..
+        """
+
+        ai = await self.ai_repo.get_ai()
+
+        dialog = await self.dialog_repo.get_dialogue_or_none(tg_id=tg_id)
+
+        if dialog:
+            await self.dialog_repo.delete_dialogs(tg_id=tg_id)
+
+        dialog = self.dialog_service.create_dialog(tg_id=tg_id, topic=topic)
+        await self.dialog_repo.save_dialog(dialog)
+
+        gpt_answer = await self.gpt_gateway.get_answer(
+            api_key=ai.gpt_api_key,
+            prompt=get_prompt(DialoguePromtEnum.START_DIALOG)
+            .replace(
+                "<<topic>>", topic,
+            ),
+        )
+
+        return await self.elevenlabs_gateway.get_audio(
+            api_key=ai.elevenlabs_api_key,
+            text=gpt_answer,
+        )
+
+
+class ContinueDialogUseCase:
     """Use case to receive answer from ChatGPT"""
 
     def __init__(
@@ -32,7 +83,11 @@ class ContinueDialogueUseCase:
         self.dialog_service = dialog_service
         self.context_limit = context_limit
 
-    async def __call__(self, tg_id: str, voice: bytes) -> bytes:
+    async def __call__(
+        self,
+        tg_id: str,
+        voice: bytes,
+    ) -> Tuple[bytes, Optional[str]]:
         """
         Use case to receive answer from ChatGPT
 
@@ -76,12 +131,26 @@ class ContinueDialogueUseCase:
         self.dialog_service.update_dialog(dialog)
         await self.dialog_repo.update_dialog(dialog)
 
-        return await self.elevenlabs_gateway.get_audio(
+        gpt_answer_mistakes: Optional[str] = await self.gpt_gateway.get_answer(
+            api_key=ai.gpt_api_key,
+            prompt=get_prompt(DialoguePromtEnum.EXCEPTIONS_DIALOG)
+                .replace(
+                    "<<text>>", reply,
+                ),
+        )
+
+        if gpt_answer_mistakes == "[]":
+            gpt_answer_mistakes = None
+
+        audio_answer = await self.elevenlabs_gateway.get_audio(
             api_key=ai.elevenlabs_api_key,
             text=gpt_answer,
         )
 
-class StartDialogUseCase:
+        return audio_answer, gpt_answer_mistakes
+
+
+class ReturnToDialogUseCase:
     """Use case to receive answer from ChatGPT"""
 
     def __init__(
@@ -90,38 +159,32 @@ class StartDialogUseCase:
         elevenlabs_gateway: ElevenLabsGateway,
         ai_repo: AIRepo,
         dialog_repo: DialogRepo,
-        dialog_service: DialogService,
     ) -> None:
-
         self.gpt_gateway = gpt_gateway
         self.elevenlabs_gateway = elevenlabs_gateway
         self.ai_repo = ai_repo
         self.dialog_repo = dialog_repo
-        self.dialog_service = dialog_service
 
-    async def __call__(self, tg_id: str, topic: str) -> bytes:
+    async def __call__(self, tg_id: str) -> bytes:
         """
         Use case to receive answer from ChatGPT
 
-        :param voice: Prompt for ChatGPT.
-        :return: Answer in voice form..
+        :param voice: Voice for ChatGPT.
+        :return: Answer in voice form.
         """
 
         ai = await self.ai_repo.get_ai()
 
-        dialog = await self.dialog_repo.get_dialogue_or_none(tg_id=tg_id)
-
-        if dialog:
-            await self.dialog_repo.delete_dialogs(tg_id=tg_id)
-
-        dialog = self.dialog_service.create_dialog(tg_id=tg_id, topic=topic)
-        await self.dialog_repo.save_dialog(dialog)
+        dialog = await self.dialog_repo.get_dialog(tg_id=tg_id)
 
         gpt_answer = await self.gpt_gateway.get_answer(
             api_key=ai.gpt_api_key,
-            prompt=get_prompt(DialoguePromtEnum.START_DIALOG)
+            prompt=get_prompt(DialoguePromtEnum.CONTINUE_DIALOG)
             .replace(
-                "<<topic>>", topic,
+                "<<topic>>", dialog.topic,
+            )
+            .replace(
+                "<<context>>", json.dumps(dialog.context, ensure_ascii=False),
             ),
         )
 
@@ -129,6 +192,7 @@ class StartDialogUseCase:
             api_key=ai.elevenlabs_api_key,
             text=gpt_answer,
         )
+
 
 class VoiceToTextUseCase:
     """Use case to receive answer from ChatGPT"""
