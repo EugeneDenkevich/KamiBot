@@ -1,8 +1,11 @@
+import asyncio
 from typing import BinaryIO
 
+from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 
 from kami.backend.domain.lang_test.models import QuestT
+from kami.bot_client.states.dialogue import DialogFSM
 
 
 def parse_question(
@@ -31,3 +34,27 @@ async def get_voice_reply(message: Message) -> bytes:
     )
 
     return voice_binary.read()
+
+
+async def wait_for_answer(
+    awaiting_time: int,
+    message: Message,
+    state: FSMContext,
+    text: str,
+) -> None:
+    """
+    Wait if user is not responsing.
+
+    :param message: Message.
+    :param await_for_answer: How much awaiting in sec.
+    :param state: FSM context.
+    """
+
+    async def notify_if_no_response() -> None:
+        await asyncio.sleep(awaiting_time)
+
+        if await state.get_state() == DialogFSM.conversation.state:
+            await message.answer(text)
+            await state.clear()
+
+    asyncio.create_task(notify_if_no_response())

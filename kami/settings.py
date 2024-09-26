@@ -19,6 +19,8 @@ class Settings(BaseSettings):
 
     context_limit: int = 5
 
+    awaiting_time: int = 600
+
     vpn_conn_string: str = ""
 
     model_config = SettingsConfigDict(

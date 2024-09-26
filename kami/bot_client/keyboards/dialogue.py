@@ -17,6 +17,12 @@ class MyTopicCallback(
 ):
     pass
 
+class ContinueDialogueCallback(
+    CallbackData,
+    prefix="continue_callback",  # type: ignore[call-arg]
+):
+    pass
+
 
 def build_dialog_markup(bot_name: str) -> InlineKeyboardMarkup:
     """
@@ -55,6 +61,12 @@ def build_dialog_markup(bot_name: str) -> InlineKeyboardMarkup:
     builder.button(
         text=_("{text}").format(text=text),
         callback_data=MyTopicCallback().pack(),
+    ).adjust(1)
+
+    text = "Continue dialogue"
+    builder.button(
+        text=_("{text}").format(text=text),
+        callback_data=ContinueDialogueCallback().pack(),
     ).adjust(1)
 
     return builder.as_markup()
