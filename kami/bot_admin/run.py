@@ -5,7 +5,7 @@ from kami.bot_admin.common.setup_bot import (
     setup_dispatcher,
     setup_i18n,
 )
-from kami.bot_client.handlers import setup_routers
+from kami.bot_admin.handlers import setup_routers
 from kami.common import get_work_dir
 
 

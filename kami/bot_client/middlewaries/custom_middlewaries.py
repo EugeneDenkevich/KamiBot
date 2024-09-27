@@ -4,6 +4,7 @@ from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject
 
 from kami.backend.presentation.dependencies import get_backend_client
+from kami.common import get_bot_admin
 from kami.settings import get_settings
 
 
@@ -28,5 +29,7 @@ class CustomMiddleware(BaseMiddleware):
         settings = get_settings()
 
         data["settings"] = settings
+        data["bot_admin"] = get_bot_admin(bot_admin_token=settings.bot_admin_token)
         data["backend_client"] = await get_backend_client()
+
         return await handler(event, data)

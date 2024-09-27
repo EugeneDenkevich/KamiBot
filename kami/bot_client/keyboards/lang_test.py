@@ -11,7 +11,7 @@ class StartLangTestCallback(  # type: ignore[call-arg]
     """Callback data for "Start language test" button"""
 
 
-def build_lang_test_keyboard() -> InlineKeyboardMarkup:
+def build_lang_test_markup() -> InlineKeyboardMarkup:
     """
     Builder for start language test markup.
 

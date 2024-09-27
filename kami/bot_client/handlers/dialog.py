@@ -7,13 +7,14 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.types.input_file import BufferedInputFile
+from aiogram.types.reply_keyboard_remove import ReplyKeyboardRemove
 from aiogram.utils.i18n import gettext as _
 
 from kami.backend.domain.dialog.exceptions import DialogueNotFoundError
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import get_voice_reply, wait_for_answer
 from kami.bot_client.keyboards.dialogue import (
-    ContinueDialogueCallback,
+    ContinueDialogueCD,
     MyTopicCallback,
     TopicSelectedCD,
     build_dialog_markup,
@@ -25,9 +26,11 @@ router = Router()
 
 
 @router.message(Command(commands=["dialog"]))
+@router.message(F.text == "Dialogues")
 async def handle_dialog_command(
     message: Message,
     state: Optional[FSMContext],
+    backend_client: BackendClient,
 ) -> None:
     """
     Handler for /dialogue
@@ -38,13 +41,21 @@ async def handle_dialog_command(
 
     await state.clear()  # type: ignore[union-attr]
 
+    no_dialog = False
+    try:
+        await backend_client.get_dialog(
+            tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+        )
+    except DialogueNotFoundError:
+        no_dialog = True
+
     await message.answer(
         text=_(
             "Let's practice English!\n"
             "Select any topic to begin the dialog and we'll "
             "be able to talk by voice messages on this topic:",
         ),
-        reply_markup=build_dialog_markup(bot_name="KamiBOT"),
+        reply_markup=build_dialog_markup(no_dialog=no_dialog),
     )
 
 
@@ -85,6 +96,11 @@ async def handle_topic_selected(
     """
 
     await callback.answer()
+
+    await callback.message.answer(  # type: ignore[union-attr]
+        text=_("One moment..."),
+        reply_markup=ReplyKeyboardRemove(),
+    )
 
     await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
 
@@ -129,6 +145,11 @@ async def handle_my_topic_selected(
     :param backend_client: Backend client.
     :param settings: Project settings.
     """
+
+    await message.answer(
+        text=_("One moment..."),
+        reply_markup=ReplyKeyboardRemove(),
+    )
 
     await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
 
@@ -205,19 +226,26 @@ async def handle_dialog_voice(
         )
 
 
-@router.callback_query(ContinueDialogueCallback.filter())
-async def handle_continue_dialog_voice(
+@router.callback_query(ContinueDialogueCD.filter())
+async def handle_continue_dialog(
     callback: CallbackQuery,
     backend_client: BackendClient,
     state: Optional[FSMContext],
 ) -> None:
     """
-    Handler for continuing dialog voice button.
+    Handler for continuing dialog button.
 
     :param callback: Callback.
     :param backend_client: Backend client.
     :param state: FSM state.
     """
+
+    await callback.answer()
+
+    await callback.message.answer(  # type: ignore[union-attr]
+        text=_("One moment..."),
+        reply_markup=ReplyKeyboardRemove(),
+    )
 
     tg_id = str(callback.from_user.id)
 
@@ -235,8 +263,11 @@ async def handle_continue_dialog_voice(
             chat_id=callback.message.chat.id,   # type: ignore[union-attr]
             action=ChatAction.RECORD_VOICE,
         )
+
         voice_answer = await backend_client.return_to_dialog(tg_id=tg_id)
+
         await callback.message.answer_audio(   # type: ignore[union-attr]
             audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
         )
+
         await state.set_state(DialogFSM.conversation)   # type: ignore[union-attr]

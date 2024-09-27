@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     client_language: str = "en"
     admin_language: str = "en"
 
+    admin_id: str = ""
+
     context_limit: int = 5
 
     awaiting_time: int = 600

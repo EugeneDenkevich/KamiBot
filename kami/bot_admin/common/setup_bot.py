@@ -16,6 +16,7 @@ async def set_commands(bot: Bot) -> None:
 
     await bot.set_my_commands([
         BotCommand(command="start", description="Start from this"),
+        BotCommand(command="getid", description="Get telegram id"),
     ])
 
 

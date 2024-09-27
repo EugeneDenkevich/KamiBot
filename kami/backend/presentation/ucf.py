@@ -22,6 +22,12 @@ from kami.backend.domain.lang_test.usecases import (
     SaveReplyUseCase,
     StartTestUseCase,
 )
+from kami.backend.domain.user.services import UserService
+from kami.backend.domain.user.usecases import (
+    CreateUserUseCase,
+    GetUserUseCase,
+    UpdateUserUseCase,
+)
 from kami.backend.gateways.chat_gpt.gateway import GPTGateway
 from kami.backend.gateways.elevenlabs.gateway import ElevenLabsGateway
 from kami.backend.gateways.whisper.gateway import WhisperGateway
@@ -29,6 +35,7 @@ from kami.backend.infra.elevenlabs.client_elevenlabs import AsyncElevenLabsClien
 from kami.backend.repos.ai.repo import AIRepo
 from kami.backend.repos.dialog.repo import DialogRepo
 from kami.backend.repos.lang_test.repo import LangTestRepo
+from kami.backend.repos.user.repo import UserRepo
 
 
 class UseCaseFactory:
@@ -145,4 +152,27 @@ class UseCaseFactory:
                 ),
                 ai_repo=AIRepo(session=session),
                 dialog_repo=DialogRepo(session=session),
+            )
+
+    @asynccontextmanager
+    async def create_user(self) -> AsyncIterator[CreateUserUseCase]:
+        async with self.session_factory() as session:
+            yield CreateUserUseCase(
+                user_service=UserService(),
+                user_repo=UserRepo(session=session),
+            )
+
+    @asynccontextmanager
+    async def get_user(self) -> AsyncIterator[GetUserUseCase]:
+        async with self.session_factory() as session:
+            yield GetUserUseCase(
+                user_repo=UserRepo(session=session),
+            )
+
+    @asynccontextmanager
+    async def update_user(self) -> AsyncIterator[UpdateUserUseCase]:
+        async with self.session_factory() as session:
+            yield UpdateUserUseCase(
+                user_service=UserService(),
+                user_repo=UserRepo(session=session),
             )
