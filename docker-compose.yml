@@ -29,6 +29,7 @@ services:
       dockerfile: dockerfiles/Dockerfile.client
     networks:
       - kami-network
+    restart: always
     env_file:
       - ".env"
     volumes:
@@ -52,6 +53,7 @@ services:
       dockerfile: dockerfiles/Dockerfile.admin
     networks:
       - kami-network
+    restart: always
     env_file:
       - ".env"
     volumes:
@@ -75,6 +77,7 @@ services:
       dockerfile: dockerfiles/Dockerfile.migrator
     networks:
       - kami-network
+    restart: always
     env_file:
       - ".env"
     environment:
@@ -83,7 +86,6 @@ services:
     volumes:
       - .:/project
     init: true
-    restart: no
     depends_on:
       kami-db:
         condition: service_healthy
