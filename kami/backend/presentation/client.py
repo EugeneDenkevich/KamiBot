@@ -3,6 +3,7 @@ from typing import Optional, Tuple, Union
 from kami.backend.domain.dialog.models import ContextT, Dialog
 from kami.backend.domain.lang_test.enums import RateEnum
 from kami.backend.domain.lang_test.models import QuestT
+from kami.backend.domain.user.models import User
 from kami.backend.presentation.ucf import UseCaseFactory
 
 
@@ -11,9 +12,6 @@ class BackendClient():
 
     def __init__(self, ucf: UseCaseFactory):
         self.ucf = ucf
-
-    def get_example(self) -> str:
-        return "Btw, hello from backend client!"
 
     async def create_dialog(
         self,
@@ -69,12 +67,46 @@ class BackendClient():
         async with self.ucf.start_dialog() as start_dialog:
             return await start_dialog(tg_id=tg_id, topic=topic)
 
-    async def voice_to_text(
+    async def create_user(
         self,
-        voice: bytes,
-    ) -> str:
-        async with self.ucf.voice_to_text() as voice_to_text:
-            return await voice_to_text(voice=voice)
+        tg_id: str,
+        fio: str,
+        phone: str,
+        username: Optional[str] = None,
+    ) -> User:
+        async with self.ucf.create_user() as create_user:
+            return await create_user(
+                tg_id=tg_id,
+                fio=fio,
+                phone=phone,
+                username=username,
+            )
+
+    async def get_user(
+        self,
+        tg_id: str,
+    ) -> User:
+        async with self.ucf.get_user() as get_user:
+            return await get_user(tg_id=tg_id)
+
+    async def update_user(
+        self,
+        tg_id: str,
+        fio: Optional[str] = None,
+        phone: Optional[str] = None,
+        username: Optional[str] = None,
+        active: Optional[bool] = None,
+        onboarded: Optional[bool] = None,
+    ) -> User:
+        async with self.ucf.update_user() as update_user:
+            return await update_user(
+                tg_id=tg_id,
+                fio=fio,
+                phone=phone,
+                username=username,
+                active=active,
+                onboarded=onboarded,
+            )
 
     async def get_dialog(
         self,

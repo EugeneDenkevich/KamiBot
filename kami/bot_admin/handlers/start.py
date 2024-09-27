@@ -2,8 +2,6 @@ from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 
-from kami.bot_admin.keyboards.start import build_start_keyboard
-
 router = Router()
 
 
@@ -17,7 +15,4 @@ async def handle_start(
     :param message: Message from telegram.
     """
 
-    await message.answer(
-        text="Hello World!",
-        reply_markup=build_start_keyboard(bot_name="KamiBOT"),
-    )
+    await message.answer(text="This is the Kami admin bot.")

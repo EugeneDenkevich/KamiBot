@@ -3,7 +3,7 @@ from aiogram.types import InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
-class StartCallback(CallbackData, prefix="any"):  # type: ignore[call-arg]
+class StartCallbackData(CallbackData, prefix="any"):  # type: ignore[call-arg]
     """Callback data for "Find more" button"""
 
     bot_name: str
@@ -20,7 +20,7 @@ def build_start_keyboard(bot_name: str) -> InlineKeyboardMarkup:
 
     builder.button(
         text="Find more!",
-        callback_data=StartCallback(bot_name=bot_name).pack(),
+        callback_data=StartCallbackData(bot_name=bot_name).pack(),
     )
 
     return builder.as_markup()

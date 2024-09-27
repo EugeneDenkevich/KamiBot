@@ -9,6 +9,16 @@ class ElevenLabsGateway:
     def __init__(self, elevenlabs_client: AsyncElevenLabsClient) -> None:
         self.elevenlabs_client = elevenlabs_client
 
+    # async def get_audio(self, api_key: str, text: str, voice_id: str) -> bytes:
+    #     """
+    #     Converting text to voice using ElevenLabs.
+
+    #     :param api_key: API key for ElevenLabs.
+    #     :param prompt: Text to speech for ElevenLabs.
+    #     :param voice_id: Client's voice ID.
+    #     :return: Voiced audio.
+    #     """
+
     async def get_audio(self, api_key: str, text: str) -> bytes:
         """
         Converting text to voice using ElevenLabs.

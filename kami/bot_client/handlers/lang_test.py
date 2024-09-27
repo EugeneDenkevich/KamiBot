@@ -4,22 +4,25 @@ from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
+from aiogram.types.reply_keyboard_remove import ReplyKeyboardRemove
 from aiogram.utils.i18n import gettext as _
 
+from kami.backend.domain.ai.exceptions import AINotFoundError
 from kami.backend.domain.lang_test.exceptions import NoQuestionsError
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import get_voice_reply, parse_question
 from kami.bot_client.keyboards.lang_test import (
     StartLangTestCallback,
-    build_lang_test_keyboard,
+    build_lang_test_markup,
 )
 from kami.bot_client.states.lang_test import LangTestFSM
 
 router = Router()
 
 
+@router.message(F.text == "Language Level")
 @router.message(Command(commands=["lang_test"]))
-async def handle_start(
+async def handle_lang_test(
     message: Message,
     state: FSMContext,
 ) -> None:
@@ -33,12 +36,12 @@ async def handle_start(
 
     await message.answer(
         text=_("Start test?"),
-        reply_markup=build_lang_test_keyboard(),
+        reply_markup=build_lang_test_markup(),
     )
 
 
 @router.callback_query(StartLangTestCallback.filter())
-async def handle_lang_test(
+async def handle_testing(
     callback: Union[Message, CallbackQuery],
     backend_client: BackendClient,
     state: FSMContext,
@@ -51,6 +54,11 @@ async def handle_lang_test(
     :param state: FSM state.
     """
 
+    await callback.message.answer(  # type: ignore[union-attr]
+        text=_("One moment..."),
+        reply_markup=ReplyKeyboardRemove(),
+    )
+
     tg_id = str(callback.from_user.id)  # type: ignore[union-attr]
 
     await state.set_state(LangTestFSM.lang_testing)
@@ -62,18 +70,22 @@ async def handle_lang_test(
 
     try:
         await backend_client.start_test(tg_id=tg_id)
-    except Exception:
+    except AINotFoundError:
         await state.clear()
-        raise
+        await callback.message.answer(  # type: ignore[union-attr]
+            text=_(
+                "Error while test creating: NoAiError",
+            ),
+        )
+    else:
+        await callback.message.answer(  # type: ignore[union-attr]
+            text=_("Test was created."),
+        )
 
-    await callback.message.answer(  # type: ignore[union-attr]
-        text=_("Test was created."),
-    )
-
-    current_question = await backend_client.ask_one(tg_id=tg_id)
-    await callback.message.answer(  # type: ignore[union-attr]
-        text=parse_question(current_question=current_question),
-    )
+        current_question = await backend_client.ask_one(tg_id=tg_id)
+        await callback.message.answer(  # type: ignore[union-attr]
+            text=parse_question(current_question=current_question),
+        )
 
 
 @router.message(F.text, LangTestFSM.lang_testing)

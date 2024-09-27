@@ -1,1 +1,1 @@
-"""Bot keyboards"""
+"""Bot keyboard markups"""
