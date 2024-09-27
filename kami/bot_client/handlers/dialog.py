@@ -12,7 +12,7 @@ from aiogram.utils.i18n import gettext as _
 
 from kami.backend.domain.dialog.exceptions import DialogueNotFoundError
 from kami.backend.presentation.client import BackendClient
-from kami.bot_client.common.utils import get_voice_reply, wait_for_answer
+from kami.bot_client.common.utils import auth_user, get_voice_reply, wait_for_answer
 from kami.bot_client.keyboards.dialogue import (
     ContinueDialogueCD,
     MyTopicCallback,
@@ -41,22 +41,30 @@ async def handle_dialog_command(
 
     await state.clear()  # type: ignore[union-attr]
 
-    no_dialog = False
-    try:
-        await backend_client.get_dialog(
-            tg_id=str(message.from_user.id),  # type: ignore[union-attr]
-        )
-    except DialogueNotFoundError:
-        no_dialog = True
-
-    await message.answer(
-        text=_(
-            "Let's practice English!\n"
-            "Select any topic to begin the dialog and we'll "
-            "be able to talk by voice messages on this topic:",
-        ),
-        reply_markup=build_dialog_markup(no_dialog=no_dialog),
+    user = await auth_user(
+        message=message,
+        backend_client=backend_client,
+        tg_id=str(message.from_user.id),
+        state=state,
     )
+
+    if user:
+        no_dialog = False
+        try:
+            await backend_client.get_dialog(
+                tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+            )
+        except DialogueNotFoundError:
+            no_dialog = True
+
+        await message.answer(
+            text=_(
+                "Let's practice English!\n"
+                "Select any topic to begin the dialog and we'll "
+                "be able to talk by voice messages on this topic:",
+            ),
+            reply_markup=build_dialog_markup(no_dialog=no_dialog),
+        )
 
 
 @router.callback_query(MyTopicCallback.filter())

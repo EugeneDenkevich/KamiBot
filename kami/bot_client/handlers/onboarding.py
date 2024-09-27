@@ -4,10 +4,12 @@ from typing import Union
 from aiogram import F, Router
 from aiogram.enums.parse_mode import ParseMode
 from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from kami.backend.presentation.client import BackendClient
+from kami.bot_client.common.utils import auth_user
 from kami.bot_client.keyboards.main_menu import build_main_menu_markup
 from kami.bot_client.keyboards.onboarding import (
     OnboardingCD,
@@ -23,6 +25,7 @@ router = Router()
 async def handle_start_onboarding(
     mescall: Union[Message, CallbackQuery],
     backend_client: BackendClient,
+    state: FSMContext,
 ) -> None:
     """
     Handler for first step of onboarding.
@@ -32,25 +35,33 @@ async def handle_start_onboarding(
 
     tg_id = str(mescall.from_user.id)
 
-    if isinstance(mescall, CallbackQuery):
-        await mescall.answer()
-
-        message = mescall.message
-    else:
-        message = mescall
-
-    await backend_client.update_user(
-        tg_id=tg_id,  # type: ignore[union-attr]
-        onboarded=True,
+    user = await auth_user(
+        message=mescall if isinstance(mescall, Message) else mescall.message,
+        backend_client=backend_client,
+        tg_id=tg_id,
+        state=state,
     )
 
-    await message.answer(  # type: ignore[union-attr]
-        text=_(
-            "Now I'll tell you how to use all my features, "
-            "and then we can test your English level.",
-        ),
-        reply_markup=build_onboarding_step_markup(text="Cool idea 😊", step=2),
-    )
+    if user:
+        if isinstance(mescall, CallbackQuery):
+            await mescall.answer()
+
+            message = mescall.message
+        else:
+            message = mescall
+
+        await backend_client.update_user(
+            tg_id=tg_id,  # type: ignore[union-attr]
+            onboarded=True,
+        )
+
+        await message.answer(  # type: ignore[union-attr]
+            text=_(
+                "Now I'll tell you how to use all my features, "
+                "and then we can test your English level.",
+            ),
+            reply_markup=build_onboarding_step_markup(text="Cool idea 😊", step=2),
+        )
 
 
 @router.callback_query(OnboardingCD.filter(F.step == 2))

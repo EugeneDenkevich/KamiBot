@@ -10,7 +10,7 @@ from aiogram.utils.i18n import gettext as _
 from kami.backend.domain.ai.exceptions import AINotFoundError
 from kami.backend.domain.lang_test.exceptions import NoQuestionsError
 from kami.backend.presentation.client import BackendClient
-from kami.bot_client.common.utils import get_voice_reply, parse_question
+from kami.bot_client.common.utils import auth_user, get_voice_reply, parse_question
 from kami.bot_client.keyboards.lang_test import (
     StartLangTestCallback,
     build_lang_test_markup,
@@ -24,6 +24,7 @@ router = Router()
 @router.message(Command(commands=["lang_test"]))
 async def handle_lang_test(
     message: Message,
+    backend_client: BackendClient,
     state: FSMContext,
 ) -> None:
     """
@@ -32,12 +33,20 @@ async def handle_lang_test(
     :param message: Message from telegram.
     """
 
-    await state.clear()
-
-    await message.answer(
-        text=_("Start test?"),
-        reply_markup=build_lang_test_markup(),
+    user = await auth_user(
+        message=message,
+        backend_client=backend_client,
+        tg_id=str(message.from_user.id),
+        state=state,
     )
+
+    if user:
+        await state.clear()
+
+        await message.answer(
+            text=_("Start test?"),
+            reply_markup=build_lang_test_markup(),
+        )
 
 
 @router.callback_query(StartLangTestCallback.filter())

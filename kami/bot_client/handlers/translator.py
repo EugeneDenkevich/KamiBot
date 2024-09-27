@@ -6,6 +6,9 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
 from aiogram.utils.i18n import gettext as _
 
+from kami.backend.presentation.client import BackendClient
+from kami.bot_client.common.utils import auth_user
+
 router = Router()
 
 
@@ -13,6 +16,7 @@ router = Router()
 @router.message(F.text == "Translator")
 async def handle_dialog_command(
     message: Message,
+    backend_client: BackendClient,
     state: Optional[FSMContext],
 ) -> None:
     """
@@ -23,8 +27,16 @@ async def handle_dialog_command(
 
     await state.clear()  # type: ignore[union-attr]
 
-    await message.answer(
-        text=_(
-            "Edit your text and I helped translate it!\n",
-        ),
+    user = await auth_user(
+        message=message,
+        backend_client=backend_client,
+        tg_id=str(message.from_user.id),
+        state=state,
     )
+
+    if user:
+        await message.answer(
+            text=_(
+                "Edit your text and I helped translate it!\n",
+            ),
+        )
