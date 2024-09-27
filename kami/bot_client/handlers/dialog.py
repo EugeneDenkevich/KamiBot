@@ -29,8 +29,8 @@ router = Router()
 @router.message(F.text == "Dialogues")
 async def handle_dialog_command(
     message: Message,
-    state: Optional[FSMContext],
     backend_client: BackendClient,
+    state: Optional[FSMContext],
 ) -> None:
     """
     Handler for /dialogue
@@ -69,7 +69,8 @@ async def handle_dialog_command(
 
 @router.callback_query(MyTopicCallback.filter())
 async def handle_my_topic(
-    callback: CallbackQuery,
+    callback_query: CallbackQuery,
+    backend_client: BackendClient,
     state: Optional[FSMContext],
 ) -> None:
     """
@@ -79,18 +80,26 @@ async def handle_my_topic(
     :param state: FSM state.
     """
 
-    await callback.answer()
+    await callback_query.answer()
 
-    await state.set_state(DialogFSM.my_topic)  # type: ignore[union-attr]
-
-    await callback.message.answer(   # type: ignore[union-attr]
-        text="Input your topic, please",
+    user = await auth_user(
+            message=callback_query.message,
+            backend_client=backend_client,
+            tg_id=str(callback_query.from_user.id),
+            state=state,
     )
+
+    if user:
+        await state.set_state(DialogFSM.my_topic)  # type: ignore[union-attr]
+
+        await callback_query.message.answer(   # type: ignore[union-attr]
+            text="Input your topic, please",
+        )
 
 
 @router.callback_query(TopicSelectedCD.filter())
 async def handle_topic_selected(
-    callback: CallbackQuery,
+    callback_query: CallbackQuery,
     callback_data: TopicSelectedCD,
     state: Optional[FSMContext],
     backend_client: BackendClient,
@@ -103,39 +112,47 @@ async def handle_topic_selected(
     :param state: FSM state.
     """
 
-    await callback.answer()
+    await callback_query.answer()
 
-    await callback.message.answer(  # type: ignore[union-attr]
-        text=_("One moment..."),
-        reply_markup=ReplyKeyboardRemove(),
+    user = await auth_user(
+            message=callback_query.message,
+            backend_client=backend_client,
+            tg_id=str(callback_query.from_user.id),
+            state=state,
     )
 
-    await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
-
-    await callback.bot.send_chat_action(  # type: ignore[union-attr]
-        chat_id=callback.message.chat.id,  # type: ignore[union-attr]
-        action=ChatAction.RECORD_VOICE,
-    )
-
-    try:
-        voice_answer = await backend_client.start_dialog(
-            tg_id=str(callback.from_user.id),
-            topic=callback_data.topic,
-        )
-    except:
-        await state.clear()  # type: ignore[union-attr]
-        raise
-    else:
-        await callback.message.answer_audio(   # type: ignore[union-attr]
-            audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
+    if user:
+        await callback_query.message.answer(  # type: ignore[union-attr]
+            text=_("One moment..."),
+            reply_markup=ReplyKeyboardRemove(),
         )
 
-        await wait_for_answer(
-            awaiting_time=settings.awaiting_time,
-            message=callback.message,  # type: ignore[arg-type]
-            state=state,  # type: ignore[arg-type]
-            text=_("Awaiting time is up. Continue dialog here /dialog."),
+        await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
+
+        await callback_query.bot.send_chat_action(  # type: ignore[union-attr]
+            chat_id=callback_query.message.chat.id,  # type: ignore[union-attr]
+            action=ChatAction.RECORD_VOICE,
         )
+
+        try:
+            voice_answer = await backend_client.start_dialog(
+                tg_id=str(callback_query.from_user.id),
+                topic=callback_data.topic,
+            )
+        except:
+            await state.clear()  # type: ignore[union-attr]
+            raise
+        else:
+            await callback_query.message.answer_audio(   # type: ignore[union-attr]
+                audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
+            )
+
+            await wait_for_answer(
+                awaiting_time=settings.awaiting_time,
+                message=callback_query.message,  # type: ignore[arg-type]
+                state=state,  # type: ignore[arg-type]
+                text=_("Awaiting time is up. Continue dialog here /dialog."),
+            )
 
 
 @router.message(DialogFSM.my_topic)
@@ -154,37 +171,45 @@ async def handle_my_topic_selected(
     :param settings: Project settings.
     """
 
-    await message.answer(
-        text=_("One moment..."),
-        reply_markup=ReplyKeyboardRemove(),
-    )
-
-    await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
-
-    await message.bot.send_chat_action(  # type: ignore[union-attr]
-        chat_id=message.chat.id,
-        action=ChatAction.RECORD_VOICE,
-    )
-
-    try:
-        voice_answer = await backend_client.start_dialog(
-            tg_id=str(message.from_user.id),  # type: ignore[union-attr]
-            topic=message.text,  # type: ignore[arg-type]
-        )
-    except:
-        await state.clear()  # type: ignore[union-attr]
-        raise
-    else:
-        await message.answer_audio(   # type: ignore[union-attr]
-            audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
-        )
-
-        await wait_for_answer(
-            awaiting_time=settings.awaiting_time,
+    user = await auth_user(
             message=message,
-            state=state,  # type: ignore[arg-type]
-            text=_("Awaiting time is up. Continue dialog here /dialog."),
+            backend_client=backend_client,
+            tg_id=str(message.from_user.id),
+            state=state,
+    )
+
+    if user:
+        await message.answer(
+            text=_("One moment..."),
+            reply_markup=ReplyKeyboardRemove(),
         )
+
+        await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
+
+        await message.bot.send_chat_action(  # type: ignore[union-attr]
+            chat_id=message.chat.id,
+            action=ChatAction.RECORD_VOICE,
+        )
+
+        try:
+            voice_answer = await backend_client.start_dialog(
+                tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+                topic=message.text,  # type: ignore[arg-type]
+            )
+        except:
+            await state.clear()  # type: ignore[union-attr]
+            raise
+        else:
+            await message.answer_audio(   # type: ignore[union-attr]
+                audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
+            )
+
+            await wait_for_answer(
+                awaiting_time=settings.awaiting_time,
+                message=message,
+                state=state,  # type: ignore[arg-type]
+                text=_("Awaiting time is up. Continue dialog here /dialog."),
+            )
 
 
 @router.message(F.voice and DialogFSM.conversation)
@@ -203,40 +228,48 @@ async def handle_dialog_voice(
     :param settings: Project settings.
     """
 
-    voice_reply = await get_voice_reply(message)
-
-    await message.bot.send_chat_action(  # type: ignore[union-attr]
-        chat_id=message.chat.id,
-        action=ChatAction.RECORD_VOICE,
+    user = await auth_user(
+            message=message,
+            backend_client=backend_client,
+            tg_id=str(message.from_user.id),
+            state=state,
     )
 
-    try:
-        voice, mistakes = await backend_client.continue_dialog(
-            tg_id=str(message.from_user.id),  # type: ignore[union-attr]
-            voice=voice_reply,
-        )
-    except:
-        await state.clear()  # type: ignore[union-attr]
-        raise
-    else:
-        if mistakes is not None:
-            await message.answer(text=mistakes, parse_mode=ParseMode.HTML)
+    if user:
+        voice_reply = await get_voice_reply(message)
 
-        await message.answer_audio(
-            audio=BufferedInputFile(file=voice, filename="voice1.ogg"),
+        await message.bot.send_chat_action(  # type: ignore[union-attr]
+            chat_id=message.chat.id,
+            action=ChatAction.RECORD_VOICE,
         )
 
-        await wait_for_answer(
-            awaiting_time=settings.awaiting_time,
-            message=message,
-            state=state,   # type: ignore[arg-type]
-            text=_("Awaiting time is up. Continue dialog here /dialog."),
-        )
+        try:
+            voice, mistakes = await backend_client.continue_dialog(
+                tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+                voice=voice_reply,
+            )
+        except:
+            await state.clear()  # type: ignore[union-attr]
+            raise
+        else:
+            if mistakes is not None:
+                await message.answer(text=mistakes, parse_mode=ParseMode.HTML)
+
+            await message.answer_audio(
+                audio=BufferedInputFile(file=voice, filename="voice1.ogg"),
+            )
+
+            await wait_for_answer(
+                awaiting_time=settings.awaiting_time,
+                message=message,
+                state=state,   # type: ignore[arg-type]
+                text=_("Awaiting time is up. Continue dialog here /dialog."),
+            )
 
 
 @router.callback_query(ContinueDialogueCD.filter())
 async def handle_continue_dialog(
-    callback: CallbackQuery,
+    callback_query: CallbackQuery,
     backend_client: BackendClient,
     state: Optional[FSMContext],
 ) -> None:
@@ -248,34 +281,42 @@ async def handle_continue_dialog(
     :param state: FSM state.
     """
 
-    await callback.answer()
+    await callback_query.answer()
 
-    await callback.message.answer(  # type: ignore[union-attr]
-        text=_("One moment..."),
-        reply_markup=ReplyKeyboardRemove(),
+    user = await auth_user(
+            message=callback_query.message,
+            backend_client=backend_client,
+            tg_id=str(callback_query.from_user.id),
+            state=state,
     )
 
-    tg_id = str(callback.from_user.id)
-
-    try:
-        await backend_client.get_dialog(tg_id=tg_id)
-    except DialogueNotFoundError:
-        await callback.message.answer(   # type: ignore[union-attr]
-            _(
-                "You dont have a created dialog yet! "
-                "Choose a topic for the dialogue and start your first dialogue.",
-            ),
-        )
-    else:
-        await callback.message.bot.send_chat_action(  # type: ignore[union-attr]
-            chat_id=callback.message.chat.id,   # type: ignore[union-attr]
-            action=ChatAction.RECORD_VOICE,
+    if user:
+        await callback_query.message.answer(  # type: ignore[union-attr]
+            text=_("One moment..."),
+            reply_markup=ReplyKeyboardRemove(),
         )
 
-        voice_answer = await backend_client.return_to_dialog(tg_id=tg_id)
+        tg_id = str(callback_query.from_user.id)
 
-        await callback.message.answer_audio(   # type: ignore[union-attr]
-            audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
-        )
+        try:
+            await backend_client.get_dialog(tg_id=tg_id)
+        except DialogueNotFoundError:
+            await callback_query.message.answer(   # type: ignore[union-attr]
+                _(
+                    "You dont have a created dialog yet! "
+                    "Choose a topic for the dialogue and start your first dialogue.",
+                ),
+            )
+        else:
+            await callback_query.message.bot.send_chat_action(  # type: ignore[union-attr]
+                chat_id=callback_query.message.chat.id,   # type: ignore[union-attr]
+                action=ChatAction.RECORD_VOICE,
+            )
 
-        await state.set_state(DialogFSM.conversation)   # type: ignore[union-attr]
+            voice_answer = await backend_client.return_to_dialog(tg_id=tg_id)
+
+            await callback_query.message.answer_audio(   # type: ignore[union-attr]
+                audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
+            )
+
+            await state.set_state(DialogFSM.conversation)   # type: ignore[union-attr]

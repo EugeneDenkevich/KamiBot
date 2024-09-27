@@ -51,7 +51,7 @@ async def handle_lang_test(
 
 @router.callback_query(StartLangTestCallback.filter())
 async def handle_testing(
-    callback: Union[Message, CallbackQuery],
+    callback_query: Union[Message, CallbackQuery],
     backend_client: BackendClient,
     state: FSMContext,
 ) -> None:
@@ -63,38 +63,47 @@ async def handle_testing(
     :param state: FSM state.
     """
 
-    await callback.message.answer(  # type: ignore[union-attr]
-        text=_("One moment..."),
-        reply_markup=ReplyKeyboardRemove(),
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
+    user = await auth_user(
+        message=callback_query.message,
+        backend_client=backend_client,
+        tg_id=tg_id,
+        state=state,
     )
 
-    tg_id = str(callback.from_user.id)  # type: ignore[union-attr]
-
-    await state.set_state(LangTestFSM.lang_testing)
-    await callback.answer()  # type: ignore[call-arg]
-
-    await callback.message.answer(  # type: ignore[union-attr]
-        text=_("Test is creating..."),
-    )
-
-    try:
-        await backend_client.start_test(tg_id=tg_id)
-    except AINotFoundError:
-        await state.clear()
-        await callback.message.answer(  # type: ignore[union-attr]
-            text=_(
-                "Error while test creating: NoAiError",
-            ),
-        )
-    else:
-        await callback.message.answer(  # type: ignore[union-attr]
-            text=_("Test was created."),
+    if user:
+        await callback_query.message.answer(  # type: ignore[union-attr]
+            text=_("One moment..."),
+            reply_markup=ReplyKeyboardRemove(),
         )
 
-        current_question = await backend_client.ask_one(tg_id=tg_id)
-        await callback.message.answer(  # type: ignore[union-attr]
-            text=parse_question(current_question=current_question),
+
+        await state.set_state(LangTestFSM.lang_testing)
+        await callback_query.answer()  # type: ignore[call-arg]
+
+        await callback_query.message.answer(  # type: ignore[union-attr]
+            text=_("Test is creating..."),
         )
+
+        try:
+            await backend_client.start_test(tg_id=tg_id)
+        except AINotFoundError:
+            await state.clear()
+            await callback_query.message.answer(  # type: ignore[union-attr]
+                text=_(
+                    "Error while test creating: NoAiError",
+                ),
+            )
+        else:
+            await callback_query.message.answer(  # type: ignore[union-attr]
+                text=_("Test was created."),
+            )
+
+            current_question = await backend_client.ask_one(tg_id=tg_id)
+            await callback_query.message.answer(  # type: ignore[union-attr]
+                text=parse_question(current_question=current_question),
+            )
 
 
 @router.message(F.text, LangTestFSM.lang_testing)
@@ -113,27 +122,35 @@ async def handle_lang_test_text(
 
     tg_id = str(message.from_user.id)  # type: ignore[union-attr]
 
-    await state.set_state(LangTestFSM.lang_testing)
-
-    try:
-        await backend_client.save_reply(
-            tg_id=tg_id,
-            reply=message.text,  # type: ignore[arg-type]
-        )
-
-        current_question = await backend_client.ask_one(tg_id=tg_id)
-    except NoQuestionsError:
-        await state.clear()
-
-        rate = await backend_client.rate_lang_level(tg_id=tg_id)
-        await message.answer(  # type: ignore[union-attr]
-            text=_("Yor result is: {rate}.").format(rate=rate),
-        )
-
-        return
-    await message.answer(  # type: ignore[union-attr]
-        text=parse_question(current_question),
+    user = await auth_user(
+        message=message,
+        backend_client=backend_client,
+        tg_id=tg_id,
+        state=state,
     )
+
+    if user:
+        await state.set_state(LangTestFSM.lang_testing)
+
+        try:
+            await backend_client.save_reply(
+                tg_id=tg_id,
+                reply=message.text,  # type: ignore[arg-type]
+            )
+
+            current_question = await backend_client.ask_one(tg_id=tg_id)
+        except NoQuestionsError:
+            await state.clear()
+
+            rate = await backend_client.rate_lang_level(tg_id=tg_id)
+            await message.answer(  # type: ignore[union-attr]
+                text=_("Yor result is: {rate}.").format(rate=rate),
+            )
+
+            return
+        await message.answer(  # type: ignore[union-attr]
+            text=parse_question(current_question),
+        )
 
 
 @router.message(F.voice, LangTestFSM.lang_testing)
@@ -152,23 +169,31 @@ async def handle_lang_test_voice(
 
     tg_id = str(message.from_user.id)  # type: ignore[union-attr]
 
-    await state.set_state(LangTestFSM.lang_testing)
-
-    voice_reply = await get_voice_reply(message)
-
-    try:
-        await backend_client.save_reply(tg_id=tg_id, reply=voice_reply)
-
-        current_question = await backend_client.ask_one(tg_id=tg_id)
-    except NoQuestionsError:
-        await state.clear()
-
-        rate = await backend_client.rate_lang_level(tg_id=tg_id)
-        await message.answer(  # type: ignore[union-attr]
-            text=_("Yor result is: {rate}.").format(rate=rate),
-        )
-
-        return
-    await message.answer(  # type: ignore[union-attr]
-        text=parse_question(current_question),
+    user = await auth_user(
+            message=message,
+            backend_client=backend_client,
+            tg_id=tg_id,
+            state=state,
     )
+
+    if user:
+        await state.set_state(LangTestFSM.lang_testing)
+
+        voice_reply = await get_voice_reply(message)
+
+        try:
+            await backend_client.save_reply(tg_id=tg_id, reply=voice_reply)
+
+            current_question = await backend_client.ask_one(tg_id=tg_id)
+        except NoQuestionsError:
+            await state.clear()
+
+            rate = await backend_client.rate_lang_level(tg_id=tg_id)
+            await message.answer(  # type: ignore[union-attr]
+                text=_("Yor result is: {rate}.").format(rate=rate),
+            )
+
+            return
+        await message.answer(  # type: ignore[union-attr]
+            text=parse_question(current_question),
+        )
