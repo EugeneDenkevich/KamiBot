@@ -7,9 +7,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.types.input_file import BufferedInputFile
-from aiogram.types.reply_keyboard_remove import ReplyKeyboardRemove
 from aiogram.utils.i18n import gettext as _
-from aiogram.utils.i18n import lazy_gettext as __
 
 from kami.backend.domain.dialog.exceptions import DialogueNotFoundError
 from kami.backend.presentation.client import BackendClient
@@ -28,7 +26,7 @@ router = Router()
 
 
 @router.message(Command(commands=["dialog"]))
-@router.message(F.text == __("Dialogues"))
+@router.message(F.text == "Dialogues")
 @router.callback_query(DialogAfterTestCD.filter())
 async def handle_dialog_command(
     mescall: Union[Message, CallbackQuery],
@@ -140,7 +138,6 @@ async def handle_topic_selected(
     if user:
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_("One moment..."),
-            reply_markup=ReplyKeyboardRemove(),
         )
 
         await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
@@ -199,7 +196,6 @@ async def handle_my_topic_selected(
     if user:
         await message.answer(
             text=_("One moment..."),
-            reply_markup=ReplyKeyboardRemove(),
         )
 
         await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
@@ -230,7 +226,7 @@ async def handle_my_topic_selected(
             )
 
 
-@router.message(F.voice and DialogFSM.conversation)
+@router.message(F.voice, DialogFSM.conversation)
 async def handle_dialog_voice(
     message: Message,
     backend_client: BackendClient,
@@ -311,7 +307,6 @@ async def handle_continue_dialog(
     if user:
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_("One moment..."),
-            reply_markup=ReplyKeyboardRemove(),
         )
 
         tg_id = str(callback_query.from_user.id)

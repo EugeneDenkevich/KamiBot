@@ -3,9 +3,7 @@ from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
-from aiogram.types.reply_keyboard_remove import ReplyKeyboardRemove
 from aiogram.utils.i18n import gettext as _
-from aiogram.utils.i18n import lazy_gettext as __
 
 from kami.backend.domain.ai.exceptions import AINotFoundError
 from kami.backend.domain.lang_test.exceptions import NoQuestionsError
@@ -16,13 +14,16 @@ from kami.bot_client.keyboards.lang_test import (
     StartLangTestCallback,
     build_lang_test_markup,
 )
-from kami.bot_client.keyboards.main_menu import build_main_menu_markup
+from kami.bot_client.keyboards.main_menu import (
+    build_main_menu_markup,
+    get_main_reply_buttons,
+)
 from kami.bot_client.states.lang_test import LangTestFSM
 
 router = Router()
 
 
-@router.message(F.text == __("Language Level"))
+@router.message(F.text == "Language Level")
 @router.message(Command(commands=["lang_test"]))
 async def handle_lang_test(
     message: Message,
@@ -81,7 +82,6 @@ async def handle_testing(
     if user:
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_("One moment..."),
-            reply_markup=ReplyKeyboardRemove(),
         )
 
         await state.set_state(LangTestFSM.lang_testing)
@@ -110,7 +110,11 @@ async def handle_testing(
             )
 
 
-@router.message(F.text, LangTestFSM.lang_testing)
+@router.message(
+    ~F.text.startswith("/"),
+    F.text.not_in(get_main_reply_buttons()),
+    LangTestFSM.lang_testing,
+)
 async def handle_lang_test_text(
     message: Message,
     backend_client: BackendClient,

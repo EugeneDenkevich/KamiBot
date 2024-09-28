@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-29 01:34+0300\n"
+"POT-Creation-Date: 2024-09-29 02:14+0300\n"
 "PO-Revision-Date: 2024-09-16 18:54+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -42,51 +42,51 @@ msgid ""
 "messages on this topic:"
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:106
+#: kami/bot_client/handlers/dialog.py:108
 msgid "Input your topic, please"
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:139
-#: kami/bot_client/handlers/dialog.py:198
+#: kami/bot_client/handlers/dialog.py:141
+#: kami/bot_client/handlers/dialog.py:199
 #: kami/bot_client/handlers/dialog.py:310
-#: kami/bot_client/handlers/lang_test.py:83
+#: kami/bot_client/handlers/lang_test.py:82
 msgid "One moment..."
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:169
+#: kami/bot_client/handlers/dialog.py:170
 #: kami/bot_client/handlers/dialog.py:226
 #: kami/bot_client/handlers/dialog.py:281
 msgid "Awaiting time is up. Continue dialog here /dialog."
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:320
+#: kami/bot_client/handlers/dialog.py:319
 msgid ""
 "You dont have a created dialog yet! Choose a topic for the dialogue and "
 "start your first dialogue."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:51
+#: kami/bot_client/handlers/lang_test.py:50
 msgid "Start test?"
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:90
+#: kami/bot_client/handlers/lang_test.py:88
 msgid "Test is creating..."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:98
+#: kami/bot_client/handlers/lang_test.py:96
 msgid "Error while test creating: NoAiError"
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:104
+#: kami/bot_client/handlers/lang_test.py:102
 msgid "Test was created."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:152
-#: kami/bot_client/handlers/lang_test.py:205
+#: kami/bot_client/handlers/lang_test.py:154
+#: kami/bot_client/handlers/lang_test.py:207
 msgid "Yor result is: {rate}."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:156
+#: kami/bot_client/handlers/lang_test.py:158
 msgid "Now i recommend you to practise your speaking skills."
 msgstr ""
 
@@ -209,18 +209,6 @@ msgstr ""
 
 #: kami/bot_client/keyboards/lang_test.py:24
 msgid "Start language test"
-msgstr ""
-
-#: kami/bot_client/keyboards/main_menu.py:12
-msgid "Dialogues"
-msgstr ""
-
-#: kami/bot_client/keyboards/main_menu.py:13
-msgid "Language Level"
-msgstr ""
-
-#: kami/bot_client/keyboards/main_menu.py:14
-msgid "Translator"
 msgstr ""
 
 #: kami/bot_client/keyboards/onboarding.py:48

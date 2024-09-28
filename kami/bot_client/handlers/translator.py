@@ -4,7 +4,6 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
-from aiogram.utils.i18n import lazy_gettext as __
 
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user, get_voice_reply
@@ -19,7 +18,7 @@ router = Router()
 
 
 @router.message(Command(commands=["translator"]))
-@router.message(F.text == __("Translator"))
+@router.message(F.text == "Translator")
 async def handle_translator_command(
     message: Message,
     backend_client: BackendClient,
