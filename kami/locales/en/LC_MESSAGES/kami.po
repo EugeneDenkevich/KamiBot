@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-25 01:31+0300\n"
+"POT-Creation-Date: 2024-09-26 21:41+0300\n"
 "PO-Revision-Date: 2024-09-16 18:54+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,68 +18,48 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: kami/bot_client/handlers/dialogue.py:36
+#: kami/bot_client/handlers/dialogue.py:37
 msgid ""
 "Let's practice English!\n"
 "Select any topic to begin the dialog and we'll be able to talk by voice "
 "messages on this topic:"
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:36
+#: kami/bot_client/handlers/lang_test.py:35
 msgid "Start test?"
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:61
+#: kami/bot_client/handlers/lang_test.py:60
 msgid "Test is creating..."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:69
-msgid "Error while test creating try again: {command}."
-msgstr ""
-
-#: kami/bot_client/handlers/lang_test.py:75
+#: kami/bot_client/handlers/lang_test.py:70
 msgid "Test was created."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:114
-#: kami/bot_client/handlers/lang_test.py:152
+#: kami/bot_client/handlers/lang_test.py:109
+#: kami/bot_client/handlers/lang_test.py:147
 msgid "Yor result is: {rate}."
 msgstr ""
 
-#: kami/bot_client/handlers/start.py:23
+#: kami/bot_client/handlers/start.py:26
 msgid "Hello World!"
 msgstr ""
 
-#: kami/bot_client/handlers/start.py:27
+#: kami/bot_client/handlers/start.py:30
 msgid "And hello again!"
 msgstr ""
 
-#: kami/bot_client/handlers/start.py:31
+#: kami/bot_client/handlers/start.py:34
 msgid "Hello one more time!"
 msgstr ""
 
-#: kami/bot_client/handlers/start.py:51
-msgid "Dialog was created!"
-msgstr ""
-
-#: kami/bot_client/handlers/start.py:55
-msgid "Welcome to {bot_name}"
-msgstr ""
-
-#: kami/bot_client/keyboards/dialogue.py:77
-msgid "Acquaintance"
-msgstr ""
-
-#: kami/bot_client/keyboards/dialogue.py:82
-msgid "Ordering food at a restaurant"
-msgstr ""
-
-#: kami/bot_client/keyboards/dialogue.py:87
-msgid "Job interview"
-msgstr ""
-
-#: kami/bot_client/keyboards/dialogue.py:92
-msgid "My topic"
+#: kami/bot_client/keyboards/dialogue.py:32
+#: kami/bot_client/keyboards/dialogue.py:38
+#: kami/bot_client/keyboards/dialogue.py:44
+#: kami/bot_client/keyboards/dialogue.py:50
+#: kami/bot_client/keyboards/dialogue.py:56
+msgid "{text}"
 msgstr ""
 
 #: kami/bot_client/keyboards/lang_test.py:24
@@ -90,3 +70,29 @@ msgstr ""
 msgid "Find more!"
 msgstr ""
 
+#~ msgid "Error while test creating try again: {command}."
+#~ msgstr ""
+
+#~ msgid "Dialog was created!"
+#~ msgstr ""
+
+#~ msgid "Welcome to {bot_name}"
+#~ msgstr ""
+
+#~ msgid "Please write or say the text you want to translate:"
+#~ msgstr ""
+
+#~ msgid "Acquaintance"
+#~ msgstr ""
+
+#~ msgid "Ordering food at a restaurant"
+#~ msgstr ""
+
+#~ msgid "Job interview"
+#~ msgstr ""
+
+#~ msgid "My topic"
+#~ msgstr ""
+
+#~ msgid "Start translation"
+#~ msgstr ""

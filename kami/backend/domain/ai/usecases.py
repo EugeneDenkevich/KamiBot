@@ -1,8 +1,7 @@
-
 import json
 from typing import Optional, Tuple
 
-from kami.backend.domain.ai.enums import DialoguePromtEnum
+from kami.backend.domain.ai.enums import DialoguePromtEnum, TranslatorPromtEnum
 from kami.backend.domain.dialog.services import DialogService
 from kami.backend.gateways.chat_gpt.gateway import GPTGateway
 from kami.backend.gateways.elevenlabs.gateway import ElevenLabsGateway
@@ -219,4 +218,75 @@ class VoiceToTextUseCase:
         return await self.whisper_gateway.audio_to_text(
             api_key=ai.gpt_api_key,
             voice=voice,
+        )
+
+
+class TranslateTextToTextUseCase:
+    """Use case to receive translated text from ChatGPT"""
+
+    def __init__(
+        self,
+        gpt_gateway: GPTGateway,
+        ai_repo: AIRepo,
+    ) -> None:
+
+        self.gpt_gateway = gpt_gateway
+        self.ai_repo = ai_repo
+
+    async def __call__(self, direction: str, text: str) -> str:
+        """
+        Use case to receive translated text from ChatGPT
+
+        :param voice: Prompt for ChatGPT.
+        :return: Answer in text form..
+        """
+
+        ai = await self.ai_repo.get_ai()
+
+        return await self.gpt_gateway.get_answer(
+            api_key=ai.gpt_api_key,
+            prompt=(
+                get_prompt(TranslatorPromtEnum.START_TRANSLATOR)
+                .replace("<<text>>", text)
+                .replace("<<direction>>", direction)
+            ),
+        )
+
+
+class TranslateVoiceToTextUseCase:
+    """Use case to receive translated text from ChatGPT"""
+
+    def __init__(
+        self,
+        gpt_gateway: GPTGateway,
+        whisper_gateway: WhisperGateway,
+        ai_repo: AIRepo,
+    ) -> None:
+
+        self.gpt_gateway = gpt_gateway
+        self.whisper_gateway = whisper_gateway
+        self.ai_repo = ai_repo
+
+    async def __call__(self, direction: str, voice: bytes) -> str:
+        """
+        Use case to receive translated text from ChatGPT
+
+        :param voice: Prompt for ChatGPT.
+        :return: Answer in text form..
+        """
+
+        ai = await self.ai_repo.get_ai()
+
+        gpt_request = await self.whisper_gateway.audio_to_text(
+            api_key=ai.gpt_api_key,
+            voice=voice,
+        )
+
+        return await self.gpt_gateway.get_answer(
+            api_key=ai.gpt_api_key,
+            prompt=(
+                get_prompt(TranslatorPromtEnum.START_TRANSLATOR)
+                .replace("<<text>>", gpt_request)
+                .replace("<<direction>>", direction)
+            ),
         )

@@ -8,6 +8,8 @@ from kami.backend.domain.ai.usecases import (
     ContinueDialogUseCase,
     ReturnToDialogUseCase,
     StartDialogUseCase,
+    TranslateTextToTextUseCase,
+    TranslateVoiceToTextUseCase,
     VoiceToTextUseCase,
 )
 from kami.backend.domain.dialog.services import DialogService
@@ -175,4 +177,23 @@ class UseCaseFactory:
             yield UpdateUserUseCase(
                 user_service=UserService(),
                 user_repo=UserRepo(session=session),
+            )
+
+    @asynccontextmanager
+    async def translate_text_to_text(self) -> AsyncIterator[TranslateTextToTextUseCase]:
+        async with self.session_factory() as session:
+            yield TranslateTextToTextUseCase(
+                gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
+                ai_repo=AIRepo(session=session),
+            )
+
+    @asynccontextmanager
+    async def translate_voice_to_text(
+        self,
+    ) -> AsyncIterator[TranslateVoiceToTextUseCase]:
+        async with self.session_factory() as session:
+            yield TranslateVoiceToTextUseCase(
+                gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
+                whisper_gateway=WhisperGateway(whisper_client=self.whisper_client),
+                ai_repo=AIRepo(session=session),
             )

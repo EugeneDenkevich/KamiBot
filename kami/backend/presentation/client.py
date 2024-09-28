@@ -121,3 +121,19 @@ class BackendClient():
     ) -> bytes:
         async with self.ucf.return_to_dialog() as return_to_dialog:
             return await return_to_dialog(tg_id=tg_id)
+
+    async def translate_text_to_text(
+        self,
+        direction: str,
+        text: str,
+    ) -> str:
+        async with self.ucf.translate_text_to_text() as translate_text_to_text:
+            return await translate_text_to_text(direction=direction, text=text)
+
+    async def translate_voice_to_text(
+        self,
+        direction: str,
+        voice: bytes,
+    ) -> str:
+        async with self.ucf.translate_voice_to_text() as translate_voice_to_text:
+            return await translate_voice_to_text(direction=direction, voice=voice)

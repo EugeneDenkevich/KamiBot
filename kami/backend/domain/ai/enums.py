@@ -7,3 +7,9 @@ class DialoguePromtEnum(StrEnum):
     START_DIALOG = "start_dialog"
     CONTINUE_DIALOG = "continue_dialog"
     EXCEPTIONS_DIALOG = "exceptions_dialog"
+
+
+class TranslatorPromtEnum(StrEnum):
+    """Translator prompts"""
+
+    START_TRANSLATOR = "translator"
