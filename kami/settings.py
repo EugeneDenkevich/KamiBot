@@ -16,6 +16,7 @@ class Settings(BaseSettings):
 
     client_language: str = "en"
     admin_language: str = "en"
+    translation_language: str = "Italian"
 
     admin_id: str = ""
 

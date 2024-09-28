@@ -9,4 +9,3 @@ class DialogFSM(StatesGroup):
 
     my_topic = State()
     """State when user select individual topic"""
-
