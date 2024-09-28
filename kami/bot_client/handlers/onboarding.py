@@ -30,28 +30,30 @@ async def handle_start_onboarding(
     """
     Handler for first step of onboarding.
 
-    :param message: Message from telegram.
+    :param mescall: Message or callback.
+    :param backend_client: Backend client.
+    :param state: FSM state.
     """
 
-    tg_id = str(mescall.from_user.id)
+    tg_id = str(mescall.from_user.id)  # type: ignore[union-attr]
+
+    if isinstance(mescall, CallbackQuery):
+        await mescall.answer()
+
+        message = mescall.message
+    else:
+        message = mescall
 
     user = await auth_user(
-        message=mescall if isinstance(mescall, Message) else mescall.message,
+        message=message,
         backend_client=backend_client,
         tg_id=tg_id,
         state=state,
     )
 
     if user:
-        if isinstance(mescall, CallbackQuery):
-            await mescall.answer()
-
-            message = mescall.message
-        else:
-            message = mescall
-
         await backend_client.update_user(
-            tg_id=tg_id,  # type: ignore[union-attr]
+            tg_id=tg_id,
             onboarded=True,
         )
 
@@ -60,7 +62,10 @@ async def handle_start_onboarding(
                 "Now I'll tell you how to use all my features, "
                 "and then we can test your English level.",
             ),
-            reply_markup=build_onboarding_step_markup(text="Cool idea 😊", step=2),
+            reply_markup=build_onboarding_step_markup(
+                text=_("Cool idea 😊"),
+                step=2,
+            ),
         )
 
 
@@ -73,7 +78,9 @@ async def handle_onboarding_first(
     """
     Handler for second step of onboarding.
 
-    :param message: Message from telegram.
+    :param callback_query: CallbackQuery.
+    :param backend_client: Backend client.
+    :param state: FSM state.
     """
 
     await state.clear()
@@ -101,7 +108,10 @@ async def handle_onboarding_first(
                 "And also the <b>Menu</b> button with additional functions: \n"
                 "Answers to questions, Payment, Feedback, and so on.",
             ),
-            reply_markup=build_onboarding_step_markup(text="Got it", step=3),
+            reply_markup=build_onboarding_step_markup(
+                text=_("Got it"),
+                step=3,
+            ),
             parse_mode=ParseMode.HTML,
         )
 
@@ -115,7 +125,9 @@ async def handle_onboarding_second(
     """
     Handler for third step of onboarding.
 
-    :param message: Message from telegram.
+    :param callback_query: CallbackQuery.
+    :param backend_client: Backend client.
+    :param state: FSM state.
     """
 
     user = await auth_user(
@@ -142,7 +154,10 @@ async def handle_onboarding_second(
                 "This video shows how to work with “Dialogues”.\n"
                 "Watch the video, then click the “Got it” button",
             ),
-            reply_markup=build_onboarding_step_markup(text="Got it", step=4),
+            reply_markup=build_onboarding_step_markup(
+                text=_("Got it"),
+                step=4,
+            ),
         )
 
 
@@ -155,7 +170,9 @@ async def handle_onboarding_third(
     """
     Handler for fourth step of onboarding.
 
-    :param message: Message from telegram.
+    :param callback_query: CallbackQuery.
+    :param backend_client: Backend client.
+    :param state: FSM state.
     """
 
     user = await auth_user(
@@ -173,7 +190,10 @@ async def handle_onboarding_third(
                 "This video shows how the “Translator” works.\n"
                 "Watch the video, then click the “Got it” button",
             ),
-            reply_markup=build_onboarding_step_markup(text="Got it", step=5),
+            reply_markup=build_onboarding_step_markup(
+                text=_("Got it"),
+                step=5,
+            ),
         )
 
 
@@ -186,7 +206,9 @@ async def handle_onboarding_fourth(
     """
     Handler for fourth step of onboarding.
 
-    :param message: Message from telegram.
+    :param callback_query: CallbackQuery.
+    :param backend_client: Backend client.
+    :param state: FSM state.
     """
 
     user = await auth_user(
@@ -204,7 +226,10 @@ async def handle_onboarding_fourth(
                 "This video shows how the “Language Level” works.\n"
                 "Watch the video, then click the “Got it” button",
             ),
-            reply_markup=build_onboarding_step_markup(text="Got it", step=6),
+            reply_markup=build_onboarding_step_markup(
+                text=_("Got it"),
+                step=6,
+            ),
         )
 
 
@@ -217,7 +242,9 @@ async def handle_onboarding_fifth(
     """
     Handler for fourth step of onboarding.
 
-    :param message: Message from telegram.
+    :param callback_query: CallbackQuery.
+    :param backend_client: Backend client.
+    :param state: FSM state.
     """
 
     user = await auth_user(
@@ -238,7 +265,7 @@ async def handle_onboarding_fifth(
                 "communicate with you.",
             ),
             reply_markup=build_onboarding_step_markup(
-                text="Language level test",
+                text=_("Language level test start"),
                 step=7,
             ),
         )
@@ -253,7 +280,9 @@ async def handle_show_where(
     """
     Handler for fourth step of onboarding.
 
-    :param message: Message from telegram.
+    :param callback_query: CallbackQuery.
+    :param backend_client: Backend client.
+    :param state: FSM state.
     """
 
     user = await auth_user(
@@ -270,5 +299,5 @@ async def handle_show_where(
             text=_(
                 "Watch the videonote and everything will become clear.",
             ),
-            reply_markup=build_onboarding_step_markup(text="Got it"),
+            reply_markup=build_onboarding_step_markup(text=_("Got it")),
         )

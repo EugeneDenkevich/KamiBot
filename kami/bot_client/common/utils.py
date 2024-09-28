@@ -1,9 +1,10 @@
 import asyncio
-from typing import BinaryIO, Optional
+from typing import BinaryIO, Optional, Union
 
 from aiogram.enums.parse_mode import ParseMode
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
+from aiogram.types.inaccessible_message import InaccessibleMessage
 from aiogram.utils.i18n import gettext as _
 
 from kami.backend.domain.lang_test.models import QuestT
@@ -68,7 +69,7 @@ async def wait_for_answer(
 
 
 async def auth_user(
-    message: Message,
+    message: Union[Message, InaccessibleMessage, None],
     backend_client: BackendClient,
     tg_id: str,
     state: FSMContext,
@@ -87,14 +88,14 @@ async def auth_user(
     except UserNotFoundError:
         await state.set_state(RegisterFSM.share_contact)
 
-        await message.answer(
+        await message.answer(  # type: ignore[union-attr]
             text=_("Hello. Please, share your contact"),
             reply_markup=build_share_contact_markup(),
         )
         return None
     else:
         if not user.active:
-            await message.answer(
+            await message.answer(  # type: ignore[union-attr]
                 text=_(
                     "Hello. Unfortunately, your subscription is not activated.\n"
                     "To continue, go to the <b>Menu</b> and select <b>Payment</b> "

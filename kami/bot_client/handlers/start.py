@@ -23,6 +23,7 @@ async def handle_start(
 
     :param message: Message from telegram.
     :param backend_client: Get functions from BackendClient.
+    :param state: FSM state.
     """
 
     await state.clear()
@@ -30,7 +31,7 @@ async def handle_start(
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),
+        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
         state=state,
     )
 

@@ -19,15 +19,15 @@ async def run_bot(bot_token: str, language: str) -> None:
     bot = Bot(token=bot_token)
     dispatcher = Dispatcher()
 
-    await set_commands(bot)
-    setup_routers(dispatcher)
-
-    setup_dispatcher(dispatcher)
-
     setup_i18n(
         dispatcher=dispatcher,
         work_dir=get_work_dir(),
         language=language,
     )
+
+    await set_commands(bot)
+    setup_routers(dispatcher)
+
+    setup_dispatcher(dispatcher)
 
     await dispatcher.start_polling(bot)
