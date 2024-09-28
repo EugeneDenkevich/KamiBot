@@ -19,7 +19,7 @@ def build_add_user_markup(
     Builder for add user keyboard.
 
     :param tg_id: User telegram id.
-    :param fio: User fullname.
+    :param phone: User phone.
     """
 
     builder = InlineKeyboardBuilder()

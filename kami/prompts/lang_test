@@ -2,13 +2,13 @@
 В начале сделай тесты легкими (A1-A2), в середине сделай средней сложности (B1-B2), а в конце сложными (C1-C2).
 К каждому вопросу добавь несколько вариантов ответа в виде словаря, где ключом будет буква (a, b, c...), а значением — сам вариант ответа.
 Также укажи правильный ответ отдельно в поле correct_answer, где значением будет буква правильного ответа.
-Напиши на русском.
+Напиши на итальянском.
 Больше ничего не пиши, только эти 6 вопросов.
 Вот примеры твоих ответов:
 
 [
   {
-    "question": "Выберите правильный вариант: \"I ____ already seen that movie.\"",
+    "question": "Scegli l'opzione corretta: \"I ____ already seen that movie.\"",
     "options": {
       "a": "have",
       "b": "had",
@@ -17,7 +17,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Какой из следующих вариантов является правильным: \"If I ____ you, I would accept the offer.\"",
+    "question": "Quale delle seguenti opzioni è corretta: \"If I ____ you, I would accept the offer.\"",
     "options": {
       "a": "were",
       "b": "was",
@@ -26,7 +26,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Как перевести на английский: \"Мы давно не виделись\"?",
+    "question": "Come tradurre in inglese: \"Non ci vediamo da molto tempo\"?",
     "options": {
       "a": "We haven’t seen each other for a long time",
       "b": "We don’t see each other since a long time",
@@ -35,7 +35,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Выберите правильный вариант: \"She would have passed the exam if she ____ harder.\"",
+    "question": "Scegli l'opzione corretta: \"She would have passed the exam if she ____ harder.\"",
     "options": {
       "a": "studied",
       "b": "has studied",
@@ -44,7 +44,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Какое слово лучше всего подходит для завершения предложения: \"Not only ____ he a great musician, but he is also a talented painter.\"",
+    "question": "Quale parola è meglio completare la frase?: \"Not only ____ he a great musician, but he is also a talented painter.\"",
     "options": {
       "a": "is",
       "b": "was",
@@ -53,7 +53,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Выберите правильный вариант: \"Were I to know her address, I ____ send her an invitation.\"",
+    "question": "Scegli l'opzione corretta: \"Were I to know her address, I ____ send her an invitation.\"",
     "options": {
       "a": "would",
       "b": "will",
@@ -65,7 +65,7 @@
 
 [
   {
-    "question": "Выберите правильный вариант: \"They ____ going to the concert tonight.\"",
+    "question": "Scegli l'opzione corretta: \"They ____ going to the concert tonight.\"",
     "options": {
       "a": "are",
       "b": "is",
@@ -74,7 +74,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Какой вариант правильный: \"He plays the guitar very ____\"?",
+    "question": "Quale opzione è corretta: \"He plays the guitar very ____\"?",
     "options": {
       "a": "good",
       "b": "well",
@@ -83,7 +83,7 @@
     "correct_answer": "b"
   },
   {
-    "question": "Как перевести на английский: \"У тебя есть время поговорить?\"?",
+    "question": "Come tradurre in inglese: \"Hai tempo per parlare??\"?",
     "options": {
       "a": "Do you have time to talk?",
       "b": "Have you time to talk?",
@@ -92,7 +92,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Выберите правильный вариант: \"She has lived here ____ 2010.\"",
+    "question": "Scegli l'opzione corretta: \"She has lived here ____ 2010.\"",
     "options": {
       "a": "since",
       "b": "for",
@@ -101,7 +101,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Какое слово лучше всего подходит для завершения предложения: \"The results of the experiment were not as we ____.\"",
+    "question": "Quale parola è meglio completare la frase?: \"The results of the experiment were not as we ____.\"",
     "options": {
       "a": "expected",
       "b": "expect",
@@ -110,7 +110,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Выберите правильный вариант: \"Had I been aware of the situation, I ____ acted differently.\"",
+    "question": "Scegli l'opzione corretta: \"Had I been aware of the situation, I ____ acted differently.\"",
     "options": {
       "a": "would have",
       "b": "will have",
@@ -122,7 +122,7 @@
 
 [
   {
-    "question": "Выберите правильный вариант: \"She ____ a new dress for the party.\"",
+    "question": "Scegli l'opzione corretta: \"She ____ a new dress for the party.\"",
     "options": {
       "a": "buyed",
       "b": "bought",
@@ -131,7 +131,7 @@
     "correct_answer": "b"
   },
   {
-    "question": "Какой вариант правильный: \"The book is ____ the table.\"?",
+    "question": "Quale opzione è corretta: \"The book is ____ the table.\"?",
     "options": {
       "a": "on",
       "b": "in",
@@ -140,7 +140,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Как перевести на английский: \"Ты часто гуляешь в парке?\"?",
+    "question": "Come tradurre in inglese: \"Cammini spesso nel parco?\"?",
     "options": {
       "a": "Do you often walk in the park?",
       "b": "Are you often walking in the park?",
@@ -149,7 +149,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Выберите правильный вариант: \"If I had known about the meeting, I ____ gone.\"",
+    "question": "Scegli l'opzione corretta: \"If I had known about the meeting, I ____ gone.\"",
     "options": {
       "a": "would have",
       "b": "will have",
@@ -158,7 +158,7 @@
     "correct_answer": "a"
   },
   {
-    "question": "Какое слово лучше всего подходит для завершения предложения: \"He is looking forward to ____ you soon.\"",
+    "question": "Quale parola è meglio completare la frase: \"He is looking forward to ____ you soon.\"",
     "options": {
       "a": "see",
       "b": "seeing",
@@ -167,7 +167,7 @@
     "correct_answer": "b"
   },
   {
-    "question": "Выберите правильный вариант: \"Should you need any assistance, please do not hesitate to contact me.\"",
+    "question": "Scegli l'opzione corretta: \"Should you need any assistance, please do not hesitate to contact me.\"",
     "options": {
       "a": "If you will need",
       "b": "If you need",
@@ -180,5 +180,5 @@
 Это важно: для создания теста используй только структуру из примеров: List[Dict[str, Union[str, Dict[str, str]]]].
 Это важно: вопросов должно быть 6. Уровень сложности должен расти от A1 до C2 равномерно от вопроса к вопросу.
 Пожалуйста, не смешивай языки.
-В тестах не должно быть смешений языков внутри одного элемента, например, когда часть предложения на русском, а часть — на английском.
+В тестах не должно быть смешений языков внутри одного элемента, например, когда часть предложения на итальянском, а часть — на английском.
 Важно: твой ответ должен иметь структуру структуру из примеров: List[Dict[str, Union[str, Dict[str, str]]]]

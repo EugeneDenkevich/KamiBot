@@ -17,6 +17,7 @@ class MyTopicCallback(
 ):
     pass
 
+
 class ContinueDialogueCD(
     CallbackData,
     prefix="continue_callback",  # type: ignore[call-arg]
@@ -28,7 +29,7 @@ def build_dialog_markup(no_dialog: bool) -> InlineKeyboardMarkup:
     """
     Builder for dialogue message keyboard.
 
-    :paran bot_name: Name of current bot
+    :param no_dialog: If previous dialog is saved.
     """
 
     builder = InlineKeyboardBuilder()

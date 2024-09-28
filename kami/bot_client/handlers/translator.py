@@ -3,6 +3,8 @@ from aiogram.enums.chat_action import ChatAction
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
+from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import lazy_gettext as __
 
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user, get_voice_reply
@@ -16,8 +18,8 @@ from kami.settings import Settings
 router = Router()
 
 
-@router.message(F.text == "Translator")
 @router.message(Command(commands=["translator"]))
+@router.message(F.text == __("Translator"))
 async def handle_translator_command(
     message: Message,
     backend_client: BackendClient,
@@ -30,6 +32,7 @@ async def handle_translator_command(
     :param message: Message from telegram.
     :param backend_client: Backend client.
     :param state: FSM state.
+    :param settings: Get Settings.
     """
 
     await state.clear()
@@ -37,13 +40,13 @@ async def handle_translator_command(
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),
+        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
         state=state,
     )
 
     if user:
         await message.answer(
-            text="Please choose the translation direction:",
+            text=_("Please choose the translation direction:"),
             reply_markup=build_translator_markup(language=settings.translation_language),
         )
 
@@ -77,7 +80,7 @@ async def handle_direction_choice(
         await state.set_state(TranslatorFSM.translating)
 
         await callback_query.message.answer(  # type: ignore[union-attr]
-            text="Please write or send the text/voice you want to translate:",
+            text=_("Please write or send the text/voice you want to translate:"),
         )
 
         await callback_query.answer()
@@ -100,13 +103,13 @@ async def handle_translator_text(
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),
+        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
         state=state,
     )
 
     if user:
         user_data = await state.get_data()
-        direction = user_data.get("direction")
+        direction = user_data["direction"]
 
         await message.bot.send_chat_action(  # type: ignore[union-attr]
             chat_id=message.chat.id,
@@ -139,13 +142,13 @@ async def handle_translator_voice(
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),
+        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
         state=state,
     )
 
     if user:
         user_data = await state.get_data()
-        direction = user_data.get("direction")
+        direction = user_data["direction"]
         voice_reply = await get_voice_reply(message)
 
         await message.bot.send_chat_action(  # type: ignore[union-attr]

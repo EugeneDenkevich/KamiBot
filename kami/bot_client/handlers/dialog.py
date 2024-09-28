@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Union
 
 from aiogram import F, Router
 from aiogram.enums.chat_action import ChatAction
@@ -9,10 +9,12 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.types.input_file import BufferedInputFile
 from aiogram.types.reply_keyboard_remove import ReplyKeyboardRemove
 from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import lazy_gettext as __
 
 from kami.backend.domain.dialog.exceptions import DialogueNotFoundError
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user, get_voice_reply, wait_for_answer
+from kami.bot_client.keyboards.dialog_after_test import DialogAfterTestCD
 from kami.bot_client.keyboards.dialogue import (
     ContinueDialogueCD,
     MyTopicCallback,
@@ -26,38 +28,48 @@ router = Router()
 
 
 @router.message(Command(commands=["dialog"]))
-@router.message(F.text == "Dialogues")
+@router.message(F.text == __("Dialogues"))
+@router.callback_query(DialogAfterTestCD.filter())
 async def handle_dialog_command(
-    message: Message,
+    mescall: Union[Message, CallbackQuery],
     backend_client: BackendClient,
-    state: Optional[FSMContext],
+    state: FSMContext,
 ) -> None:
     """
     Handler for /dialogue
 
-    :param message: Message from telegram.
+    :param mescall: Message or callback.
+    :param backend_client: Backend client.
     :param state: FSM state.
     """
 
     await state.clear()  # type: ignore[union-attr]
 
+    tg_id = str(mescall.from_user.id)  # type: ignore[union-attr]
+
+    if isinstance(mescall, CallbackQuery):
+        mescall.answer()
+
+        message = mescall.message
+    else:
+        message = mescall
+
     user = await auth_user(
-        message=message,
+        message=message,  # type: ignore[arg-type]
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
         no_dialog = False
         try:
-            await backend_client.get_dialog(
-                tg_id=str(message.from_user.id),  # type: ignore[union-attr]
-            )
+            await backend_client.get_dialog(tg_id=tg_id)
         except DialogueNotFoundError:
             no_dialog = True
 
-        await message.answer(
+        # Multiline i18n work only in such format
+        await message.answer(  # type: ignore[union-attr]
             text=_(
                 "Let's practice English!\n"
                 "Select any topic to begin the dialog and we'll "
@@ -71,29 +83,30 @@ async def handle_dialog_command(
 async def handle_my_topic(
     callback_query: CallbackQuery,
     backend_client: BackendClient,
-    state: Optional[FSMContext],
+    state: FSMContext,
 ) -> None:
     """
     Handler for "Topic of dialogue" button's.
 
-    :param mescall: Message or callback.
+    :param callback_query: CallbackQuery.
+    :param backend_client: Backend client.
     :param state: FSM state.
     """
 
     await callback_query.answer()
 
     user = await auth_user(
-            message=callback_query.message,
-            backend_client=backend_client,
-            tg_id=str(callback_query.from_user.id),
-            state=state,
+        message=callback_query.message,  # type: ignore[arg-type]
+        backend_client=backend_client,
+        tg_id=str(callback_query.from_user.id),
+        state=state,
     )
 
     if user:
         await state.set_state(DialogFSM.my_topic)  # type: ignore[union-attr]
 
-        await callback_query.message.answer(   # type: ignore[union-attr]
-            text="Input your topic, please",
+        await callback_query.message.answer(  # type: ignore[union-attr]
+            text=_("Input your topic, please"),
         )
 
 
@@ -101,24 +114,27 @@ async def handle_my_topic(
 async def handle_topic_selected(
     callback_query: CallbackQuery,
     callback_data: TopicSelectedCD,
-    state: Optional[FSMContext],
+    state: FSMContext,
     backend_client: BackendClient,
     settings: Settings,
 ) -> None:
     """
     Handler for "Topic of dialogue" button's.
 
-    :param mescall: Message or callback.
+    :param settings: Get settings.
+    :param callback_query: Callback query.
+    :param callback_data: Callback data.
+    :param backend_client: BackendClient.
     :param state: FSM state.
     """
 
     await callback_query.answer()
 
     user = await auth_user(
-            message=callback_query.message,
-            backend_client=backend_client,
-            tg_id=str(callback_query.from_user.id),
-            state=state,
+        message=callback_query.message,  # type: ignore[arg-type]
+        backend_client=backend_client,
+        tg_id=str(callback_query.from_user.id),
+        state=state,
     )
 
     if user:
@@ -139,11 +155,13 @@ async def handle_topic_selected(
                 tg_id=str(callback_query.from_user.id),
                 topic=callback_data.topic,
             )
+
         except:
             await state.clear()  # type: ignore[union-attr]
             raise
+
         else:
-            await callback_query.message.answer_audio(   # type: ignore[union-attr]
+            await callback_query.message.answer_audio(  # type: ignore[union-attr]
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
             )
 
@@ -158,7 +176,7 @@ async def handle_topic_selected(
 @router.message(DialogFSM.my_topic)
 async def handle_my_topic_selected(
     message: Message,
-    state: Optional[FSMContext],
+    state: FSMContext,
     backend_client: BackendClient,
     settings: Settings,
 ) -> None:
@@ -172,10 +190,10 @@ async def handle_my_topic_selected(
     """
 
     user = await auth_user(
-            message=message,
-            backend_client=backend_client,
-            tg_id=str(message.from_user.id),
-            state=state,
+        message=message,
+        backend_client=backend_client,
+        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+        state=state,
     )
 
     if user:
@@ -200,7 +218,7 @@ async def handle_my_topic_selected(
             await state.clear()  # type: ignore[union-attr]
             raise
         else:
-            await message.answer_audio(   # type: ignore[union-attr]
+            await message.answer_audio(  # type: ignore[union-attr]
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
             )
 
@@ -216,7 +234,7 @@ async def handle_my_topic_selected(
 async def handle_dialog_voice(
     message: Message,
     backend_client: BackendClient,
-    state: Optional[FSMContext],
+    state: FSMContext,
     settings: Settings,
 ) -> None:
     """
@@ -229,10 +247,10 @@ async def handle_dialog_voice(
     """
 
     user = await auth_user(
-            message=message,
-            backend_client=backend_client,
-            tg_id=str(message.from_user.id),
-            state=state,
+        message=message,
+        backend_client=backend_client,
+        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+        state=state,
     )
 
     if user:
@@ -262,7 +280,7 @@ async def handle_dialog_voice(
             await wait_for_answer(
                 awaiting_time=settings.awaiting_time,
                 message=message,
-                state=state,   # type: ignore[arg-type]
+                state=state,  # type: ignore[arg-type]
                 text=_("Awaiting time is up. Continue dialog here /dialog."),
             )
 
@@ -271,23 +289,23 @@ async def handle_dialog_voice(
 async def handle_continue_dialog(
     callback_query: CallbackQuery,
     backend_client: BackendClient,
-    state: Optional[FSMContext],
+    state: FSMContext,
 ) -> None:
     """
     Handler for continuing dialog button.
 
-    :param callback: Callback.
-    :param backend_client: Backend client.
+    :param callback_query: Callback.
+    :param backend_client: Get functions from BackendClient.
     :param state: FSM state.
     """
 
     await callback_query.answer()
 
     user = await auth_user(
-            message=callback_query.message,
-            backend_client=backend_client,
-            tg_id=str(callback_query.from_user.id),
-            state=state,
+        message=callback_query.message,  # type: ignore[arg-type]
+        backend_client=backend_client,
+        tg_id=str(callback_query.from_user.id),
+        state=state,
     )
 
     if user:
@@ -301,7 +319,7 @@ async def handle_continue_dialog(
         try:
             await backend_client.get_dialog(tg_id=tg_id)
         except DialogueNotFoundError:
-            await callback_query.message.answer(   # type: ignore[union-attr]
+            await callback_query.message.answer(  # type: ignore[union-attr]
                 _(
                     "You dont have a created dialog yet! "
                     "Choose a topic for the dialogue and start your first dialogue.",
@@ -309,14 +327,14 @@ async def handle_continue_dialog(
             )
         else:
             await callback_query.message.bot.send_chat_action(  # type: ignore[union-attr]
-                chat_id=callback_query.message.chat.id,   # type: ignore[union-attr]
+                chat_id=callback_query.message.chat.id,  # type: ignore[union-attr]
                 action=ChatAction.RECORD_VOICE,
             )
 
             voice_answer = await backend_client.return_to_dialog(tg_id=tg_id)
 
-            await callback_query.message.answer_audio(   # type: ignore[union-attr]
+            await callback_query.message.answer_audio(  # type: ignore[union-attr]
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
             )
 
-            await state.set_state(DialogFSM.conversation)   # type: ignore[union-attr]
+            await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]

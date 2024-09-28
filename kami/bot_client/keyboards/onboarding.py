@@ -34,12 +34,12 @@ def build_onboarding_step_markup(
 
     if step != 7:
         builder.button(
-            text=_("{text}").format(text=text),
+            text=text,
             callback_data=OnboardingCD(step=step if step else 3).pack(),
         )
     else:
         builder.button(
-            text=_("{text}").format(text=text),
+            text=text,
             callback_data=StartLangTestCallback().pack(),
         )
 
