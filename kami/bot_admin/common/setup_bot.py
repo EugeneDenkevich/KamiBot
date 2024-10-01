@@ -4,7 +4,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand
 from aiogram.utils.i18n import ConstI18nMiddleware, I18n
 
-from kami.bot_client.middlewaries.custom_middlewaries import CustomMiddleware
+from kami.bot_admin.middlewaries.custom_middlewaries import CustomMiddleware
 
 
 async def set_commands(bot: Bot) -> None:

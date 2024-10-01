@@ -28,3 +28,13 @@ def get_bot_admin(bot_admin_token: str) -> Bot:
     """
 
     return Bot(token=bot_admin_token)
+
+
+def get_bot_client(bot_client_token: str) -> Bot:
+    """
+    Get bot client.
+
+    :Bot: Bot client.
+    """
+
+    return Bot(token=bot_client_token)
