@@ -4,6 +4,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.utils.i18n import gettext as _
 
+from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
+from kami.backend.presentation.client import BackendClient
 from kami.bot_client.keyboards.add_user import build_add_user_markup
 from kami.settings import Settings
 
@@ -16,11 +18,19 @@ async def handle_register(
     bot_admin: Bot,
     settings: Settings,
     state: FSMContext,
+    backend_client: BackendClient,
 ) -> None:
 
     await state.clear()
 
-    tg_id = str(message.from_user.id)   # type: ignore[union-attr]
+    tg_id = str(message.from_user.id)  # type: ignore[union-attr]
+
+    await backend_client.log_to_db(
+        tg_id=tg_id,
+        module=ModuleEnum.AUTH,
+        action=ActionEnum.SHARE_CONTACT,
+    )
+
     fio = (
         f"{message.from_user.first_name} "   # type: ignore[union-attr]
         f"{message.from_user.last_name}"   # type: ignore[union-attr]

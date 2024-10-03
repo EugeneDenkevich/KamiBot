@@ -44,7 +44,7 @@ class UserService():
         :param phone: User phone number.
         :param username: User username.
         :param active: User active status.
-        :param blocked: User block status.
+        :param onboarded: User onboarded status.
         """
 
         if username is not None:

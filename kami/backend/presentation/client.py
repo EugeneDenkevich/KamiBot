@@ -137,3 +137,16 @@ class BackendClient():
     ) -> str:
         async with self.ucf.translate_voice_to_text() as translate_voice_to_text:
             return await translate_voice_to_text(direction=direction, voice=voice)
+
+    async def log_to_db(
+        self,
+        tg_id: str,
+        module: str,
+        action: str,
+    ) -> None:
+        async with self.ucf.log_to_db() as log_to_db:
+            return await log_to_db(
+                tg_id=tg_id,
+                module=module,
+                action=action,
+            )

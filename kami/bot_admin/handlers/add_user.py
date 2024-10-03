@@ -2,7 +2,7 @@ from aiogram import Bot, Router
 from aiogram.types import CallbackQuery
 from aiogram.utils.i18n import gettext as _
 
-from kami.backend.domain.user.exceptions import UserAlreadyExestsError
+from kami.backend.domain.user.exceptions import UserAlreadyExistsError
 from kami.backend.presentation.client import BackendClient
 from kami.bot_admin.keyboards.add_user import AddUserCallbackData
 
@@ -29,11 +29,13 @@ async def handle_add_user(
         .split("\n")[3]
         .strip("Fullname: ")
     )
+
     username = (
         callback_query.message.text  # type: ignore[union-attr]
         .split("\n")[2]
         .strip("Username: ")
     )
+
     try:
         await backend_client.create_user(
             tg_id=callback_data.tg_id,
@@ -45,7 +47,7 @@ async def handle_add_user(
             chat_id=callback_data.tg_id,
             text=_("✅ You were activated! Press /start to continue."),
         )
-    except UserAlreadyExestsError:
+    except UserAlreadyExistsError:
         await callback_query.message.answer(  # type: ignore[union-attr]
             text="User already added.",
         )

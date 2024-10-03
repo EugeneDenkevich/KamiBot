@@ -1,6 +1,6 @@
 from typing import Optional
 
-from kami.backend.domain.user.exceptions import UserAlreadyExestsError
+from kami.backend.domain.user.exceptions import UserAlreadyExistsError
 from kami.backend.domain.user.models import User
 from kami.backend.domain.user.services import UserService
 from kami.backend.repos.user.repo import UserRepo
@@ -37,7 +37,7 @@ class CreateUserUseCase():
         user = await self.user_repo.get_user_or_none(tg_id=tg_id)
 
         if user:
-            raise UserAlreadyExestsError()
+            raise UserAlreadyExistsError()
 
         user = self.user_service.create_user(
             tg_id=tg_id,

@@ -9,6 +9,7 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.types.input_file import BufferedInputFile
 from aiogram.utils.i18n import gettext as _
 
+from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.domain.dialog.exceptions import DialogueNotFoundError
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user, get_voice_reply, wait_for_answer
@@ -46,7 +47,7 @@ async def handle_dialog_command(
     tg_id = str(mescall.from_user.id)  # type: ignore[union-attr]
 
     if isinstance(mescall, CallbackQuery):
-        mescall.answer()
+        await mescall.answer()
 
         message = mescall.message
     else:
@@ -60,6 +61,12 @@ async def handle_dialog_command(
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.DIALOGS,
+            action=ActionEnum.BOT_SENT,
+        )
+
         no_dialog = False
         try:
             await backend_client.get_dialog(tg_id=tg_id)
@@ -93,14 +100,22 @@ async def handle_my_topic(
 
     await callback_query.answer()
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
-        message=callback_query.message,  # type: ignore[arg-type]
+        message=callback_query.message,  # type: ignore[union-attr]
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.DIALOGS,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await state.set_state(DialogFSM.my_topic)  # type: ignore[union-attr]
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -128,14 +143,22 @@ async def handle_topic_selected(
 
     await callback_query.answer()
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
-        message=callback_query.message,  # type: ignore[arg-type]
+        message=callback_query.message,  # type: ignore[union-attr]
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.DIALOGS,
+            action=ActionEnum.USER_PUSH,
+        )
+
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_("One moment..."),
         )
@@ -149,14 +172,12 @@ async def handle_topic_selected(
 
         try:
             voice_answer = await backend_client.start_dialog(
-                tg_id=str(callback_query.from_user.id),
+                tg_id=tg_id,
                 topic=callback_data.topic,
             )
-
         except:
             await state.clear()  # type: ignore[union-attr]
             raise
-
         else:
             await callback_query.message.answer_audio(  # type: ignore[union-attr]
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
@@ -186,17 +207,23 @@ async def handle_my_topic_selected(
     :param settings: Project settings.
     """
 
+    tg_id = str(message.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
-        await message.answer(
-            text=_("One moment..."),
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.DIALOGS,
+            action=ActionEnum.BOT_SENT,
         )
+
+        await message.answer(text=_("One moment..."))
 
         await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
 
@@ -207,7 +234,7 @@ async def handle_my_topic_selected(
 
         try:
             voice_answer = await backend_client.start_dialog(
-                tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+                tg_id=tg_id,  # type: ignore[union-attr]
                 topic=message.text,  # type: ignore[arg-type]
             )
         except:
@@ -241,25 +268,31 @@ async def handle_dialog_voice(
     :param backend_client: Backend client.
     :param settings: Project settings.
     """
+    tg_id = str(message.from_user.id)  # type: ignore[union-attr]
 
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.DIALOGS,
+            action=ActionEnum.BOT_SENT,
+        )
+
         voice_reply = await get_voice_reply(message)
 
         await message.bot.send_chat_action(  # type: ignore[union-attr]
             chat_id=message.chat.id,
             action=ChatAction.RECORD_VOICE,
         )
-
         try:
             voice, mistakes = await backend_client.continue_dialog(
-                tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+                tg_id=tg_id,  # type: ignore[union-attr]
                 voice=voice_reply,
             )
         except:
@@ -297,19 +330,25 @@ async def handle_continue_dialog(
 
     await callback_query.answer()
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=callback_query.message,  # type: ignore[arg-type]
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.DIALOGS,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_("One moment..."),
         )
-
-        tg_id = str(callback_query.from_user.id)
 
         try:
             await backend_client.get_dialog(tg_id=tg_id)
