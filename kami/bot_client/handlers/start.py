@@ -7,6 +7,7 @@ from aiogram.utils.i18n import gettext as _
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user
+from kami.bot_client.enums.stickers import StickersEnum
 from kami.bot_client.keyboards.main_menu import build_main_menu_markup
 from kami.bot_client.keyboards.onboarding import build_onboarding_step_markup
 
@@ -44,6 +45,8 @@ async def handle_start(
             module=ModuleEnum.START,
             action=ActionEnum.USER_PUSH,
         )
+
+        await message.answer_sticker(StickersEnum.KAMILA_ONBOARDING)
 
         await message.answer(
             text=_(

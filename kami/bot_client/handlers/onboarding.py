@@ -1,16 +1,21 @@
 import asyncio
+import logging
 from typing import Union
 
 from aiogram import F, Router
+from aiogram.enums.chat_action import ChatAction
 from aiogram.enums.parse_mode import ParseMode
+from aiogram.exceptions import TelegramNetworkError
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.types import CallbackQuery, Message
+from aiogram.types import CallbackQuery, FSInputFile, Message
 from aiogram.utils.i18n import gettext as _
 
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user
+from kami.bot_client.enums.stickers import StickersEnum
+from kami.bot_client.enums.video_note import VideoNoteEnum
 from kami.bot_client.keyboards.main_menu import build_main_menu_markup
 from kami.bot_client.keyboards.onboarding import (
     OnboardingCD,
@@ -63,7 +68,6 @@ async def handle_start_onboarding(
             tg_id=tg_id,
             onboarded=True,
         )
-
         await message.answer(  # type: ignore[union-attr]
             text=_(
                 "Now I'll tell you how to use all my features, "
@@ -112,16 +116,20 @@ async def handle_onboarding_first(
 
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
-                "At the bottom there is a quick menu with basic functions: "
-                "Dialogues, Language Level, Translator.\n",
+                "👇At the bottom there is a quick menu with basic functions:\n"
+                "📍Dialogues\n"
+                "📍Language Level\n"
+                "📍Translator\n",
             ),
             reply_markup=build_main_menu_markup(),
         )
 
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
-                "Click on these buttons to quickly select the desired function. "
+                "🔴<b>Click</b> on these buttons to quickly "
+                "select the desired function.\n"
                 "And also the <b>Menu</b> button with additional functions: \n"
+                "📍Onboarding \n"
                 "Answers to questions, Payment, Feedback, and so on.",
             ),
             reply_markup=build_onboarding_step_markup(
@@ -164,6 +172,7 @@ async def handle_onboarding_second(
 
         await callback_query.answer()
 
+        await callback_query.message.answer_sticker(StickersEnum.KAMILA_MAIN)
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
                 "Now I will show you how to use the basic functions. "
@@ -173,13 +182,26 @@ async def handle_onboarding_second(
 
         await asyncio.sleep(1)
 
+        await callback_query.message.bot.send_chat_action(  # type: ignore[union-attr]
+            chat_id=callback_query.message.chat.id,
+            action=ChatAction.RECORD_VIDEO_NOTE,
+        )
+
+        video_file = FSInputFile(VideoNoteEnum.KAMILA_DIALOG)
+
+        try:
+            await callback_query.message.answer_video_note(video_file)
+        except TelegramNetworkError:
+            logging.error(f"No file {VideoNoteEnum.KAMILA_DIALOG}")
+            pass
+
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
-                "This video shows how to work with “Dialogues”.\n"
-                "Watch the video, then click the “Got it” button",
+                "📹 This video shows how to work with “Dialogues”.\n"
+                "👀 Watch the video, then click the “Got it” button",
             ),
             reply_markup=build_onboarding_step_markup(
-                text=_("Got it"),
+                text=_("Got it 😉"),
                 step=4,
             ),
         )
@@ -217,13 +239,26 @@ async def handle_onboarding_third(
 
         await callback_query.answer()
 
+        await callback_query.message.bot.send_chat_action(  # type: ignore[union-attr]
+            chat_id=callback_query.message.chat.id,
+            action=ChatAction.RECORD_VIDEO_NOTE,
+        )
+
+        video_file = FSInputFile(VideoNoteEnum.KAMILA_TRANSLATE)
+
+        try:
+            await callback_query.message.answer_video_note(video_file)
+        except TelegramNetworkError:
+            logging.error(f"No file {VideoNoteEnum.KAMILA_TRANSLATE}")
+            pass
+
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
                 "This video shows how the “Translator” works.\n"
                 "Watch the video, then click the “Got it” button",
             ),
             reply_markup=build_onboarding_step_markup(
-                text=_("Got it"),
+                text=_("Got it 😊"),
                 step=5,
             ),
         )
@@ -260,6 +295,19 @@ async def handle_onboarding_fourth(
         )
 
         await callback_query.answer()
+
+        await callback_query.message.bot.send_chat_action(  # type: ignore[union-attr]
+            chat_id=callback_query.message.chat.id,
+            action=ChatAction.RECORD_VIDEO_NOTE,
+        )
+
+        video_file = FSInputFile(VideoNoteEnum.KAMILA_LANGUAGE_TEST)
+
+        try:
+            await callback_query.message.answer_video_note(video_file)
+        except TelegramNetworkError:
+            logging.error(f"No file {VideoNoteEnum.KAMILA_LANGUAGE_TEST}")
+            pass
 
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
@@ -305,15 +353,16 @@ async def handle_onboarding_fifth(
 
         await callback_query.answer()
 
+        await callback_query.message.answer_sticker(StickersEnum.KAMILA_LANGUAGE_TEST)
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
-                "Great, it's time to determine your level of English.\n"
-                "Click the button below and take the 6-question test.\n"
-                "This will help me choose the style and phrases to "
+                "😉 Great, it's time to determine your level of English. 🧐\n"
+                "Click the button below 🖲 and take the 6-question test.\n"
+                "📝 This will help me choose the style and phrases to "
                 "communicate with you.",
             ),
             reply_markup=build_onboarding_step_markup(
-                text=_("Language level test start"),
+                text=_("Language level test start 😉"),
                 step=7,
             ),
         )
@@ -351,9 +400,22 @@ async def handle_show_where(
 
         await callback_query.answer()
 
+        await callback_query.message.bot.send_chat_action(  # type: ignore[union-attr]
+            chat_id=callback_query.message.chat.id,
+            action=ChatAction.RECORD_VIDEO_NOTE,
+        )
+
+        video_file = FSInputFile(VideoNoteEnum.KAMILA_MENU)
+
+        try:
+            await callback_query.message.answer_video_note(video_file)
+        except TelegramNetworkError:
+            logging.error(f"No file {VideoNoteEnum.KAMILA_MENU}")
+            pass
+
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
-                "Watch the videonote and everything will become clear.",
+                "👀 Watch the videonote and everything will become clear.",
             ),
             reply_markup=build_onboarding_step_markup(text=_("Got it")),
         )

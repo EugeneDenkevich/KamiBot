@@ -1,5 +1,6 @@
 import uvicorn
 
+from kami.bot_client.common.run import run_in_pooling
 from kami.bot_client.web.app import (
     get_app,
     get_bot,
@@ -19,18 +20,26 @@ def main() -> None:
 
     bot = get_bot(token=settings.bot_client_token)
     dp = get_dispatcher()
-    app = get_app(
-        lifespan=lifespan, # type: ignore[arg-type]
-        bot=bot,
-        dp=dp,
-        url=settings.server_domain,
-        language=settings.client_language,
-        token=settings.bot_client_token,
-    )
 
-    setup_fastapi_routers(app=app)
+    if settings.debug_mode:
+        run_in_pooling(
+            bot=bot,
+            dp=dp,
+            language=settings.client_language,
+        )
+    else:
+        app = get_app(
+            lifespan=lifespan, # type: ignore[arg-type]
+            bot=bot,
+            dp=dp,
+            url=settings.server_domain,
+            language=settings.client_language,
+            token=settings.bot_client_token,
+        )
 
-    uvicorn.run(app, host=settings.server_host, port=settings.server_port_client)
+        setup_fastapi_routers(app=app)
+
+        uvicorn.run(app, host=settings.server_host, port=settings.server_port_client)
 
 
 if __name__ == "__main__":

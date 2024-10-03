@@ -5,6 +5,7 @@ from aiogram.utils.i18n import gettext as _
 from kami.backend.domain.user.exceptions import UserAlreadyExistsError
 from kami.backend.presentation.client import BackendClient
 from kami.bot_admin.keyboards.add_user import AddUserCallbackData
+from kami.bot_client.enums.stickers import StickersEnum
 
 router = Router()
 
@@ -43,9 +44,17 @@ async def handle_add_user(
             phone=callback_data.phone,
             username=username,
         )
+
+        await bot_client.send_sticker(
+            chat_id=callback_data.tg_id,
+            sticker=StickersEnum.KAMILA_DONE,
+        )
         await bot_client.send_message(  # type: ignore[union-attr]
             chat_id=callback_data.tg_id,
-            text=_("✅ You were activated! Press /start to continue."),
+            text=_(
+                "Hello, beautiful soul! \n"
+                "Your account is activated. Thank you very much for your trust.",
+            ),
         )
     except UserAlreadyExistsError:
         await callback_query.message.answer(  # type: ignore[union-attr]

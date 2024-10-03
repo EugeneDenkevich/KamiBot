@@ -66,8 +66,8 @@ services:
       kami-migrator:
         condition: service_completed_successfully
     environment:
+      KAMI_BOT_DEBUG_MODE: true
       KAMI_BOT_DB_HOST: "kami-db"
-      DEBUG_MODE: false
     extra_hosts:
       - "host.docker.internal:host-gateway"
     stdin_open: true
@@ -82,8 +82,8 @@ services:
     env_file:
       - ".env"
     environment:
+      KAMI_BOT_DEBUG_MODE: true
       KAMI_BOT_DB_HOST: "kami-db"
-      DEBUG_MODE: true
     volumes:
       - .:/project
     init: true

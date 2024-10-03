@@ -150,3 +150,10 @@ class BackendClient():
                 module=module,
                 action=action,
             )
+
+    async def voice_to_text(
+        self,
+        voice: bytes,
+    ) -> str:
+        async with self.ucf.voice_to_text() as voice_to_text:
+            return await voice_to_text(voice=voice)
