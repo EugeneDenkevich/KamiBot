@@ -6,6 +6,7 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from kami.backend.domain.ai.exceptions import AINotFoundError
+from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.domain.lang_test.exceptions import NoQuestionsError
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user, get_voice_reply, parse_question
@@ -38,14 +39,22 @@ async def handle_lang_test(
     :param state: FSM state.
     """
 
+    tg_id = str(message.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.LANG_TEST,
+            action=ActionEnum.USER_PUSH,
+        )
+
         await state.clear()
 
         await message.answer(
@@ -63,7 +72,7 @@ async def handle_testing(
     """
     Handler for "Start language test" button.
 
-    :param mescall: Message or callback.
+    :param callback_query: Callback.
     :param backend_client: Backend client.
     :param state: FSM state.
     """
@@ -80,6 +89,12 @@ async def handle_testing(
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.LANG_TEST,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_("One moment..."),
         )
@@ -92,6 +107,7 @@ async def handle_testing(
 
         try:
             await backend_client.start_test(tg_id=tg_id)
+
         except AINotFoundError:
             await state.clear()
             await callback_query.message.answer(  # type: ignore[union-attr]
@@ -138,6 +154,12 @@ async def handle_lang_test_text(
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.LANG_TEST,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await state.set_state(LangTestFSM.lang_testing)
 
         try:
@@ -193,6 +215,12 @@ async def handle_lang_test_voice(
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.LANG_TEST,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await state.set_state(LangTestFSM.lang_testing)
 
         voice_reply = await get_voice_reply(message)

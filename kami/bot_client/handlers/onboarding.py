@@ -8,6 +8,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
+from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user
 from kami.bot_client.keyboards.main_menu import build_main_menu_markup
@@ -52,6 +53,12 @@ async def handle_start_onboarding(
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.USER_PUSH,
+        )
+
         await backend_client.update_user(
             tg_id=tg_id,
             onboarded=True,
@@ -85,14 +92,22 @@ async def handle_onboarding_first(
 
     await state.clear()
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=callback_query.message,
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await callback_query.answer()
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -102,6 +117,7 @@ async def handle_onboarding_first(
             ),
             reply_markup=build_main_menu_markup(),
         )
+
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
                 "Click on these buttons to quickly select the desired function. "
@@ -130,14 +146,22 @@ async def handle_onboarding_second(
     :param state: FSM state.
     """
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=callback_query.message,
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await callback_query.answer()
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -175,14 +199,22 @@ async def handle_onboarding_third(
     :param state: FSM state.
     """
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=callback_query.message,
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await callback_query.answer()
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -211,14 +243,22 @@ async def handle_onboarding_fourth(
     :param state: FSM state.
     """
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=callback_query.message,
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await callback_query.answer()
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -247,14 +287,22 @@ async def handle_onboarding_fifth(
     :param state: FSM state.
     """
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=callback_query.message,
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await callback_query.answer()
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -285,14 +333,22 @@ async def handle_show_where(
     :param state: FSM state.
     """
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=callback_query.message,
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await callback_query.answer()
 
         await callback_query.message.answer(  # type: ignore[union-attr]

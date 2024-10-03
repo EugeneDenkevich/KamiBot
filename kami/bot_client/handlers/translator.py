@@ -5,6 +5,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
+from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user, get_voice_reply
 from kami.bot_client.keyboards.translator import (
@@ -36,14 +37,22 @@ async def handle_translator_command(
 
     await state.clear()
 
+    tg_id = str(message.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.TRANSLATE,
+            action=ActionEnum.USER_PUSH,
+        )
+
         await message.answer(
             text=_("Please choose the translation direction:"),
             reply_markup=build_translator_markup(language=settings.translation_language),
@@ -66,14 +75,22 @@ async def handle_direction_choice(
     :param state: FSM state.
     """
 
+    tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=callback_query.message,
         backend_client=backend_client,
-        tg_id=str(callback_query.from_user.id),
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.TRANSLATE,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await state.update_data(direction=callback_data.direction)
 
         await state.set_state(TranslatorFSM.translating)
@@ -99,14 +116,22 @@ async def handle_translator_text(
     :param state: FSM state.
     """
 
+    tg_id = str(message.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.TRANSLATE,
+            action=ActionEnum.BOT_SENT,
+        )
+
         user_data = await state.get_data()
         direction = user_data["direction"]
 
@@ -138,14 +163,22 @@ async def handle_translator_voice(
     :param state: FSM state.
     """
 
+    tg_id = str(message.from_user.id)  # type: ignore[union-attr]
+
     user = await auth_user(
         message=message,
         backend_client=backend_client,
-        tg_id=str(message.from_user.id),  # type: ignore[union-attr]
+        tg_id=tg_id,
         state=state,
     )
 
     if user:
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.TRANSLATE,
+            action=ActionEnum.BOT_SENT,
+        )
+
         user_data = await state.get_data()
         direction = user_data["direction"]
         voice_reply = await get_voice_reply(message)

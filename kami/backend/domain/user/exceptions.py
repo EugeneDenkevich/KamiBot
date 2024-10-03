@@ -2,5 +2,5 @@ class UserNotFoundError(Exception):
     """Error if user not found"""
 
 
-class UserAlreadyExestsError(Exception):
+class UserAlreadyExistsError(Exception):
     """Error if user already exists"""

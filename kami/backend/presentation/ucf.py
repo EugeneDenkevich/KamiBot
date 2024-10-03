@@ -12,6 +12,10 @@ from kami.backend.domain.ai.usecases import (
     TranslateVoiceToTextUseCase,
     VoiceToTextUseCase,
 )
+from kami.backend.domain.audit.services import AuditService
+from kami.backend.domain.audit.usecases import (
+    LogToDBUseCase,
+)
 from kami.backend.domain.dialog.services import DialogService
 from kami.backend.domain.dialog.usecases import (
     CreateDialogUseCase,
@@ -35,12 +39,14 @@ from kami.backend.gateways.elevenlabs.gateway import ElevenLabsGateway
 from kami.backend.gateways.whisper.gateway import WhisperGateway
 from kami.backend.infra.elevenlabs.client_elevenlabs import AsyncElevenLabsClient
 from kami.backend.repos.ai.repo import AIRepo
+from kami.backend.repos.audit.repo import AuditRepo
 from kami.backend.repos.dialog.repo import DialogRepo
 from kami.backend.repos.lang_test.repo import LangTestRepo
 from kami.backend.repos.user.repo import UserRepo
 
 
 class UseCaseFactory:
+    """Factory of usecases"""
 
     def __init__(
         self,
@@ -49,12 +55,14 @@ class UseCaseFactory:
         whisper_client: AsyncOpenAI,
         elevenlabs_client: AsyncElevenLabsClient,
         context_limit: int,
+        admin_id: str,
     ):
         self.session_factory = session_factory
         self.gpt_client = gpt_client
         self.whisper_client = whisper_client
         self.elevenlabs_client = elevenlabs_client
         self.context_limit = context_limit
+        self.admin_id = admin_id
 
     @asynccontextmanager
     async def create_dialog(self) -> AsyncIterator[CreateDialogUseCase]:
@@ -196,4 +204,14 @@ class UseCaseFactory:
                 gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
                 whisper_gateway=WhisperGateway(whisper_client=self.whisper_client),
                 ai_repo=AIRepo(session=session),
+            )
+
+    @asynccontextmanager
+    async def log_to_db(self) -> AsyncIterator[LogToDBUseCase]:
+        async with self.session_factory() as session:
+            yield LogToDBUseCase(
+                audit_service=AuditService(),
+                audit_repo=AuditRepo(session=session),
+                user_repo=UserRepo(session=session),
+                admin_id=self.admin_id,
             )
