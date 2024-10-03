@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-29 02:14+0300\n"
+"POT-Creation-Date: 2024-09-30 18:30+0300\n"
 "PO-Revision-Date: 2024-09-16 18:54+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -35,58 +35,58 @@ msgid ""
 " you can press /start again"
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:72
+#: kami/bot_client/handlers/dialog.py:71
 msgid ""
 "Let's practice English!\n"
 "Select any topic to begin the dialog and we'll be able to talk by voice "
 "messages on this topic:"
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:108
+#: kami/bot_client/handlers/dialog.py:107
 msgid "Input your topic, please"
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:141
-#: kami/bot_client/handlers/dialog.py:199
-#: kami/bot_client/handlers/dialog.py:310
-#: kami/bot_client/handlers/lang_test.py:82
+#: kami/bot_client/handlers/dialog.py:140
+#: kami/bot_client/handlers/dialog.py:198
+#: kami/bot_client/handlers/dialog.py:309
+#: kami/bot_client/handlers/lang_test.py:84
 msgid "One moment..."
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:170
-#: kami/bot_client/handlers/dialog.py:226
-#: kami/bot_client/handlers/dialog.py:281
+#: kami/bot_client/handlers/dialog.py:169
+#: kami/bot_client/handlers/dialog.py:225
+#: kami/bot_client/handlers/dialog.py:280
 msgid "Awaiting time is up. Continue dialog here /dialog."
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:319
+#: kami/bot_client/handlers/dialog.py:318
 msgid ""
 "You dont have a created dialog yet! Choose a topic for the dialogue and "
 "start your first dialogue."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:50
+#: kami/bot_client/handlers/lang_test.py:52
 msgid "Start test?"
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:88
+#: kami/bot_client/handlers/lang_test.py:90
 msgid "Test is creating..."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:96
+#: kami/bot_client/handlers/lang_test.py:98
 msgid "Error while test creating: NoAiError"
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:102
+#: kami/bot_client/handlers/lang_test.py:104
 msgid "Test was created."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:154
-#: kami/bot_client/handlers/lang_test.py:207
+#: kami/bot_client/handlers/lang_test.py:156
+#: kami/bot_client/handlers/lang_test.py:209
 msgid "Yor result is: {rate}."
 msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:158
+#: kami/bot_client/handlers/lang_test.py:160
 msgid "Now i recommend you to practise your speaking skills."
 msgstr ""
 
@@ -182,11 +182,11 @@ msgstr ""
 msgid "Hello, Kami 👋"
 msgstr ""
 
-#: kami/bot_client/handlers/translator.py:49
+#: kami/bot_client/handlers/translator.py:48
 msgid "Please choose the translation direction:"
 msgstr ""
 
-#: kami/bot_client/handlers/translator.py:83
+#: kami/bot_client/handlers/translator.py:82
 msgid "Please write or send the text/voice you want to translate:"
 msgstr ""
 
