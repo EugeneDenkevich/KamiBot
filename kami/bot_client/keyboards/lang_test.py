@@ -21,7 +21,7 @@ def build_lang_test_markup() -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
 
     builder.button(
-        text=_("Start language test"),
+        text=_("Let's get started 📝"),
         callback_data=StartLangTestCallback().pack(),
     )
 

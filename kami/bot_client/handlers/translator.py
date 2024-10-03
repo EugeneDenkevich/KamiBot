@@ -8,6 +8,7 @@ from aiogram.utils.i18n import gettext as _
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user, get_voice_reply
+from kami.bot_client.enums.stickers import StickersEnum
 from kami.bot_client.keyboards.translator import (
     StartTranslatorCD,
     build_translator_markup,
@@ -53,8 +54,10 @@ async def handle_translator_command(
             action=ActionEnum.USER_PUSH,
         )
 
+        await message.answer_sticker(StickersEnum.KAMILA_TRANSLATE)
+
         await message.answer(
-            text=_("Please choose the translation direction:"),
+            text=_("👇 Please choose the translation direction:"),
             reply_markup=build_translator_markup(language=settings.translation_language),
         )
 
@@ -96,7 +99,7 @@ async def handle_direction_choice(
         await state.set_state(TranslatorFSM.translating)
 
         await callback_query.message.answer(  # type: ignore[union-attr]
-            text=_("Please write or send the text/voice you want to translate:"),
+            text=_("🖋 Please write or send the text/voice you want to translate:"),
         )
 
         await callback_query.answer()

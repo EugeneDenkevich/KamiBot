@@ -11,6 +11,7 @@ from kami.backend.domain.lang_test.models import QuestT
 from kami.backend.domain.user.exceptions import UserNotFoundError
 from kami.backend.domain.user.models import User
 from kami.backend.presentation.client import BackendClient
+from kami.bot_client.enums.stickers import StickersEnum
 from kami.bot_client.keyboards.share_contact import build_share_contact_markup
 from kami.bot_client.states.dialogue import DialogFSM
 from kami.bot_client.states.register import RegisterFSM
@@ -88,20 +89,20 @@ async def auth_user(
     except UserNotFoundError:
         await state.set_state(RegisterFSM.share_contact)
 
+        await message.answer_sticker(StickersEnum.KAMILA_AUTH)  # type: ignore[arg-type, union-attr]
         await message.answer(  # type: ignore[union-attr]
-            text=_("Hello. Please, share your contact"),
+            text=_("Hello. Please, share your contact 👇"),
             reply_markup=build_share_contact_markup(),
         )
         return None
     else:
         if not user.active:
+            await message.answer_sticker(StickersEnum.KAMILA_START_IF_NOT_PAID)  # type: ignore[arg-type, union-attr]
             await message.answer(  # type: ignore[union-attr]
                 text=_(
-                    "Hello. Unfortunately, your subscription is not activated.\n"
-                    "To continue, go to the <b>Menu</b> and select <b>Payment</b> "
-                    "or pay now by clicking <b>Activate subscribtion</b>.\n"
-                    "After payment, the administrator will confirm your account "
-                    "activation and you can press /start again",
+                    "The administrator will check your data.\n"
+                    "If your subscription is paid, you will receive a "
+                    "notification and all the functions of the bot will work",
                 ),
                 parse_mode=ParseMode.HTML,
             )
