@@ -7,7 +7,10 @@ from aiogram.utils.i18n import gettext as _
 
 from kami.backend.domain.ai.exceptions import AINotFoundError
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
-from kami.backend.domain.lang_test.exceptions import NoQuestionsError
+from kami.backend.domain.lang_test.exceptions import (
+    LangTastCreationFailedError,
+    NoQuestionsError,
+)
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user, get_voice_reply, parse_question
 from kami.bot_client.enums.stickers import StickersEnum
@@ -118,6 +121,13 @@ async def handle_testing(
             await callback_query.message.answer(
                 text=_(
                     "Error while test creating: NoAiError",
+                ),
+            )
+        except LangTastCreationFailedError:
+            await state.clear()
+            await callback_query.message.answer(
+                text=_(
+                    "Error while test creating. Try again: /lang_test",
                 ),
             )
         else:
