@@ -7,6 +7,7 @@ static/
 .ruff_cache
 tests_old/
 assets/
+media/
 
 # C extensions
 *.so
@@ -30,6 +31,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+kami/media/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

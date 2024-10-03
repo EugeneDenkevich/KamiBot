@@ -6,6 +6,7 @@ from aiogram.utils.i18n import gettext as _
 
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.presentation.client import BackendClient
+from kami.bot_client.enums.stickers import StickersEnum
 from kami.bot_client.keyboards.add_user import build_add_user_markup
 from kami.settings import Settings
 
@@ -37,11 +38,12 @@ async def handle_register(
     )
     username = message.from_user.username  # type: ignore[union-attr]
 
+    await message.answer_sticker(StickersEnum.KAMILA_START_IF_NOT_PAID)
     await message.answer(
         text=_(
-            "We notified admin and you will get "
-            "the <b>registration form</b> soon.\n"
-            "After this press /start again.",
+            "The administrator will check your data. \n"
+            "If your subscription is paid, you will receive "
+            "a notification and all the functions of the bot will work",
         ),
         parse_mode=ParseMode.HTML,
         reply_markup=ReplyKeyboardRemove(),

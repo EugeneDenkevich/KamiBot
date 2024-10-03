@@ -13,6 +13,7 @@ from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.domain.dialog.exceptions import DialogueNotFoundError
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user, get_voice_reply, wait_for_answer
+from kami.bot_client.enums.stickers import StickersEnum
 from kami.bot_client.keyboards.dialog_after_test import DialogAfterTestCD
 from kami.bot_client.keyboards.dialogue import (
     ContinueDialogueCD,
@@ -73,15 +74,31 @@ async def handle_dialog_command(
         except DialogueNotFoundError:
             no_dialog = True
 
-        # Multiline i18n work only in such format
-        await message.answer(  # type: ignore[union-attr]
-            text=_(
-                "Let's practice English!\n"
-                "Select any topic to begin the dialog and we'll "
-                "be able to talk by voice messages on this topic:",
-            ),
-            reply_markup=build_dialog_markup(no_dialog=no_dialog),
-        )
+        if no_dialog:
+            # Multiline i18n work only in such format
+            await message.answer_sticker(StickersEnum.KAMILA_FIRST_DIALOG)
+            await message.answer(  # type: ignore[union-attr]
+                text=_(
+                    "Let's practice 🗣 English!\n"
+                    "😎 Select any topic to begin the dialog and we'll "
+                    "be able to talk by voice messages on this topic:",
+                ),
+                reply_markup=build_dialog_markup(no_dialog=no_dialog),
+            )
+        else:
+            # Multiline i18n work only in such format
+            await message.answer_sticker(
+                StickersEnum.KAMILA_SECOND_DIALOGUE,  # type: ignore[arg-type]
+            )
+            await message.answer(  # type: ignore[union-attr]
+                text=_(
+                    "🥰 Welcome back, let's continue the practice of communication!"
+                    "Let's practice 🗣 English!\n"
+                    "😎 Select any topic to begin the dialog and we'll "
+                    "be able to talk by voice messages on this topic:",
+                ),
+                reply_markup=build_dialog_markup(no_dialog=no_dialog),
+            )
 
 
 @router.callback_query(MyTopicCallback.filter())
@@ -118,6 +135,9 @@ async def handle_my_topic(
 
         await state.set_state(DialogFSM.my_topic)  # type: ignore[union-attr]
 
+        await callback_query.message.answer_sticker(  # type: ignore[union-attr]
+            StickersEnum.KAMILA_MY_TOPIC,  # type: ignore[arg-type]
+        )
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_("Input your topic, please"),
         )
@@ -233,9 +253,16 @@ async def handle_my_topic_selected(
         )
 
         try:
+            if message.content_type == "voice":
+                voice_replay = await get_voice_reply(message)
+                topic = await backend_client.voice_to_text(voice_replay)
+
+            else:
+                topic = message.text  # type: ignore[assignment]
+
             voice_answer = await backend_client.start_dialog(
                 tg_id=tg_id,  # type: ignore[union-attr]
-                topic=message.text,  # type: ignore[arg-type]
+                topic=topic,  # type: ignore[arg-type]
             )
         except:
             await state.clear()  # type: ignore[union-attr]
@@ -245,12 +272,12 @@ async def handle_my_topic_selected(
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
             )
 
-            await wait_for_answer(
-                awaiting_time=settings.awaiting_time,
-                message=message,
-                state=state,  # type: ignore[arg-type]
-                text=_("Awaiting time is up. Continue dialog here /dialog."),
-            )
+        await wait_for_answer(
+            awaiting_time=settings.awaiting_time,
+            message=message,
+            state=state,  # type: ignore[arg-type]
+            text=_("Awaiting time is up. Continue dialog here /dialog."),
+        )
 
 
 @router.message(F.voice, DialogFSM.conversation)
@@ -306,12 +333,12 @@ async def handle_dialog_voice(
                 audio=BufferedInputFile(file=voice, filename="voice1.ogg"),
             )
 
-            await wait_for_answer(
-                awaiting_time=settings.awaiting_time,
-                message=message,
-                state=state,  # type: ignore[arg-type]
-                text=_("Awaiting time is up. Continue dialog here /dialog."),
-            )
+        await wait_for_answer(
+            awaiting_time=settings.awaiting_time,
+            message=message,
+            state=state,  # type: ignore[arg-type]
+            text=_("Awaiting time is up. Continue dialog here /dialog."),
+        )
 
 
 @router.callback_query(ContinueDialogueCD.filter())
