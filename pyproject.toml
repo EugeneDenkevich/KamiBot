@@ -20,6 +20,8 @@ pyttsx3 = "2.97"
 httpx = {extras = ["socks"], version = "0.27.2"}
 pydub = "0.25.1"
 ffmpeg = "1.4"
+fastapi = "0.115.0"
+uvicorn = "0.31.0"
 
 [tool.poetry.group.linters.dependencies]
 pre-commit = "3.7.1"

@@ -4,7 +4,9 @@ from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand
 from aiogram.utils.i18n import ConstI18nMiddleware, I18n
 
+from kami.bot_client.handlers import setup_routers
 from kami.bot_client.middlewaries.custom_middlewaries import CustomMiddleware
+from kami.common import get_work_dir
 
 
 async def set_commands(bot: Bot) -> None:
@@ -48,3 +50,22 @@ def setup_i18n(
     i18n_middlewarie = ConstI18nMiddleware(i18n=i18n, locale=language)
 
     dispatcher.update.middleware(i18n_middlewarie)
+
+
+async def setup_bot(bot: Bot, language: str, dispatcher: Dispatcher) -> None:
+    """
+    Setup Bot.
+
+    :param bot: Bot.
+    :param language: Language for the bot.
+    :param dispatcher: Dispatcher.
+    """
+
+    await set_commands(bot)
+    setup_routers(dispatcher)
+    setup_dispatcher(dispatcher)
+    setup_i18n(
+        dispatcher=dispatcher,
+        work_dir=get_work_dir(),
+        language=language,
+    )

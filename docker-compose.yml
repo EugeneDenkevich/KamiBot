@@ -29,6 +29,8 @@ services:
       dockerfile: dockerfiles/Dockerfile.client
     networks:
       - kami-network
+    ports:
+      - '${KAMI_BOT_SERVER_PORT_CLIENT}:${KAMI_BOT_SERVER_PORT_CLIENT}'
     restart: always
     env_file:
       - ".env"
@@ -52,6 +54,8 @@ services:
       dockerfile: dockerfiles/Dockerfile.admin
     networks:
       - kami-network
+    ports:
+      - '${KAMI_BOT_SERVER_PORT_ADMIN}:${KAMI_BOT_SERVER_PORT_ADMIN}'
     restart: always
     env_file:
       - ".env"

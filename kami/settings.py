@@ -26,6 +26,11 @@ class Settings(BaseSettings):
 
     vpn_conn_string: str = ""
 
+    server_domain: str = ""
+    server_host: str = ""
+    server_port_client: int = 5000
+    server_port_admin: int = 5001
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_prefix="KAMI_BOT_",
