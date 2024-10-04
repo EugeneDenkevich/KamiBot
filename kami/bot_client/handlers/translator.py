@@ -57,7 +57,10 @@ async def handle_translator_command(
         await message.answer_sticker(StickersEnum.KAMILA_TRANSLATE)
 
         await message.answer(
-            text=_("👇 Please choose the translation direction:"),
+            text=_(
+                "👇 Choose the language you want to translate to.\n"
+                "🖋 Then write a text or send a voice message.",
+            ),
             reply_markup=build_translator_markup(language=settings.translation_language),
         )
 
@@ -97,10 +100,6 @@ async def handle_direction_choice(
         await state.update_data(direction=callback_data.direction)
 
         await state.set_state(TranslatorFSM.translating)
-
-        await callback_query.message.answer(  # type: ignore[union-attr]
-            text=_("🖋 Please write or send the text/voice you want to translate:"),
-        )
 
         await callback_query.answer()
 
