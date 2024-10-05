@@ -35,7 +35,10 @@ BotD = Annotated[Bot, Depends(get_current_bot)]
 DispatcherD = Annotated[Dispatcher, Depends(get_current_dp)]
 
 
-@fastapi_router.post(path=f"/{settings.bot_admin_token}", response_model=None)
+@fastapi_router.post(
+    path=f"/webhook-client/{settings.bot_admin_token}",
+    response_model=None,
+)
 async def webhook(
     request: Request,
     bot: BotD,
