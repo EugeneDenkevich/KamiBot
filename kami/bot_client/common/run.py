@@ -18,6 +18,10 @@ def run_in_pooling(bot: Bot, dp: Dispatcher, language: str) -> None:
         loop = asyncio.get_event_loop()
 
         loop.run_until_complete(
+            bot.delete_webhook(),
+        )
+
+        loop.run_until_complete(
             setup_bot(
                 bot=bot,
                 language=language,
