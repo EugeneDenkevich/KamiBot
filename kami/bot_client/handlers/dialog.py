@@ -116,6 +116,7 @@ async def handle_my_topic(
     """
 
     await callback_query.answer()
+    await state.clear()
 
     tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
 
@@ -160,8 +161,9 @@ async def handle_topic_selected(
     :param backend_client: BackendClient.
     :param state: FSM state.
     """
-
+    
     await callback_query.answer()
+    await state.clear()
 
     tg_id = str(callback_query.from_user.id)  # type: ignore[union-attr]
 
@@ -203,11 +205,14 @@ async def handle_topic_selected(
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
             )
 
+            dialog = await backend_client.get_dialog(tg_id=tg_id)
+
             await wait_for_answer(
+                dialog_id=dialog.id,
                 awaiting_time=settings.awaiting_time,
                 message=callback_query.message,  # type: ignore[arg-type]
                 state=state,  # type: ignore[arg-type]
-                text=_("Awaiting time is up. Continue dialog here /dialog."),
+                backend_client=backend_client,
             )
 
 
@@ -272,11 +277,14 @@ async def handle_my_topic_selected(
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
             )
 
+        dialog = await backend_client.get_dialog(tg_id=tg_id)
+
         await wait_for_answer(
+            dialog_id=dialog.id,
             awaiting_time=settings.awaiting_time,
-            message=message,
+            message=message,  # type: ignore[arg-type]
             state=state,  # type: ignore[arg-type]
-            text=_("Awaiting time is up. Continue dialog here /dialog."),
+            backend_client=backend_client,
         )
 
 
@@ -333,11 +341,14 @@ async def handle_dialog_voice(
                 audio=BufferedInputFile(file=voice, filename="voice1.ogg"),
             )
 
+        dialog = await backend_client.get_dialog(tg_id=tg_id)
+
         await wait_for_answer(
+            dialog_id=dialog.id,
             awaiting_time=settings.awaiting_time,
-            message=message,
+            message=message,  # type: ignore[arg-type]
             state=state,  # type: ignore[arg-type]
-            text=_("Awaiting time is up. Continue dialog here /dialog."),
+            backend_client=backend_client,
         )
 
 
