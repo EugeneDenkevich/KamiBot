@@ -22,6 +22,7 @@ async def set_commands(bot: Bot) -> None:
         BotCommand(command="translator", description="Start translation"),
         BotCommand(command="lang_test", description="Start language test"),
         BotCommand(command="onboarding", description="Run onboarding"),
+        BotCommand(command="support", description="Write to support"),
     ])
 
 
