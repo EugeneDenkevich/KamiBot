@@ -96,6 +96,9 @@ async def handle_direction_choice(
 
         await state.update_data(direction=callback_data.direction)
 
+        await callback_query.message.answer_sticker(
+            StickersEnum.KAMILA_SECOND_TRANSLATE
+        )
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
                 "Now it is possible to send a message:\n"

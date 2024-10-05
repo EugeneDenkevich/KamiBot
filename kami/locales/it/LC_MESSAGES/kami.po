@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-05 12:09+0300\n"
+"POT-Creation-Date: 2024-10-05 14:55+0300\n"
 "PO-Revision-Date: 2024-09-27 21:01+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -28,16 +28,16 @@ msgstr ""
 msgid "Your telegram id: "
 msgstr "Il tuo ID telegram:"
 
-#: kami/bot_client/common/utils.py:68
+#: kami/bot_client/common/utils.py:57
 msgid "Awaiting time is up. Continue dialog here /dialog."
 msgstr "Il tempo di attesa è scaduto. Continua il dialogo qui /dialog."
 
-#: kami/bot_client/common/utils.py:96
+#: kami/bot_client/common/utils.py:85
 #, fuzzy
 msgid "Hello. Please, share your contact 👇"
 msgstr "Ciao. Per favore, condividi il tuo contatto"
 
-#: kami/bot_client/common/utils.py:104
+#: kami/bot_client/common/utils.py:93
 msgid ""
 "The administrator will check your data.\n"
 "If your subscription is paid, you will receive a notification and all the"
@@ -97,31 +97,26 @@ msgstr ""
 msgid "Test is creating..."
 msgstr "Il test sta creando..."
 
-#: kami/bot_client/handlers/lang_test.py:122
+#: kami/bot_client/handlers/lang_test.py:121
 msgid "Error while test creating: NoAiError"
 msgstr "Errore durante la creazione del test: NoAiError"
 
-#: kami/bot_client/handlers/lang_test.py:129
-#, fuzzy
-msgid "Error while test creating. Try again: /lang_test"
-msgstr "Errore durante la creazione del test: NoAiError"
-
-#: kami/bot_client/handlers/lang_test.py:135
+#: kami/bot_client/handlers/lang_test.py:127
 msgid "Test was created."
 msgstr "Il test è stato creato."
 
-#: kami/bot_client/handlers/lang_test.py:194
+#: kami/bot_client/handlers/lang_test.py:188
 #, fuzzy
 msgid ""
 "Very good!\n"
 "Yor result is: {rate}."
 msgstr "Il tuo risultato è: {rate}."
 
-#: kami/bot_client/handlers/lang_test.py:201
+#: kami/bot_client/handlers/lang_test.py:195
 msgid "Now i recommend you to practise your speaking skills."
 msgstr "Ora ti consiglio di mettere in pratica le tue capacità oratorie."
 
-#: kami/bot_client/handlers/lang_test.py:257
+#: kami/bot_client/handlers/lang_test.py:249
 msgid "Yor result is: {rate}."
 msgstr "Il tuo risultato è: {rate}."
 
@@ -257,10 +252,25 @@ msgstr "Ciao, sono Kami, la tua insegnante di inglese online!"
 msgid "Hello, Kami 👋"
 msgstr "Ciao, Kami 👋"
 
-#: kami/bot_client/handlers/translator.py:60
+#: kami/bot_client/handlers/support.py:21
 msgid ""
-"👇 Choose the language you want to translate to.\n"
-"🖋 Then write a text or send a voice message."
+"If you have found errors in the work of AI Kami or do not understand how "
+"the functionality works, write here: \n"
+"@NikMer"
+msgstr ""
+
+#: kami/bot_client/handlers/translator.py:60
+msgid "👇 Choose the language in which you want to translate."
+msgstr ""
+
+#: kami/bot_client/handlers/translator.py:100
+msgid ""
+"Now it is possible to send a message:\n"
+"🖋 as text\n"
+"🗣 or voice\n"
+"I will translate it and send a response via SMS.\n"
+"❕ If you wish to change the translation direction, press the Menu button "
+"and select the translation language again."
 msgstr ""
 
 #: kami/bot_client/keyboards/add_user.py:28
@@ -337,4 +347,12 @@ msgstr "Inglese → {language}"
 
 #~ msgid "Start language test"
 #~ msgstr "Inizia il test di lingua"
+
+#~ msgid "Error while test creating. Try again: /lang_test"
+#~ msgstr "Errore durante la creazione del test: NoAiError"
+
+#~ msgid ""
+#~ "👇 Choose the language you want to translate to.\n"
+#~ "🖋 Then write a text or send a voice message."
+#~ msgstr ""
 
