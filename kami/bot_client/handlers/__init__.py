@@ -7,6 +7,7 @@ from kami.bot_client.handlers.lang_test import router as lang_test_router
 from kami.bot_client.handlers.onboarding import router as onboarding_router
 from kami.bot_client.handlers.register import router as register_router
 from kami.bot_client.handlers.start import router as start_router
+from kami.bot_client.handlers.support import router as support_router
 from kami.bot_client.handlers.translator import router as translator_router
 
 
@@ -17,6 +18,7 @@ def setup_routers(dispatcher: Dispatcher) -> None:
     :param dispatcher: Main dispatcher of routers.
     """
     dispatcher.include_router(start_router)
+    dispatcher.include_router(support_router)
     dispatcher.include_router(lang_test_router)
     dispatcher.include_router(register_router)
     dispatcher.include_router(onboarding_router)
