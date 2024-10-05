@@ -46,7 +46,7 @@ async def lifespan(
     :param token: Bot admin token.
     """
 
-    url_webhook = f"{url}/webhook/{token}"
+    url_webhook = f"{url}/webhook-admin/{token}"
 
     await bot.set_webhook(
         url=url_webhook,
