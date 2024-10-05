@@ -101,3 +101,21 @@ class DialogRepo():
 
         await self.session.execute(query)
         await self.session.commit()
+    
+    async def get_dialog_by_id_or_none(self, dialog_id: str) -> Optional[Dialog]:
+        """
+        Get dialog or None from DB by id.
+        
+        :param dialog_id: Dialog id in DB.
+        :return: Dialog or None.
+        """
+
+        query = select(DialogTable).where(DialogTable.id == dialog_id)
+
+        result = await self.session.execute(query)
+        dialogue = result.scalar()
+
+        if not dialogue:
+            return None
+
+        return dialogue_db_to_entity(dialog=dialogue)

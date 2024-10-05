@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-30 18:30+0300\n"
+"POT-Creation-Date: 2024-10-05 12:09+0300\n"
 "PO-Revision-Date: 2024-09-27 21:01+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -18,56 +18,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
+#: kami/bot_admin/handlers/add_user.py:54
+msgid ""
+"Hello, beautiful soul! \n"
+"Your account is activated. Thank you very much for your trust."
+msgstr ""
+
 #: kami/bot_admin/handlers/getid.py:19
 msgid "Your telegram id: "
 msgstr "Il tuo ID telegram:"
 
-#: kami/bot_client/common/utils.py:92
-msgid "Hello. Please, share your contact"
+#: kami/bot_client/common/utils.py:68
+msgid "Awaiting time is up. Continue dialog here /dialog."
+msgstr "Il tempo di attesa è scaduto. Continua il dialogo qui /dialog."
+
+#: kami/bot_client/common/utils.py:96
+#, fuzzy
+msgid "Hello. Please, share your contact 👇"
 msgstr "Ciao. Per favore, condividi il tuo contatto"
 
-#: kami/bot_client/common/utils.py:99
+#: kami/bot_client/common/utils.py:104
 msgid ""
-"Hello. Unfortunately, your subscription is not activated.\n"
-"To continue, go to the <b>Menu</b> and select <b>Payment</b> or pay now "
-"by clicking <b>Activate subscribtion</b>.\n"
-"After payment, the administrator will confirm your account activation and"
-" you can press /start again"
+"The administrator will check your data.\n"
+"If your subscription is paid, you will receive a notification and all the"
+" functions of the bot will work"
 msgstr ""
-"Ciao. Purtroppo il tuo abbonamento non è attivato.\n"
-"Per continuare, vai al <b>Menu</b> e seleziona <b>Pagamento</b> o paga "
-"ora cliccando su <b>Attiva abbonamento</b>.\n"
-"Dopo il pagamento, l'amministratore confermerà l'attivazione del tuo "
-"account e puoi premere di nuovo /start"
 
-#: kami/bot_client/handlers/dialog.py:71
+#: kami/bot_client/handlers/dialog.py:81
+#, fuzzy
 msgid ""
-"Let's practice English!\n"
-"Select any topic to begin the dialog and we'll be able to talk by voice "
-"messages on this topic:"
+"Let's practice 🗣 English!\n"
+"😎 Select any topic to begin the dialog and we'll be able to talk by voice"
+" messages on this topic:"
 msgstr ""
 "Pratichiamo l'inglese!\n"
 "Seleziona un argomento qualsiasi per iniziare il dialogo e potremo "
 "parlare a voce messaggi su questo argomento:"
 
-#: kami/bot_client/handlers/dialog.py:107
+#: kami/bot_client/handlers/dialog.py:94
+#, fuzzy
+msgid ""
+"🥰 Welcome back, let's continue the practice of communication!Let's "
+"practice 🗣 English!\n"
+"😎 Select any topic to begin the dialog and we'll be able to talk by voice"
+" messages on this topic:"
+msgstr ""
+"Pratichiamo l'inglese!\n"
+"Seleziona un argomento qualsiasi per iniziare il dialogo e potremo "
+"parlare a voce messaggi su questo argomento:"
+
+#: kami/bot_client/handlers/dialog.py:143
 msgid "Input your topic, please"
 msgstr "Inserisci il tuo argomento, per favore"
 
-#: kami/bot_client/handlers/dialog.py:140
-#: kami/bot_client/handlers/dialog.py:198
-#: kami/bot_client/handlers/dialog.py:309
-#: kami/bot_client/handlers/lang_test.py:84
+#: kami/bot_client/handlers/dialog.py:185
+#: kami/bot_client/handlers/dialog.py:251
+#: kami/bot_client/handlers/dialog.py:388
+#: kami/bot_client/handlers/lang_test.py:107
 msgid "One moment..."
 msgstr "Un attimo..."
 
-#: kami/bot_client/handlers/dialog.py:169
-#: kami/bot_client/handlers/dialog.py:225
-#: kami/bot_client/handlers/dialog.py:280
-msgid "Awaiting time is up. Continue dialog here /dialog."
-msgstr "Il tempo di attesa è scaduto. Continua il dialogo qui /dialog."
-
-#: kami/bot_client/handlers/dialog.py:318
+#: kami/bot_client/handlers/dialog.py:395
 msgid ""
 "You dont have a created dialog yet! Choose a topic for the dialogue and "
 "start your first dialogue."
@@ -75,32 +86,46 @@ msgstr ""
 "Non hai ancora creato un dialogo! Scegli un argomento per il dialogo e "
 "inizia il tuo primo dialogo."
 
-#: kami/bot_client/handlers/lang_test.py:52
-msgid "Start test?"
-msgstr "Iniziare il test?"
+#: kami/bot_client/handlers/lang_test.py:65
+msgid ""
+"📑 I'll send you the first example from the test. \n"
+"🖋  Write or dictate the correct answer with your voice, then I will send "
+"you the next one."
+msgstr ""
 
-#: kami/bot_client/handlers/lang_test.py:90
+#: kami/bot_client/handlers/lang_test.py:113
 msgid "Test is creating..."
 msgstr "Il test sta creando..."
 
-#: kami/bot_client/handlers/lang_test.py:98
+#: kami/bot_client/handlers/lang_test.py:122
 msgid "Error while test creating: NoAiError"
 msgstr "Errore durante la creazione del test: NoAiError"
 
-#: kami/bot_client/handlers/lang_test.py:104
+#: kami/bot_client/handlers/lang_test.py:129
+#, fuzzy
+msgid "Error while test creating. Try again: /lang_test"
+msgstr "Errore durante la creazione del test: NoAiError"
+
+#: kami/bot_client/handlers/lang_test.py:135
 msgid "Test was created."
 msgstr "Il test è stato creato."
 
-#: kami/bot_client/handlers/lang_test.py:156
-#: kami/bot_client/handlers/lang_test.py:209
-msgid "Yor result is: {rate}."
+#: kami/bot_client/handlers/lang_test.py:194
+#, fuzzy
+msgid ""
+"Very good!\n"
+"Yor result is: {rate}."
 msgstr "Il tuo risultato è: {rate}."
 
-#: kami/bot_client/handlers/lang_test.py:160
+#: kami/bot_client/handlers/lang_test.py:201
 msgid "Now i recommend you to practise your speaking skills."
 msgstr "Ora ti consiglio di mettere in pratica le tue capacità oratorie."
 
-#: kami/bot_client/handlers/onboarding.py:61
+#: kami/bot_client/handlers/lang_test.py:257
+msgid "Yor result is: {rate}."
+msgstr "Il tuo risultato è: {rate}."
+
+#: kami/bot_client/handlers/onboarding.py:72
 msgid ""
 "Now I'll tell you how to use all my features, and then we can test your "
 "English level."
@@ -108,37 +133,40 @@ msgstr ""
 "Ora ti dirò come usare tutte le mie funzionalità, e poi potremo testare "
 "il tuo livello di inglese."
 
-#: kami/bot_client/handlers/onboarding.py:66
+#: kami/bot_client/handlers/onboarding.py:77
 msgid "Cool idea 😊"
 msgstr "Bella idea 😊"
 
-#: kami/bot_client/handlers/onboarding.py:99
+#: kami/bot_client/handlers/onboarding.py:118
+#, fuzzy
 msgid ""
-"At the bottom there is a quick menu with basic functions: Dialogues, "
-"Language Level, Translator.\n"
+"👇At the bottom there is a quick menu with basic functions:\n"
+"📍Dialogues\n"
+"📍Language Level\n"
+"📍Translator\n"
 msgstr ""
 "In basso c'è un menu rapido con funzioni di base: Dialoghi, Livello della"
 " lingua, Traduttore.\n"
 
-#: kami/bot_client/handlers/onboarding.py:106
+#: kami/bot_client/handlers/onboarding.py:128
+#, fuzzy
 msgid ""
-"Click on these buttons to quickly select the desired function. And also "
-"the <b>Menu</b> button with additional functions: \n"
+"🔴<b>Click</b> on these buttons to quickly select the desired function.\n"
+"And also the <b>Menu</b> button with additional functions: \n"
+"📍Onboarding \n"
 "Answers to questions, Payment, Feedback, and so on."
 msgstr ""
 "Clicca su questi pulsanti per selezionare rapidamente la funzione "
 "desiderata. E anche il pulsante <b>Menu</b> con funzioni aggiuntive: \n"
 "Risposte alle domande, Pagamento, Feedback e così via."
 
-#: kami/bot_client/handlers/onboarding.py:112
-#: kami/bot_client/handlers/onboarding.py:158
-#: kami/bot_client/handlers/onboarding.py:194
-#: kami/bot_client/handlers/onboarding.py:230
-#: kami/bot_client/handlers/onboarding.py:302
+#: kami/bot_client/handlers/onboarding.py:136
+#: kami/bot_client/handlers/onboarding.py:318
+#: kami/bot_client/handlers/onboarding.py:420
 msgid "Got it"
 msgstr "Ho capito"
 
-#: kami/bot_client/handlers/onboarding.py:144
+#: kami/bot_client/handlers/onboarding.py:177
 msgid ""
 "Now I will show you how to use the basic functions. But you can always go"
 " through this training again."
@@ -146,15 +174,21 @@ msgstr ""
 "Ora ti mostrerò come usare le funzioni di base. Ma puoi sempreripetere "
 "questa formazione."
 
-#: kami/bot_client/handlers/onboarding.py:153
+#: kami/bot_client/handlers/onboarding.py:199
+#, fuzzy
 msgid ""
-"This video shows how to work with “Dialogues”.\n"
-"Watch the video, then click the “Got it” button"
+"📹 This video shows how to work with “Dialogues”.\n"
+"👀 Watch the video, then click the “Got it” button"
 msgstr ""
 "Questo video mostra come lavorare con i “Dialoghi”.\n"
 "Guarda il video, quindi clicca sul pulsante “Ho capito”"
 
-#: kami/bot_client/handlers/onboarding.py:189
+#: kami/bot_client/handlers/onboarding.py:204
+#, fuzzy
+msgid "Got it 😉"
+msgstr "Ho capito"
+
+#: kami/bot_client/handlers/onboarding.py:256
 msgid ""
 "This video shows how the “Translator” works.\n"
 "Watch the video, then click the “Got it” button"
@@ -162,7 +196,12 @@ msgstr ""
 "Questo video mostra come funziona il “Traduttore”.\n"
 "Guarda il video, quindi clicca sul pulsante “Capito”"
 
-#: kami/bot_client/handlers/onboarding.py:225
+#: kami/bot_client/handlers/onboarding.py:261
+#, fuzzy
+msgid "Got it 😊"
+msgstr "Ho capito"
+
+#: kami/bot_client/handlers/onboarding.py:313
 msgid ""
 "This video shows how the “Language Level” works.\n"
 "Watch the video, then click the “Got it” button"
@@ -170,35 +209,35 @@ msgstr ""
 "Questo video mostra come funziona il “Language Level”.\n"
 "Guarda il video, quindi clicca sul pulsante “Ho capito”"
 
-#: kami/bot_client/handlers/onboarding.py:261
+#: kami/bot_client/handlers/onboarding.py:358
+#, fuzzy
 msgid ""
-"Great, it's time to determine your level of English.\n"
-"Click the button below and take the 6-question test.\n"
-"This will help me choose the style and phrases to communicate with you."
+"😉 Great, it's time to determine your level of English. 🧐\n"
+"Click the button below 🖲 and take the 6-question test.\n"
+"📝 This will help me choose the style and phrases to communicate with you."
 msgstr ""
 "Ottimo, è il momento di determinare il tuo livello di inglese.\n"
 "Clicca sul pulsante qui sotto e fai il test di 6 domande.\n"
 "Questo mi aiuterà a scegliere lo stile e le frasi per comunicare con te."
 
-#: kami/bot_client/handlers/onboarding.py:268
+#: kami/bot_client/handlers/onboarding.py:365
 #, fuzzy
-msgid "Language level test start"
+msgid "Language level test start 😉"
 msgstr "Livello di lingua"
 
-#: kami/bot_client/handlers/onboarding.py:299
-msgid "Watch the videonote and everything will become clear."
+#: kami/bot_client/handlers/onboarding.py:417
+#, fuzzy
+msgid "👀 Watch the videonote and everything will become clear."
 msgstr "Guarda il video e tutto ti sarà chiaro."
 
-#: kami/bot_client/handlers/register.py:31
+#: kami/bot_client/handlers/register.py:43
 msgid ""
-"We notified admin and you will get the <b>registration form</b> soon.\n"
-"After this press /start again."
+"The administrator will check your data. \n"
+"If your subscription is paid, you will receive a notification and all the"
+" functions of the bot will work"
 msgstr ""
-"Abbiamo avvisato l'amministratore e presto riceverai il <b>modulo di "
-"registrazione</b>.\n"
-"Dopo questo, premi di nuovo /start."
 
-#: kami/bot_client/handlers/register.py:42
+#: kami/bot_client/handlers/register.py:54
 msgid ""
 "User wanted to be added:\n"
 "<b>Tg id:</b> {tg_id}\n"
@@ -210,21 +249,19 @@ msgstr ""
 "<b>Nome utente:</b> {username}\n"
 "<b>Nome completo:</b> {fio}"
 
-#: kami/bot_client/handlers/start.py:40
+#: kami/bot_client/handlers/start.py:52
 msgid "Hello, I'm Kami, your online English teacher!"
 msgstr "Ciao, sono Kami, la tua insegnante di inglese online!"
 
-#: kami/bot_client/handlers/start.py:48
+#: kami/bot_client/handlers/start.py:60
 msgid "Hello, Kami 👋"
 msgstr "Ciao, Kami 👋"
 
-#: kami/bot_client/handlers/translator.py:48
-msgid "Please choose the translation direction:"
-msgstr "Si prega di scegliere la direzione della traduzione:"
-
-#: kami/bot_client/handlers/translator.py:82
-msgid "Please write or send the text/voice you want to translate:"
-msgstr "Per favore scrivi o invia il testo/voce che vuoi tradurre:"
+#: kami/bot_client/handlers/translator.py:60
+msgid ""
+"👇 Choose the language you want to translate to.\n"
+"🖋 Then write a text or send a voice message."
+msgstr ""
 
 #: kami/bot_client/keyboards/add_user.py:28
 msgid "Add user"
@@ -244,8 +281,8 @@ msgid "{text}"
 msgstr "{text}"
 
 #: kami/bot_client/keyboards/lang_test.py:24
-msgid "Start language test"
-msgstr "Inizia il test di lingua"
+msgid "Let's get started 📝"
+msgstr ""
 
 #: kami/bot_client/keyboards/onboarding.py:48
 msgid "Show where it is"
@@ -262,3 +299,42 @@ msgstr "{language} → Inglese"
 #: kami/bot_client/keyboards/translator.py:31
 msgid "English → {language}"
 msgstr "Inglese → {language}"
+
+#~ msgid ""
+#~ "Hello. Unfortunately, your subscription is not activated.\n"
+#~ "To continue, go to the <b>Menu</b> "
+#~ "and select <b>Payment</b> or pay now "
+#~ "by clicking <b>Activate subscribtion</b>.\n"
+#~ "After payment, the administrator will "
+#~ "confirm your account activation and you"
+#~ " can press /start again"
+#~ msgstr ""
+#~ "Ciao. Purtroppo il tuo abbonamento non è attivato.\n"
+#~ "Per continuare, vai al <b>Menu</b> e "
+#~ "seleziona <b>Pagamento</b> o paga ora "
+#~ "cliccando su <b>Attiva abbonamento</b>.\n"
+#~ "Dopo il pagamento, l'amministratore confermerà"
+#~ " l'attivazione del tuo account e puoi"
+#~ " premere di nuovo /start"
+
+#~ msgid "Start test?"
+#~ msgstr "Iniziare il test?"
+
+#~ msgid ""
+#~ "We notified admin and you will get the <b>registration form</b> soon.\n"
+#~ "After this press /start again."
+#~ msgstr ""
+#~ "Abbiamo avvisato l'amministratore e presto "
+#~ "riceverai il <b>modulo di registrazione</b>."
+#~ "\n"
+#~ "Dopo questo, premi di nuovo /start."
+
+#~ msgid "Please choose the translation direction:"
+#~ msgstr "Si prega di scegliere la direzione della traduzione:"
+
+#~ msgid "Please write or send the text/voice you want to translate:"
+#~ msgstr "Per favore scrivi o invia il testo/voce che vuoi tradurre:"
+
+#~ msgid "Start language test"
+#~ msgstr "Inizia il test di lingua"
+
