@@ -156,10 +156,10 @@ class BackendClient():
     ) -> str:
         async with self.ucf.voice_to_text() as voice_to_text:
             return await voice_to_text(voice=voice)
-        
+
     async def get_dialog_or_none(
         self,
         dialog_id: str,
-    ) -> Dialog:
+    ) -> Optional[Dialog]:
         async with self.ucf.get_dialog_or_none() as get_dialog_or_none:
             return await get_dialog_or_none(dialog_id=dialog_id)
