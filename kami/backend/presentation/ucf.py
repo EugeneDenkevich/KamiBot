@@ -19,6 +19,7 @@ from kami.backend.domain.audit.usecases import (
 from kami.backend.domain.dialog.services import DialogService
 from kami.backend.domain.dialog.usecases import (
     CreateDialogUseCase,
+    GetDialogOrNoneUseCase,
     GetDialogUseCase,
 )
 from kami.backend.domain.lang_test.services import LangTestService
@@ -217,4 +218,11 @@ class UseCaseFactory:
                 audit_repo=AuditRepo(session=session),
                 user_repo=UserRepo(session=session),
                 admin_id=self.admin_id,
+            )
+
+    @asynccontextmanager
+    async def get_dialog_or_none(self) -> AsyncIterator[GetDialogOrNoneUseCase]:
+        async with self.session_factory() as session:
+            yield GetDialogOrNoneUseCase(
+                dialog_repo=DialogRepo(session=session),
             )

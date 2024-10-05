@@ -12,7 +12,6 @@ from kami.backend.domain.user.models import User
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.enums.stickers import StickersEnum
 from kami.bot_client.keyboards.share_contact import build_share_contact_markup
-from kami.bot_client.states.dialogue import DialogFSM
 from kami.bot_client.states.register import RegisterFSM
 
 
@@ -34,10 +33,11 @@ async def get_voice_reply(message: Message) -> bytes:
 
 
 async def wait_for_answer(
+    dialog_id: str,
     awaiting_time: int,
     message: Message,
     state: FSMContext,
-    text: str,
+    backend_client: BackendClient,
 ) -> None:
     """
     Wait if user is not responsing.
@@ -49,11 +49,14 @@ async def wait_for_answer(
 
     async def notify_if_no_response() -> None:
         await asyncio.sleep(awaiting_time)
+        
+        dialog = await backend_client.get_dialog_or_none(dialog_id=dialog_id)
 
-        if await state.get_state() == DialogFSM.conversation.state:
-            await message.answer(text)
+        if dialog:
+            await message.answer(
+                text=_("Awaiting time is up. Continue dialog here /dialog.")
+            )
             await state.clear()
-
     asyncio.create_task(notify_if_no_response())
 
 
