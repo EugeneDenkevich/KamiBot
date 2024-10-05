@@ -1,5 +1,6 @@
 
 from aiogram import F, Router
+from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
@@ -8,11 +9,10 @@ from aiogram.utils.i18n import gettext as _
 from kami.backend.domain.ai.exceptions import AINotFoundError
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.domain.lang_test.exceptions import (
-    LangTastCreationFailedError,
     NoQuestionsError,
 )
 from kami.backend.presentation.client import BackendClient
-from kami.bot_client.common.utils import auth_user, get_voice_reply, parse_question
+from kami.bot_client.common.utils import auth_user, get_voice_reply
 from kami.bot_client.enums.stickers import StickersEnum
 from kami.bot_client.keyboards.dialog_after_test import build_dialog_after_test_markup
 from kami.bot_client.keyboards.lang_test import (
@@ -115,19 +115,11 @@ async def handle_testing(
 
         try:
             await backend_client.start_test(tg_id=tg_id)
-
         except AINotFoundError:
             await state.clear()
             await callback_query.message.answer(
                 text=_(
                     "Error while test creating: NoAiError",
-                ),
-            )
-        except LangTastCreationFailedError:
-            await state.clear()
-            await callback_query.message.answer(
-                text=_(
-                    "Error while test creating. Try again: /lang_test",
                 ),
             )
         else:
@@ -137,11 +129,13 @@ async def handle_testing(
 
             current_question = await backend_client.ask_one(tg_id=tg_id)
             await callback_query.message.answer(
-                text=parse_question(current_question=current_question),
+                text=current_question,
+                parse_mode=ParseMode.HTML,
             )
 
 
 @router.message(
+    F.text,
     ~F.text.startswith("/"),
     F.text.not_in(get_main_reply_buttons()),
     LangTestFSM.lang_testing,
@@ -206,9 +200,7 @@ async def handle_lang_test_text(
 
             return
 
-        await message.answer(
-            text=parse_question(current_question),
-        )
+        await message.answer(text=current_question, parse_mode=ParseMode.HTML)
 
 
 @router.message(F.voice, LangTestFSM.lang_testing)
@@ -258,6 +250,4 @@ async def handle_lang_test_voice(
             )
 
             return
-        await message.answer(
-            text=parse_question(current_question),
-        )
+        await message.answer(text=current_question, parse_mode=ParseMode.HTML)

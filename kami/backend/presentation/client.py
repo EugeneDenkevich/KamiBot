@@ -2,7 +2,6 @@ from typing import Optional, Tuple, Union
 
 from kami.backend.domain.dialog.models import ContextT, Dialog
 from kami.backend.domain.lang_test.enums import RateEnum
-from kami.backend.domain.lang_test.models import QuestT
 from kami.backend.domain.user.models import User
 from kami.backend.presentation.ucf import UseCaseFactory
 
@@ -32,7 +31,7 @@ class BackendClient():
     async def ask_one(
         self,
         tg_id: str,
-    ) -> QuestT:
+    ) -> str:
         async with self.ucf.ask_one() as ask_one:
             return await ask_one(tg_id=tg_id)
 

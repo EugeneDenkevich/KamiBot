@@ -7,7 +7,6 @@ from aiogram.types import Message
 from aiogram.types.inaccessible_message import InaccessibleMessage
 from aiogram.utils.i18n import gettext as _
 
-from kami.backend.domain.lang_test.models import QuestT
 from kami.backend.domain.user.exceptions import UserNotFoundError
 from kami.backend.domain.user.models import User
 from kami.backend.presentation.client import BackendClient
@@ -15,17 +14,6 @@ from kami.bot_client.enums.stickers import StickersEnum
 from kami.bot_client.keyboards.share_contact import build_share_contact_markup
 from kami.bot_client.states.dialogue import DialogFSM
 from kami.bot_client.states.register import RegisterFSM
-
-
-def parse_question(
-    current_question: QuestT,
-) -> str:
-
-    question = f"{current_question['question']}\n"
-    options = current_question["options"]
-    for leeter, option in options.items():  # type: ignore[union-attr]
-        question += f"\n{leeter}). {option}"
-    return question
 
 
 async def get_voice_reply(message: Message) -> bytes:

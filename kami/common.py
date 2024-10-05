@@ -20,6 +20,7 @@ def get_prompt(prompt_file: str) -> str:
     with open(promt_path, encoding="utf-8") as f:
         return f.read()
 
+
 def get_bot_admin(bot_admin_token: str) -> Bot:
     """
     Get bot admin.

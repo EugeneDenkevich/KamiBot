@@ -12,7 +12,3 @@ class NoQuestionsError(Exception):
 
 class NoRepliesError(Exception):
     """Error when no replies"""
-
-
-class LangTastCreationFailedError(Exception):
-    """Error when trying create language test by ChatGPT"""

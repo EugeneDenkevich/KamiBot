@@ -20,10 +20,10 @@ class LangTestTable(Base):
     tg_id: Mapped[str] = mapped_column(String, nullable=False)
     """Telegram id"""
 
-    questions: Mapped[List[QuestT]] = mapped_column(JSON, nullable=False)
+    questions: Mapped[List[str]] = mapped_column(JSON, nullable=False)
     """Questions for user"""
 
-    current_question: Mapped[QuestT] = mapped_column(JSON, nullable=True)
+    current_question: Mapped[str] = mapped_column(String, nullable=True)
     """Current question"""
 
     replies: Mapped[List[QuestT]] = mapped_column(JSON, nullable=True)

@@ -36,6 +36,7 @@ async def get_ucf() -> UseCaseFactory:
         elevenlabs_client=elevenlabs_client,
         context_limit=settings.context_limit,
         admin_id=settings.admin_id,
+        test_count=settings.test_count,
     )
 
 

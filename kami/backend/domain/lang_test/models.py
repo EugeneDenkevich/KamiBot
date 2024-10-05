@@ -1,10 +1,10 @@
 from datetime import datetime
-from typing import Dict, List, Union
+from typing import Dict, List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-QuestT = Dict[str, Union[str, Dict[str, str]]]
+QuestT = Dict[str, str]
 
 
 class LangTest(BaseModel):
@@ -12,8 +12,8 @@ class LangTest(BaseModel):
 
     id: UUID
     tg_id: str
-    questions: List[QuestT]
-    current_question: QuestT = Field(default_factory=dict)
-    replies: List[QuestT] = Field(default_factory=list)
+    questions: List[str]
+    current_question: Optional[str] = None
+    replies: List[QuestT] = []
     created_at: datetime
     updated_at: datetime

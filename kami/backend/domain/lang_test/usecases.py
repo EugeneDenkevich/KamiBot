@@ -1,14 +1,11 @@
-import json
 from typing import Union, cast
 
 from kami.backend.domain.lang_test.enums import LangTestPromtEnum, RateEnum
 from kami.backend.domain.lang_test.exceptions import (
-    LangTastCreationFailedError,
     NoCurrentQuestionError,
     NoQuestionsError,
     NoRepliesError,
 )
-from kami.backend.domain.lang_test.models import QuestT
 from kami.backend.domain.lang_test.services import LangTestService
 from kami.backend.gateways.chat_gpt.gateway import GPTGateway
 from kami.backend.gateways.whisper.gateway import WhisperGateway
@@ -26,11 +23,13 @@ class StartTestUseCase():
         lang_test_repo: LangTestRepo,
         ai_repo: AIRepo,
         gpt_gateway: GPTGateway,
+        test_count: int,
     ) -> None:
         self.lang_test_service = lang_test_service
         self.lang_test_repo = lang_test_repo
         self.ai_repo = ai_repo
         self.gpt_gateway = gpt_gateway
+        self.test_count = test_count
 
     async def __call__(self, tg_id: str) -> None:
         """
@@ -48,17 +47,18 @@ class StartTestUseCase():
 
         ai = await self.ai_repo.get_ai()
 
-        gpt_answer = await self.gpt_gateway.get_answer(
-            api_key=ai.gpt_api_key,
-            prompt=get_prompt(LangTestPromtEnum.LANG_TEST),
-        )
+        questions = []
+        for _ in range(self.test_count):
+            gpt_answer = await self.gpt_gateway.get_answer(
+                api_key=ai.gpt_api_key,
+                prompt=get_prompt(LangTestPromtEnum.LANG_TEST),
+            )
 
-        if not gpt_answer.startswith("["):
-            raise LangTastCreationFailedError()
+            questions.append(gpt_answer)
 
         lang_test = self.lang_test_service.create_lang_test(
             tg_id=tg_id,
-            row_questions=gpt_answer,
+            questions=questions,
         )
 
         await self.lang_test_repo.save_lang_test(lang_test=lang_test)
@@ -75,7 +75,7 @@ class AskOne():
         self.lang_test_service = lang_test_service
         self.lang_test_repo = lang_test_repo
 
-    async def __call__(self, tg_id: str) -> QuestT:
+    async def __call__(self, tg_id: str) -> str:
         """
         Get question for user.
 
@@ -88,8 +88,9 @@ class AskOne():
         if not lang_test.questions:
             raise NoQuestionsError()
 
-        lang_test.current_question = lang_test.questions.pop()
-        self.lang_test_service.update_lang_test(lang_test=lang_test)
+        self.lang_test_service.set_current_question(lang_test=lang_test)
+        assert lang_test.current_question
+
         await self.lang_test_repo.update_lang_test(lang_test=lang_test)
 
         return lang_test.current_question
@@ -139,8 +140,8 @@ class SaveReplyUseCase():
                 prompt=(
                     get_prompt(LangTestPromtEnum.LANG_TEST_REPLY)
                     .replace(
-                        "<<questions>>",
-                        json.dumps(lang_test.questions, ensure_ascii=False),
+                        "<<question>>",
+                        lang_test.current_question,
                     )
                     .replace(
                         "<<reply>>", text_reply,

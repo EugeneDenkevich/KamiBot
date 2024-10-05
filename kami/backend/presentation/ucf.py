@@ -56,6 +56,7 @@ class UseCaseFactory:
         elevenlabs_client: AsyncElevenLabsClient,
         context_limit: int,
         admin_id: str,
+        test_count: int,
     ):
         self.session_factory = session_factory
         self.gpt_client = gpt_client
@@ -63,6 +64,7 @@ class UseCaseFactory:
         self.elevenlabs_client = elevenlabs_client
         self.context_limit = context_limit
         self.admin_id = admin_id
+        self.test_count = test_count
 
     @asynccontextmanager
     async def create_dialog(self) -> AsyncIterator[CreateDialogUseCase]:
@@ -87,6 +89,7 @@ class UseCaseFactory:
                 lang_test_repo=LangTestRepo(session=session),
                 ai_repo=AIRepo(session=session),
                 gpt_gateway=GPTGateway(gpt_client=self.gpt_client),
+                test_count=self.test_count,
             )
 
     @asynccontextmanager

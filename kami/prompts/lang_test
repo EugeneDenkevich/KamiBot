@@ -1,188 +1,48 @@
-Составь 6 вопросов для теста уровня английского языка.
-В начале сделай тесты легкими (A1-A2), в середине сделай средней сложности (B1-B2), а в конце сложными (C1-C2).
-К каждому вопросу добавь несколько вариантов ответа в виде словаря, где ключом будет буква (a, b, c...), а значением — сам вариант ответа.
-Также укажи правильный ответ отдельно в поле correct_answer, где значением будет буква правильного ответа.
-Напиши на итальянском.
-Больше ничего не пиши, только эти 6 вопросов.
+Составь вопрос для теста уровня английского языка.
+Вопрос должен быть случайного уровня сложности от А1 до С2.
+К вопросу добавь несколько вариантов ответа (от 3 до 5).
+Пиши на итальянском.
+Больше ничего не пиши, только этот вопрос.
+
 Вот примеры твоих ответов:
 
-[
-  {
-    "question": "Scegli l'opzione corretta: \"I ____ already seen that movie.\"",
-    "options": {
-      "a": "have",
-      "b": "had",
-      "c": "am"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Quale delle seguenti opzioni è corretta: \"If I ____ you, I would accept the offer.\"",
-    "options": {
-      "a": "were",
-      "b": "was",
-      "c": "am"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Come tradurre in inglese: \"Non ci vediamo da molto tempo\"?",
-    "options": {
-      "a": "We haven’t seen each other for a long time",
-      "b": "We don’t see each other since a long time",
-      "c": "We didn’t see each other for a long time"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Scegli l'opzione corretta: \"She would have passed the exam if she ____ harder.\"",
-    "options": {
-      "a": "studied",
-      "b": "has studied",
-      "c": "studies"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Quale parola è meglio completare la frase?: \"Not only ____ he a great musician, but he is also a talented painter.\"",
-    "options": {
-      "a": "is",
-      "b": "was",
-      "c": "does"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Scegli l'opzione corretta: \"Were I to know her address, I ____ send her an invitation.\"",
-    "options": {
-      "a": "would",
-      "b": "will",
-      "c": "might"
-    },
-    "correct_answer": "a"
-  }
-]
+1:
+<b>Domanda:</b> Qual è la traduzione corretta della frase "I have already eaten" in italiano?
 
-[
-  {
-    "question": "Scegli l'opzione corretta: \"They ____ going to the concert tonight.\"",
-    "options": {
-      "a": "are",
-      "b": "is",
-      "c": "am"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Quale opzione è corretta: \"He plays the guitar very ____\"?",
-    "options": {
-      "a": "good",
-      "b": "well",
-      "c": "better"
-    },
-    "correct_answer": "b"
-  },
-  {
-    "question": "Come tradurre in inglese: \"Hai tempo per parlare??\"?",
-    "options": {
-      "a": "Do you have time to talk?",
-      "b": "Have you time to talk?",
-      "c": "You have time for talk?"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Scegli l'opzione corretta: \"She has lived here ____ 2010.\"",
-    "options": {
-      "a": "since",
-      "b": "for",
-      "c": "during"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Quale parola è meglio completare la frase?: \"The results of the experiment were not as we ____.\"",
-    "options": {
-      "a": "expected",
-      "b": "expect",
-      "c": "expecting"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Scegli l'opzione corretta: \"Had I been aware of the situation, I ____ acted differently.\"",
-    "options": {
-      "a": "would have",
-      "b": "will have",
-      "c": "might have"
-    },
-    "correct_answer": "a"
-  }
-]
+<b>Opzioni:</b>
 
-[
-  {
-    "question": "Scegli l'opzione corretta: \"She ____ a new dress for the party.\"",
-    "options": {
-      "a": "buyed",
-      "b": "bought",
-      "c": "buy"
-    },
-    "correct_answer": "b"
-  },
-  {
-    "question": "Quale opzione è corretta: \"The book is ____ the table.\"?",
-    "options": {
-      "a": "on",
-      "b": "in",
-      "c": "at"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Come tradurre in inglese: \"Cammini spesso nel parco?\"?",
-    "options": {
-      "a": "Do you often walk in the park?",
-      "b": "Are you often walking in the park?",
-      "c": "Do you walk often in the park?"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Scegli l'opzione corretta: \"If I had known about the meeting, I ____ gone.\"",
-    "options": {
-      "a": "would have",
-      "b": "will have",
-      "c": "might have"
-    },
-    "correct_answer": "a"
-  },
-  {
-    "question": "Quale parola è meglio completare la frase: \"He is looking forward to ____ you soon.\"",
-    "options": {
-      "a": "see",
-      "b": "seeing",
-      "c": "saw"
-    },
-    "correct_answer": "b"
-  },
-  {
-    "question": "Scegli l'opzione corretta: \"Should you need any assistance, please do not hesitate to contact me.\"",
-    "options": {
-      "a": "If you will need",
-      "b": "If you need",
-      "c": "Should you needing"
-    },
-    "correct_answer": "b"
-  }
-]
+1. Io mangio già.
+2. Ho già mangiato.
+3. Sto mangiando adesso.
+4. Mangiai ieri.
 
-Это важно: для создания теста используй только структуру из примеров: List[Dict[str, Union[str, Dict[str, str]]]].
-Это важно: вопросов должно быть 6. Уровень сложности должен расти от A1 до C2 равномерно от вопроса к вопросу.
+2:
+<b>Domanda:</b> Quale frase è corretta in inglese per indicare un'azione che si è appena conclusa?
+
+<b>Opzioni:</b>
+
+1. I am finish my work.
+2. I have just finished my work.
+3. I finished my work tomorrow.
+4. I am finishing my work yesterday.
+
+3:
+<b>Domanda:</b> Qual è la forma corretta del verbo "to be" al passato semplice in inglese?
+
+<b>Opzioni:</b>
+
+1. I was.
+2. I am.
+3. I were.
+4. I will be.
+
 Пожалуйста, не смешивай языки.
-В тестах не должно быть смешений языков внутри одного элемента, например, когда часть предложения на итальянском, а часть — на английском.
-Важно: твой ответ должен иметь структуру структуру из примеров: List[Dict[str, Union[str, Dict[str, str]]]]
-Важно: не создавай опросы, где ответами являются слова:
+В вопросе не должно быть смешений языков внутри одного элемента, например, когда часть предложения на итальянском, а часть — на английском.
+Важно: не составляй, где ответом может явзятся слово из списка:
 Dialogue
 Language Level
 Translator
+
+Важно:  укрась свой ответ тегами, валидными для телеграм сообщения.
+Допустимые теги: <i>курсив</i>, <s>перечеркнутый</s>, <u>подчеркнутый</u>, <b>жирный</b>
+Используй ТОЛЬКО эти теги, никаких других не используй!

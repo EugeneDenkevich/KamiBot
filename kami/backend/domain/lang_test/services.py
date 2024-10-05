@@ -1,4 +1,3 @@
-import json
 from datetime import datetime
 from typing import List, Optional
 from uuid import uuid4
@@ -9,7 +8,7 @@ from kami.backend.domain.lang_test.models import LangTest, QuestT
 class LangTestService():
     """Service for LangTest entity"""
 
-    def create_lang_test(self, tg_id: str, row_questions: str) -> LangTest:
+    def create_lang_test(self, tg_id: str, questions: List[str]) -> LangTest:
         """
         Create language test
 
@@ -21,7 +20,7 @@ class LangTestService():
         return LangTest(
             id=uuid4(),
             tg_id=tg_id,
-            questions=json.loads(row_questions),
+            questions=questions,
             created_at=datetime.now(),
             updated_at=datetime.now(),
         )
@@ -29,8 +28,8 @@ class LangTestService():
     def update_lang_test(
         self,
         lang_test: LangTest,
-        questions: Optional[List[QuestT]] = None,
-        current_question: Optional[QuestT] = None,
+        questions: Optional[List[str]] = None,
+        current_question: Optional[str] = None,
         replies: Optional[List[QuestT]] = None,
     ) -> None:
         """
@@ -62,6 +61,7 @@ class LangTestService():
         """
 
         lang_test.current_question = lang_test.questions.pop()
+
         self.update_lang_test(lang_test=lang_test)
 
     def append_reply(
@@ -76,8 +76,14 @@ class LangTestService():
         :param reply: Reply from user.
         """
 
-        lang_test.current_question["reply"] = reply
-        lang_test.replies.append(lang_test.current_question)
+        assert lang_test.current_question
+
+        lang_test.replies.append(
+            {
+                "question": lang_test.current_question,
+                "reply": reply,
+            },
+        )
 
     def clear_current_queston(
         self,
@@ -89,7 +95,7 @@ class LangTestService():
         :param lang_test: Language test.
         """
 
-        lang_test.current_question = {}
+        lang_test.current_question = None
         self.update_lang_test(lang_test=lang_test)
 
 
