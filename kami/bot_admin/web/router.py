@@ -36,7 +36,7 @@ DispatcherD = Annotated[Dispatcher, Depends(get_current_dp)]
 
 
 @fastapi_router.post(
-    path=f"/webhook-client/{settings.bot_admin_token}",
+    path=f"/webhook-admin/{settings.bot_admin_token}",
     response_model=None,
 )
 async def webhook(
