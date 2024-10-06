@@ -3,7 +3,7 @@ from aiogram.enums.chat_action import ChatAction
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
-from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import gettext as _, lazy_gettext as __
 
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.presentation.client import BackendClient
@@ -20,7 +20,7 @@ router = Router()
 
 
 @router.message(Command(commands=["translator"]))
-@router.message(F.text == "Translator")
+@router.message(F.text == __("Translator"))
 async def handle_translator_command(
     message: Message,
     backend_client: BackendClient,
