@@ -9,7 +9,7 @@ from kami.backend.gateways.elevenlabs.gateway import ElevenLabsGateway
 from kami.backend.gateways.whisper.gateway import WhisperGateway
 from kami.backend.repos.ai.repo import AIRepo
 from kami.backend.repos.dialog.repo import DialogRepo
-from kami.backend.utils import convert_bytes_to
+from kami.backend.utils import convert_bytes
 from kami.common import get_prompt
 
 
@@ -62,7 +62,7 @@ class StartDialogUseCase:
             text=gpt_answer,
         )
 
-        return convert_bytes_to(audio_bytes=elevenlabs_answer)
+        return convert_bytes(audio_bytes=elevenlabs_answer)
 
 
 class ContinueDialogUseCase:
@@ -149,7 +149,7 @@ class ContinueDialogUseCase:
             api_key=ai.elevenlabs_api_key,
             text=gpt_answer,
         )
-        audio_answer = convert_bytes_to(audio_bytes=elevenlabs_answer)
+        audio_answer = convert_bytes(audio_bytes=elevenlabs_answer)
 
         return audio_answer, gpt_answer_mistakes
 
@@ -197,7 +197,7 @@ class ReturnToDialogUseCase:
             text=gpt_answer,
         )
 
-        return convert_bytes_to(audio_bytes=elvenlabs_answer)
+        return convert_bytes(audio_bytes=elvenlabs_answer)
 
 
 class VoiceToTextUseCase:
