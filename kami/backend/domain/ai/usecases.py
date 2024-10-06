@@ -1,5 +1,6 @@
 import json
 from typing import Optional, Tuple
+from uuid import uuid4
 
 from kami.backend.domain.ai.enums import DialoguePromtEnum, TranslatorPromtEnum
 from kami.backend.domain.dialog.services import DialogService
@@ -127,7 +128,7 @@ class ContinueDialogUseCase:
             },
         )
 
-        self.dialog_service.update_dialog(dialog)
+        self.dialog_service.update_dialog(dialog, dialog_id=uuid4())
         await self.dialog_repo.update_dialog(dialog)
 
         gpt_answer_mistakes: Optional[str] = await self.gpt_gateway.get_answer(

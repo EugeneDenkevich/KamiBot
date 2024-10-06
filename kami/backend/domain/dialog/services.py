@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from kami.backend.domain.dialog.models import ContextT, Dialog
 
@@ -26,9 +26,12 @@ class DialogService():
     def update_dialog(
         self,
         dialog: Dialog,
+        dialog_id: Optional[UUID] = None,
         topic: Optional[str] = None,
         context: Optional[ContextT] = None,
     ) -> None:
+        if dialog_id is not None:
+            dialog.id = dialog_id
         if topic is not None:
             dialog.topic = topic
         if context is not None:

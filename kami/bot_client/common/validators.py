@@ -12,7 +12,7 @@ def clean_tags(text: str) -> str:
 
     tag_pattern = re.compile(r"</?([a-zA-Z0-9]+)(?:\s[^>]*)?>")
 
-    def tag_replacer(match: Match[str]) -> str:
+    def replace_tags(match: Match[str]) -> str:
         """
         Replace invalid tags or remove attributes from valid tags.
 
@@ -28,4 +28,4 @@ def clean_tags(text: str) -> str:
             return f"<{tag_name}>"
         return ""
 
-    return re.sub(tag_pattern, tag_replacer, text)
+    return re.sub(tag_pattern, replace_tags, text)

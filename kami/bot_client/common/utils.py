@@ -48,15 +48,18 @@ async def wait_for_answer(
     """
 
     async def notify_if_no_response() -> None:
-        await asyncio.sleep(awaiting_time)
-        
+        """Notify user if he is not respoding"""
+
+        await asyncio.sleep(10)
+
         dialog = await backend_client.get_dialog_or_none(dialog_id=dialog_id)
 
         if dialog:
             await message.answer(
-                text=_("Awaiting time is up. Continue dialog here /dialog.")
+                text=_("Awaiting time is up. Continue dialog here /dialog."),
             )
             await state.clear()
+
     asyncio.create_task(notify_if_no_response())
 
 

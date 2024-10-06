@@ -78,6 +78,7 @@ class DialogRepo():
             update(DialogTable)
             .where(DialogTable.tg_id == dialogue.tg_id)
             .values(
+                id=dialogue.id,
                 topic=dialogue.topic,
                 context=dialogue.context,
                 updated_at=dialogue.updated_at,
@@ -101,11 +102,11 @@ class DialogRepo():
 
         await self.session.execute(query)
         await self.session.commit()
-    
+
     async def get_dialog_by_id_or_none(self, dialog_id: str) -> Optional[Dialog]:
         """
         Get dialog or None from DB by id.
-        
+
         :param dialog_id: Dialog id in DB.
         :return: Dialog or None.
         """
