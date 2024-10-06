@@ -7,7 +7,7 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.types.input_file import BufferedInputFile
-from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import gettext as _, lazy_gettext as __
 
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.domain.dialog.exceptions import DialogueNotFoundError
@@ -28,7 +28,7 @@ router = Router()
 
 
 @router.message(Command(commands=["dialog"]))
-@router.message(F.text == "Dialogues")
+@router.message(F.text == __("Dialogues"))
 @router.callback_query(DialogAfterTestCD.filter())
 async def handle_dialog_command(
     mescall: Union[Message, CallbackQuery],
@@ -92,10 +92,10 @@ async def handle_dialog_command(
             )
             await message.answer(  # type: ignore[union-attr]
                 text=_(
-                    "🥰 Welcome back, let's continue the practice of communication!"
-                    "Let's practice 🗣 English!\n"
-                    "😎 Select any topic to begin the dialog and we'll "
-                    "be able to talk by voice messages on this topic:",
+                    "🥰 Welcome back, let's continue our communication practice!\n"
+                    "👇 Choose any topic that we will talk about today.\n"
+                    "🗣 If you want to continue the previous dialogue,"
+                    " select Continue previous dialogue: ",
                 ),
                 reply_markup=build_dialog_markup(no_dialog=no_dialog),
             )

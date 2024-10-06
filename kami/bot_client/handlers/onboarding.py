@@ -129,8 +129,7 @@ async def handle_onboarding_first(
                 "🔴<b>Click</b> on these buttons to quickly "
                 "select the desired function.\n"
                 "And also the <b>Menu</b> button with additional functions: \n"
-                "📍Onboarding \n"
-                "Answers to questions, Payment, Feedback, and so on.",
+                "📍Onboarding \n",
             ),
             reply_markup=build_onboarding_step_markup(
                 text=_("Got it"),
@@ -356,8 +355,8 @@ async def handle_onboarding_fifth(
         await callback_query.message.answer_sticker(StickersEnum.KAMILA_LANGUAGE_TEST)
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
-                "😉 Great, it's time to determine your level of English. 🧐\n"
-                "Click the button below 🖲 and take the 6-question test.\n"
+                "😉 Great, it's time to determine your <b>level</b> of English. 🧐\n"
+                "Click the <b>button below</b> 🖲 and take the 6-question test.\n"
                 "📝 This will help me choose the style and phrases to "
                 "communicate with you.",
             ),
@@ -365,6 +364,7 @@ async def handle_onboarding_fifth(
                 text=_("Language level test start 😉"),
                 step=7,
             ),
+            parse_mode=ParseMode.HTML,
         )
 
 

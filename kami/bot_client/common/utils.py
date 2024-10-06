@@ -85,7 +85,11 @@ async def auth_user(
 
         await message.answer_sticker(StickersEnum.KAMILA_AUTH)  # type: ignore[arg-type, union-attr]
         await message.answer(  # type: ignore[union-attr]
-            text=_("Hello. Please, share your contact 👇"),
+            text=_("Click the 'Share Contact' button\n"
+                   "to log in 👇")
+        )
+        await message.answer(  # type: ignore[union-attr]
+            text=_("Or click here 👉🏻 /start"),
             reply_markup=build_share_contact_markup(),
         )
         return None
@@ -94,7 +98,8 @@ async def auth_user(
             await message.answer_sticker(StickersEnum.KAMILA_START_IF_NOT_PAID)  # type: ignore[arg-type, union-attr]
             await message.answer(  # type: ignore[union-attr]
                 text=_(
-                    "The administrator will check your data.\n"
+                    "The administrator will check \n"
+                    "your data.\n"
                     "If your subscription is paid, you will receive a "
                     "notification and all the functions of the bot will work",
                 ),
