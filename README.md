@@ -46,7 +46,7 @@ poetry run python -m kami
 ### Tips for i18n in aiogram 3:
 **Extract all words and phrases from code**
 ```
-poetry run pybabel extract --input-dirs=. -o ./kami/locales/kami.pot
+poetry run pybabel extract -k __ --input-dirs=. -o ./kami/locales/kami.pot
 ```
 **Add translates kami.po and update:**
 ```

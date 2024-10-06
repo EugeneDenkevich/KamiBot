@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-06 18:51+0300\n"
+"POT-Creation-Date: 2024-10-06 19:41+0300\n"
 "PO-Revision-Date: 2024-10-05 19:57+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -30,26 +30,30 @@ msgstr ""
 msgid "Your telegram id: "
 msgstr ""
 
-#: kami/bot_client/common/utils.py:57
+#: kami/bot_client/common/utils.py:59
 msgid "Awaiting time is up. Continue dialog here /dialog."
 msgstr ""
 
-#: kami/bot_client/common/utils.py:85
+#: kami/bot_client/common/utils.py:88
 msgid ""
 "Click the 'Share Contact' button\n"
 "to log in 👇"
 msgstr ""
 
-#: kami/bot_client/common/utils.py:89
+#: kami/bot_client/common/utils.py:92
 msgid "Or click here 👉🏻 /start"
 msgstr ""
 
-#: kami/bot_client/common/utils.py:97
+#: kami/bot_client/common/utils.py:100
 msgid ""
 "The administrator will check \n"
 "your data.\n"
 "If your subscription is paid, you will receive a notification and all the"
 " functions of the bot will work"
+msgstr ""
+
+#: kami/bot_client/handlers/dialog.py:31
+msgid "Dialogues"
 msgstr ""
 
 #: kami/bot_client/handlers/dialog.py:81
@@ -82,6 +86,10 @@ msgstr ""
 msgid ""
 "You dont have a created dialog yet! Choose a topic for the dialogue and "
 "start your first dialogue."
+msgstr ""
+
+#: kami/bot_client/handlers/lang_test.py:31
+msgid "Language Level"
 msgstr ""
 
 #: kami/bot_client/handlers/lang_test.py:65
@@ -226,6 +234,10 @@ msgid ""
 "@NikMer"
 msgstr ""
 
+#: kami/bot_client/handlers/translator.py:23
+msgid "Translator"
+msgstr ""
+
 #: kami/bot_client/handlers/translator.py:60
 msgid "👇 Choose the language in which you want to translate."
 msgstr ""
@@ -285,18 +297,6 @@ msgstr ""
 msgid "Let's get started 📝"
 msgstr ""
 
-#: kami/bot_client/keyboards/main_menu.py:23
-msgid "Dialogues"
-msgstr ""
-
-#: kami/bot_client/keyboards/main_menu.py:24
-msgid "Language Level"
-msgstr ""
-
-#: kami/bot_client/keyboards/main_menu.py:25
-msgid "Translator"
-msgstr ""
-
 #: kami/bot_client/keyboards/onboarding.py:48
 msgid "Show where it is"
 msgstr ""
@@ -330,3 +330,11 @@ msgstr ""
 #~ "the functions of the bot will work"
 #~ msgstr ""
 
+#~ msgid "Dialogues"
+#~ msgstr ""
+
+#~ msgid "Language Level"
+#~ msgstr ""
+
+#~ msgid "Translator"
+#~ msgstr ""
