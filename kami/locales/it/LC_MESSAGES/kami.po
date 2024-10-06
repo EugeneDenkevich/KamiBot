@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-06 19:41+0300\n"
+"POT-Creation-Date: 2024-10-06 19:55+0300\n"
 "PO-Revision-Date: 2024-10-05 19:57+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -65,7 +65,6 @@ msgstr ""
 "e tutte le funzioni del bot funzioneranno."
 
 #: kami/bot_client/handlers/dialog.py:31
-#, fuzzy
 msgid "Dialogues"
 msgstr "Dialoghi"
 
@@ -116,7 +115,6 @@ msgstr ""
 "inizia il tuo primo dialogo."
 
 #: kami/bot_client/handlers/lang_test.py:31
-#, fuzzy
 msgid "Language Level"
 msgstr "Livello linguistico"
 
