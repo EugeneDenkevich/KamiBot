@@ -1,48 +1,48 @@
-Составь вопрос для теста уровня английского языка.
-Вопрос должен быть случайного уровня сложности от А1 до С2.
-К вопросу добавь несколько вариантов ответа (от 3 до 5).
-Пиши на итальянском.
-Больше ничего не пиши, только этот вопрос.
+Preparare una domanda per un test di livello di lingua inglese.
+La domanda deve essere di livello di difficoltà normale da A1 a C2.
+Aggiungi diverse opzioni di risposta alla domanda (da 3 a 5).
+Scrivi in ​​italiano.
+Non scrivere altro, solo questa domanda.
 
-Вот примеры твоих ответов:
+Ecco alcuni esempi delle tue risposte:
 
 1:
-<b>Domanda:</b> Qual è la traduzione corretta della frase "I have already eaten" in italiano?
+<b>Domanda:</b> Come tradurre correttamente la frase “ho già mangiato” in italiano?
 
-<b>Opzioni:</b>
+<b>Parametri:</b>
 
-1. Io mangio già.
+1. Sto già mangiando.
 2. Ho già mangiato.
 3. Sto mangiando adesso.
-4. Mangiai ieri.
+4. Ho mangiato ieri.
 
 2:
-<b>Domanda:</b> Quale frase è corretta in inglese per indicare un'azione che si è appena conclusa?
+<b>Domanda:</b> Quale frase in inglese indica correttamente l'azione appena conclusa?
 
-<b>Opzioni:</b>
+<b>Parametri:</b>
 
-1. I am finish my work.
-2. I have just finished my work.
-3. I finished my work tomorrow.
-4. I am finishing my work yesterday.
+1. Sto finendo il lavoro.
+2. Ho appena finito il mio lavoro.
+3. Ho finito di lavorare domani.
+4. Ieri finisco di lavorare.
 
 3:
-<b>Domanda:</b> Qual è la forma corretta del verbo "to be" al passato semplice in inglese?
+<b>Domanda:</b> Qual è la forma corretta del verbo “to be” al passato semplice in inglese?
 
-<b>Opzioni:</b>
+<b>Parametri:</b>
 
-1. I was.
-2. I am.
-3. I were.
-4. I will be.
+1. Io ero.
+2. Io sono
+3. Io ero.
+4. Io sarò.
 
-Пожалуйста, не смешивай языки.
-В вопросе не должно быть смешений языков внутри одного элемента, например, когда часть предложения на итальянском, а часть — на английском.
-Важно: не составляй, где ответом может явзятся слово из списка:
-Dialogue
-Language Level
-Translator
+Per favore, non mescolare le lingue.
+La domanda non deve contenere una commistione di lingue all'interno dello stesso elemento, ad esempio quando parte della frase è scritta in italiano e parte in inglese.
+Importante: non inventare parole la cui risposta potrebbe essere una parola della lista:
+Dialogo
+Livello linguistico
+Traduttore
 
-Важно:  укрась свой ответ тегами, валидными для телеграм сообщения.
-Допустимые теги: <i>курсив</i>, <s>перечеркнутый</s>, <u>подчеркнутый</u>, <b>жирный</b>
-Используй ТОЛЬКО эти теги, никаких других не используй!
+Importante! Decora la tua risposta con tag validi per i messaggi Telegram.
+Tag validi: <i>corsivo</i>, <s>barrato</s>, <u>sottolineato</u>, <b>grassetto</b>
+Usa SOLO questi tag, non usarne altri!

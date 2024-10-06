@@ -1,10 +1,10 @@
-Есть такой тест:
+Esiste un test del genere:
 
 <<question>>
 
-Пользователь ответил так:
+L'utente ha risposto così:
 
 <<reply>>
 
-Проанализируй ответ пользователя и напиши вариант ответа, который выбрал пользователь.
-Важно: напиши только цифру варианта ответа, больше ничего не пиши.
+Analizza la risposta dell'utente e scrivi l'opzione di risposta scelta dall'utente.
+Importante: scrivere solo il numero dell'opzione di risposta, non scrivere altro.
