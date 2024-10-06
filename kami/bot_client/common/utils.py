@@ -50,7 +50,7 @@ async def wait_for_answer(
     async def notify_if_no_response() -> None:
         """Notify user if he is not respoding"""
 
-        await asyncio.sleep(10)
+        await asyncio.sleep(awaiting_time)
 
         dialog = await backend_client.get_dialog_or_none(dialog_id=dialog_id)
 
