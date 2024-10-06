@@ -9,6 +9,7 @@ from kami.backend.gateways.elevenlabs.gateway import ElevenLabsGateway
 from kami.backend.gateways.whisper.gateway import WhisperGateway
 from kami.backend.repos.ai.repo import AIRepo
 from kami.backend.repos.dialog.repo import DialogRepo
+from kami.backend.utils import convert_bytes_to
 from kami.common import get_prompt
 
 
@@ -56,10 +57,12 @@ class StartDialogUseCase:
             ),
         )
 
-        return await self.elevenlabs_gateway.get_audio(
+        elevenlabs_answer = await self.elevenlabs_gateway.get_audio(
             api_key=ai.elevenlabs_api_key,
             text=gpt_answer,
         )
+
+        return convert_bytes_to(audio_bytes=elevenlabs_answer)
 
 
 class ContinueDialogUseCase:
@@ -142,10 +145,11 @@ class ContinueDialogUseCase:
         if gpt_answer_mistakes == "[]":
             gpt_answer_mistakes = None
 
-        audio_answer = await self.elevenlabs_gateway.get_audio(
+        elevenlabs_answer = await self.elevenlabs_gateway.get_audio(
             api_key=ai.elevenlabs_api_key,
             text=gpt_answer,
         )
+        audio_answer = convert_bytes_to(audio_bytes=elevenlabs_answer)
 
         return audio_answer, gpt_answer_mistakes
 
@@ -188,10 +192,12 @@ class ReturnToDialogUseCase:
             ),
         )
 
-        return await self.elevenlabs_gateway.get_audio(
+        elvenlabs_answer = await self.elevenlabs_gateway.get_audio(
             api_key=ai.elevenlabs_api_key,
             text=gpt_answer,
         )
+
+        return convert_bytes_to(audio_bytes=elvenlabs_answer)
 
 
 class VoiceToTextUseCase:
