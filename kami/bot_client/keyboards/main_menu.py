@@ -3,12 +3,14 @@ from typing import List
 from aiogram.types import ReplyKeyboardMarkup
 from aiogram.utils.keyboard import KeyboardButton
 
+from aiogram.utils.i18n import gettext as _
+
 
 def get_main_reply_buttons() -> List[str]:
     return [
-        "Dialogues",
-        "Language Level",
-        "Translator",
+        "Dialoghi",
+        "Livello linguistico",
+        "Traduttore"
     ]
 
 

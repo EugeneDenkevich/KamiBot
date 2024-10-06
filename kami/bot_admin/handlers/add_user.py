@@ -53,7 +53,8 @@ async def handle_add_user(
             chat_id=callback_data.tg_id,
             text=_(
                 "Hello, beautiful soul! \n"
-                "Your account is activated. Thank you very much for your trust.",
+                "Your account is activated. Thank you very much for your trust."
+                "Click here to start learning 👉🏻  /start",
             ),
         )
     except UserAlreadyExistsError:

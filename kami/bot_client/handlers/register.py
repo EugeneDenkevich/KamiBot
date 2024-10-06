@@ -41,7 +41,8 @@ async def handle_register(
     await message.answer_sticker(StickersEnum.KAMILA_START_IF_NOT_PAID)
     await message.answer(
         text=_(
-            "The administrator will check your data. \n"
+            "The administrator will\n"
+            "check your data.\n"
             "If your subscription is paid, you will receive "
             "a notification and all the functions of the bot will work",
         ),
