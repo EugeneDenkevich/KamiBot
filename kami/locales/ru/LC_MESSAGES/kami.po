@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-07 08:06+0300\n"
+"POT-Creation-Date: 2024-10-07 08:35+0300\n"
 "PO-Revision-Date: 2024-10-05 19:57+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -40,7 +40,7 @@ msgid ""
 "to log in 👇"
 msgstr ""
 
-#: kami/bot_client/common/utils.py:97
+#: kami/bot_client/common/utils.py:99
 msgid ""
 "The administrator will check \n"
 "your data.\n"
@@ -68,17 +68,17 @@ msgid ""
 msgstr ""
 
 #: kami/bot_client/handlers/dialog.py:144
-msgid "Input your topic, please"
+msgid "📣 Send a voice message describing the topic you would like to talk about."
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:186
-#: kami/bot_client/handlers/dialog.py:252
-#: kami/bot_client/handlers/dialog.py:389
+#: kami/bot_client/handlers/dialog.py:189
+#: kami/bot_client/handlers/dialog.py:255
+#: kami/bot_client/handlers/dialog.py:392
 #: kami/bot_client/handlers/lang_test.py:108
 msgid "One moment..."
 msgstr ""
 
-#: kami/bot_client/handlers/dialog.py:396
+#: kami/bot_client/handlers/dialog.py:399
 msgid ""
 "You dont have a created dialog yet! Choose a topic for the dialogue and "
 "start your first dialogue."
@@ -330,4 +330,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Or click here 👉🏻 /start"
+#~ msgstr ""
+
+#~ msgid "Input your topic, please"
 #~ msgstr ""

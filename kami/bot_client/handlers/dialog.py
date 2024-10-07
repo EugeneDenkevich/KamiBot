@@ -141,7 +141,10 @@ async def handle_my_topic(
             StickersEnum.KAMILA_MY_TOPIC,  # type: ignore[arg-type]
         )
         await callback_query.message.answer(  # type: ignore[union-attr]
-            text=_("Input your topic, please"),
+            text=_(
+                "📣 Send a voice message describing the "
+                "topic you would like to talk about.",
+            ),
         )
 
 
