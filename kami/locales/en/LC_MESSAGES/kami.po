@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-06 19:55+0300\n"
+"POT-Creation-Date: 2024-10-07 07:11+0300\n"
 "PO-Revision-Date: 2024-10-05 19:57+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -263,15 +263,6 @@ msgstr ""
 msgid "A trip to the airport ✈️"
 msgstr ""
 
-#: kami/bot_client/keyboards/dialogue.py:39
-#: kami/bot_client/keyboards/dialogue.py:45
-#: kami/bot_client/keyboards/dialogue.py:51
-#: kami/bot_client/keyboards/dialogue.py:57
-#: kami/bot_client/keyboards/dialogue.py:63
-#: kami/bot_client/keyboards/dialogue.py:70
-msgid "{text}"
-msgstr ""
-
 #: kami/bot_client/keyboards/dialogue.py:43
 msgid "Acquaintance 👫"
 msgstr ""
@@ -336,4 +327,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Translator"
+#~ msgstr ""
+
+#~ msgid "{text}"
 #~ msgstr ""

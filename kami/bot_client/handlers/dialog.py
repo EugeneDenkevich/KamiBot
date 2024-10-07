@@ -7,7 +7,8 @@ from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.types.input_file import BufferedInputFile
-from aiogram.utils.i18n import gettext as _, lazy_gettext as __
+from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import lazy_gettext as __
 
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.domain.dialog.exceptions import DialogueNotFoundError
@@ -161,7 +162,7 @@ async def handle_topic_selected(
     :param backend_client: BackendClient.
     :param state: FSM state.
     """
-    
+
     await callback_query.answer()
     await state.clear()
 

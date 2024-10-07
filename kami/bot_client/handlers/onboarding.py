@@ -15,7 +15,7 @@ from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.presentation.client import BackendClient
 from kami.bot_client.common.utils import auth_user
 from kami.bot_client.enums.stickers import StickersEnum
-from kami.bot_client.enums.video_note import VideoNoteEnum
+from kami.bot_client.enums.video_notes import VideoNotesEnum
 from kami.bot_client.keyboards.main_menu import build_main_menu_markup
 from kami.bot_client.keyboards.onboarding import (
     OnboardingCD,
@@ -186,12 +186,12 @@ async def handle_onboarding_second(
             action=ChatAction.RECORD_VIDEO_NOTE,
         )
 
-        video_file = FSInputFile(VideoNoteEnum.KAMILA_DIALOG)
+        video_file = FSInputFile(VideoNotesEnum.KAMILA_DIALOG)
 
         try:
             await callback_query.message.answer_video_note(video_file)
         except TelegramNetworkError:
-            logging.error(f"No file {VideoNoteEnum.KAMILA_DIALOG}")
+            logging.error(f"No file {VideoNotesEnum.KAMILA_DIALOG}")
             pass
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -243,12 +243,12 @@ async def handle_onboarding_third(
             action=ChatAction.RECORD_VIDEO_NOTE,
         )
 
-        video_file = FSInputFile(VideoNoteEnum.KAMILA_TRANSLATE)
+        video_file = FSInputFile(VideoNotesEnum.KAMILA_TRANSLATE)
 
         try:
             await callback_query.message.answer_video_note(video_file)
         except TelegramNetworkError:
-            logging.error(f"No file {VideoNoteEnum.KAMILA_TRANSLATE}")
+            logging.error(f"No file {VideoNotesEnum.KAMILA_TRANSLATE}")
             pass
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -300,12 +300,12 @@ async def handle_onboarding_fourth(
             action=ChatAction.RECORD_VIDEO_NOTE,
         )
 
-        video_file = FSInputFile(VideoNoteEnum.KAMILA_LANGUAGE_TEST)
+        video_file = FSInputFile(VideoNotesEnum.KAMILA_LANGUAGE_TEST)
 
         try:
             await callback_query.message.answer_video_note(video_file)
         except TelegramNetworkError:
-            logging.error(f"No file {VideoNoteEnum.KAMILA_LANGUAGE_TEST}")
+            logging.error(f"No file {VideoNotesEnum.KAMILA_LANGUAGE_TEST}")
             pass
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -405,12 +405,12 @@ async def handle_show_where(
             action=ChatAction.RECORD_VIDEO_NOTE,
         )
 
-        video_file = FSInputFile(VideoNoteEnum.KAMILA_MENU)
+        video_file = FSInputFile(VideoNotesEnum.KAMILA_MENU)
 
         try:
             await callback_query.message.answer_video_note(video_file)
         except TelegramNetworkError:
-            logging.error(f"No file {VideoNoteEnum.KAMILA_MENU}")
+            logging.error(f"No file {VideoNotesEnum.KAMILA_MENU}")
             pass
 
         await callback_query.message.answer(  # type: ignore[union-attr]

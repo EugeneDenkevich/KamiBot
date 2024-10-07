@@ -3,7 +3,8 @@ from aiogram.enums.chat_action import ChatAction
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
-from aiogram.utils.i18n import gettext as _, lazy_gettext as __
+from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import lazy_gettext as __
 
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
 from kami.backend.presentation.client import BackendClient
@@ -97,7 +98,7 @@ async def handle_direction_choice(
         await state.update_data(direction=callback_data.direction)
 
         await callback_query.message.answer_sticker(
-            StickersEnum.KAMILA_SECOND_TRANSLATE
+            StickersEnum.KAMILA_SECOND_TRANSLATE,
         )
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(

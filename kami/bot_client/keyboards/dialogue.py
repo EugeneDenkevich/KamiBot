@@ -36,38 +36,38 @@ def build_dialog_markup(no_dialog: bool) -> InlineKeyboardMarkup:
 
     text = _("A trip to the airport ✈️")
     builder.button(
-        text=_("{text}").format(text=text),
+        text=text,
         callback_data=TopicSelectedCD(topic=text).pack(),
     ).adjust(1)
 
     text = _("Acquaintance 👫")
     builder.button(
-        text=_("{text}").format(text=text),
+        text=text,
         callback_data=TopicSelectedCD(topic=text).pack(),
     ).adjust(1)
 
     text = _("Ordering food at a restaurant 🍔")
     builder.button(
-        text=_("{text}").format(text=text),
+        text=text,
         callback_data=TopicSelectedCD(topic=text).pack(),
     ).adjust(1)
 
     text = _("Job interview 👩‍💼")
     builder.button(
-        text=_("{text}").format(text=text),
+        text=text,
         callback_data=TopicSelectedCD(topic=text).pack(),
     ).adjust(1)
 
     text = _("My topic 💃")
     builder.button(
-        text=_("{text}").format(text=text),
+        text=text,
         callback_data=MyTopicCallback().pack(),
     ).adjust(1)
 
     if not no_dialog:
         text = _("Continue dialogue")
         builder.button(
-            text=_("{text}").format(text=text),
+            text=text,
             callback_data=ContinueDialogueCD().pack(),
         ).adjust(1)
 

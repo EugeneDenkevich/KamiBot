@@ -4,7 +4,8 @@ from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
-from aiogram.utils.i18n import gettext as _, lazy_gettext as __
+from aiogram.utils.i18n import gettext as _
+from aiogram.utils.i18n import lazy_gettext as __
 
 from kami.backend.domain.ai.exceptions import AINotFoundError
 from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
