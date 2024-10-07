@@ -48,6 +48,8 @@ async def lifespan(
 
     url_webhook = f"{url}/webhook-client/{token}"
 
+    await bot.delete_webhook()
+
     await bot.set_webhook(
         url=url_webhook,
         allowed_updates=dp.resolve_used_update_types(),
