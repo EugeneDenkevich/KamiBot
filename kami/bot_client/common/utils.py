@@ -85,11 +85,10 @@ async def auth_user(
 
         await message.answer_sticker(StickersEnum.KAMILA_AUTH)  # type: ignore[arg-type, union-attr]
         await message.answer(  # type: ignore[union-attr]
-            text=_("Click the 'Share Contact' button\n"
-                   "to log in 👇")
-        )
-        await message.answer(  # type: ignore[union-attr]
-            text=_("Or click here 👉🏻 /start"),
+            text=_(
+                "Click the 'Share Contact' button\n"
+                "to log in 👇",
+            ),
             reply_markup=build_share_contact_markup(),
         )
         return None
