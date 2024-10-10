@@ -32,6 +32,7 @@ from kami.backend.domain.lang_test.usecases import (
 from kami.backend.domain.user.services import UserService
 from kami.backend.domain.user.usecases import (
     CreateUserUseCase,
+    GetUsersUseCase,
     GetUserUseCase,
     UpdateUserUseCase,
 )
@@ -225,4 +226,11 @@ class UseCaseFactory:
         async with self.session_factory() as session:
             yield GetDialogOrNoneUseCase(
                 dialog_repo=DialogRepo(session=session),
+            )
+
+    @asynccontextmanager
+    async def get_users(self) -> AsyncIterator[GetUsersUseCase]:
+        async with self.session_factory() as session:
+            yield GetUsersUseCase(
+                user_repo=UserRepo(session=session),
             )

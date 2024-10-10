@@ -1,4 +1,4 @@
-from typing import Optional, Tuple, Union
+from typing import List, Optional, Tuple, Union
 
 from kami.backend.domain.dialog.models import ContextT, Dialog
 from kami.backend.domain.lang_test.enums import RateEnum
@@ -163,3 +163,10 @@ class BackendClient():
     ) -> Optional[Dialog]:
         async with self.ucf.get_dialog_or_none() as get_dialog_or_none:
             return await get_dialog_or_none(dialog_id=dialog_id)
+
+    async def get_users(
+        self,
+        tg_ids: List[str],
+    ) -> List[User]:
+        async with self.ucf.get_users() as get_users:
+            return await get_users(tg_ids=tg_ids)

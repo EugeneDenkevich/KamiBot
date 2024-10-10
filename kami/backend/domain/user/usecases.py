@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from kami.backend.domain.user.exceptions import UserAlreadyExistsError
 from kami.backend.domain.user.models import User
@@ -112,3 +112,17 @@ class UpdateUserUseCase():
         await self.user_repo.update_user(user)
 
         return user
+    
+class GetUsersUseCase:
+    def __init__(self, user_repo: UserRepo):
+        self.user_repo = user_repo
+
+    async def __call__(self,  tg_ids: List[str]) -> List[User]:
+        """
+        Get users from DB.
+
+        :param tg_ids: Users id from telegram.
+        :return: List of users.
+        """
+
+        return await self.user_repo.get_users(tg_ids=tg_ids)
