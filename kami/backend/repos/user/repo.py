@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from sqlalchemy import insert, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -96,3 +96,20 @@ class UserRepo():
 
         await self.session.execute(query)
         await self.session.commit()
+
+    async def get_users(self, tg_ids: List[str]) -> List[User]:
+        """
+        Get Users from DB
+        
+        :param tg_ids: Users telegram ids list.
+        """
+
+        query = select(UserTable)
+
+        if tg_ids:
+            query = query.where(UserTable.tg_id.in_(tg_ids))
+
+        result = await self.session.execute(query)
+        users = result.scalars()
+
+        return [user_db_to_entity(user=user) for user in users]
