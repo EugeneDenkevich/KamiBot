@@ -12,10 +12,7 @@ class DialogAfterTestCD(
 
 
 def build_dialog_after_test_markup() -> InlineKeyboardMarkup:
-    """
-    Builder for dialogue button after language test.
-
-    """
+    """Builder for dialogue button after language test"""
 
     builder = InlineKeyboardBuilder()
 

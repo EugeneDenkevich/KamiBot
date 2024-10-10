@@ -52,11 +52,11 @@ async def handle_register(
 
     await bot_admin.send_message(
         chat_id=settings.admin_id,
-        text=_(
-                "User wanted to be added:\n"
-                "<b>Tg id:</b> {tg_id}\n"
-                "<b>Username:</b> {username}\n"
-                "<b>Fullname:</b> {fio}",
+        text=(
+            "User wanted to be added:\n"
+            "Tg id: {tg_id}\n"
+            "Username: {username}\n"
+            "Fullname: {fio}"
         )
         .format(tg_id=tg_id, fio=fio, username=username),
         reply_markup=build_add_user_markup(

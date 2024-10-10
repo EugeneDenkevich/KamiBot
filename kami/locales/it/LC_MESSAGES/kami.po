@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-10-07 08:35+0300\n"
+"POT-Creation-Date: 2024-10-07 18:34+0300\n"
 "PO-Revision-Date: 2024-10-05 19:57+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -283,14 +283,6 @@ msgstr ""
 "riceverà una notifica corrispondente e tutte\n"
 "le funzioni del bot funzioneranno."
 
-#: kami/bot_client/handlers/register.py:55
-msgid ""
-"User wanted to be added:\n"
-"<b>Tg id:</b> {tg_id}\n"
-"<b>Username:</b> {username}\n"
-"<b>Fullname:</b> {fio}"
-msgstr ""
-
 #: kami/bot_client/handlers/start.py:52
 msgid "Hello, I'm Kami, your online English teacher!"
 msgstr ""
@@ -344,7 +336,7 @@ msgstr ""
 msgid "Add user"
 msgstr ""
 
-#: kami/bot_client/keyboards/dialog_after_test.py:23
+#: kami/bot_client/keyboards/dialog_after_test.py:20
 msgid "Now let's start a dialogue practice"
 msgstr "Adesso iniziamo una pratica di dialogo"
 
@@ -422,3 +414,10 @@ msgstr "Inglese → {language}"
 
 #~ msgid "Input your topic, please"
 #~ msgstr "Scrivi l'argomento di cui vorreste parlare."
+
+#~ msgid ""
+#~ "User wanted to be added:\n"
+#~ "<b>Tg id:</b> {tg_id}\n"
+#~ "<b>Username:</b> {username}\n"
+#~ "<b>Fullname:</b> {fio}"
+#~ msgstr ""
