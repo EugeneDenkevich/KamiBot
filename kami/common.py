@@ -1,3 +1,4 @@
+from io import BytesIO
 from pathlib import Path
 
 from aiogram import Bot
@@ -39,3 +40,16 @@ def get_bot_client(bot_client_token: str) -> Bot:
     """
 
     return Bot(token=bot_client_token)
+
+
+async def get_bytes(file_id: str, bot: Bot) -> bytes:
+    """
+    Get bytes from telegram file object.
+
+    :param file_id: Telegram file object id.
+    """
+
+    photo_io = BytesIO()
+    await bot.download(file=file_id, destination=photo_io)
+
+    return photo_io.getvalue()

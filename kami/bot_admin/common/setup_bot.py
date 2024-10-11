@@ -5,6 +5,7 @@ from aiogram.types import BotCommand
 from aiogram.utils.i18n import ConstI18nMiddleware, I18n
 
 from kami.bot_admin.handlers import setup_routers
+from kami.bot_admin.middlewaries.admin_midlewarie import AdminMiddleware
 from kami.bot_admin.middlewaries.custom_middlewaries import CustomMiddleware
 from kami.common import get_work_dir
 
@@ -19,6 +20,7 @@ async def set_commands(bot: Bot) -> None:
     await bot.set_my_commands([
         BotCommand(command="start", description="Start from this"),
         BotCommand(command="getid", description="Get telegram id"),
+        BotCommand(command="sending", description="Start sending"),
     ])
 
 
@@ -30,6 +32,7 @@ def setup_dispatcher(dispatcher: Dispatcher) -> None:
     """
 
     dispatcher.update.middleware(CustomMiddleware())
+    dispatcher.message.middleware(AdminMiddleware())
 
 
 def setup_i18n(

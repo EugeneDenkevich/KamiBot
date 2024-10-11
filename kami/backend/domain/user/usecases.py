@@ -112,12 +112,12 @@ class UpdateUserUseCase():
         await self.user_repo.update_user(user)
 
         return user
-    
+
 class GetUsersUseCase:
     def __init__(self, user_repo: UserRepo):
         self.user_repo = user_repo
 
-    async def __call__(self,  tg_ids: List[str]) -> List[User]:
+    async def __call__(self,  tg_ids: Optional[List[str]] = None) -> List[User]:
         """
         Get users from DB.
 

@@ -1,9 +1,9 @@
 # ruff: noqa: E501
 
-import enum
+from enum import StrEnum
 
 
-class StickersEnum(enum.Enum):
+class StickersEnum(StrEnum):
 
     KAMILA_AUTH = "CAACAgIAAxkBAAEM5llm-pT1LUzQTliT_82bt8o0pNkKywACslsAAjXW2Us8EmzPkc3X9jYE"
     KAMILA_ONBOARDING = "CAACAgIAAxkBAAEM5ltm-pUX_OQwGmMNqaSoUS4N088AATAAAoZcAAKUZtlLCvEwIlDYVc42BA"

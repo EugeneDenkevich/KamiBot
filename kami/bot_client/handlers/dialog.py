@@ -66,7 +66,7 @@ async def handle_dialog_command(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.DIALOGS,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_SENT,
         )
 
         no_dialog = False
@@ -86,6 +86,12 @@ async def handle_dialog_command(
                 ),
                 reply_markup=build_dialog_markup(no_dialog=no_dialog),
             )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.DIALOGS,
+                action=ActionEnum.BOT_SENT,
+            )
         else:
             # Multiline i18n work only in such format
             await message.answer_sticker(
@@ -99,6 +105,12 @@ async def handle_dialog_command(
                     " select Continue previous dialogue: ",
                 ),
                 reply_markup=build_dialog_markup(no_dialog=no_dialog),
+            )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.DIALOGS,
+                action=ActionEnum.BOT_SENT,
             )
 
 
@@ -132,7 +144,7 @@ async def handle_my_topic(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.DIALOGS,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await state.set_state(DialogFSM.my_topic)  # type: ignore[union-attr]
@@ -145,6 +157,12 @@ async def handle_my_topic(
                 "📣 Send a voice message describing the "
                 "topic you would like to talk about.",
             ),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.DIALOGS,
+            action=ActionEnum.BOT_SENT,
         )
 
 
@@ -209,6 +227,12 @@ async def handle_topic_selected(
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
             )
 
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.DIALOGS,
+                action=ActionEnum.BOT_SENT,
+            )
+
             dialog = await backend_client.get_dialog(tg_id=tg_id)
 
             await wait_for_answer(
@@ -249,7 +273,7 @@ async def handle_my_topic_selected(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.DIALOGS,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_SENT,
         )
 
         await message.answer(text=_("One moment..."))
@@ -279,6 +303,12 @@ async def handle_my_topic_selected(
         else:
             await message.answer_audio(  # type: ignore[union-attr]
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
+            )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.DIALOGS,
+                action=ActionEnum.BOT_SENT,
             )
 
         dialog = await backend_client.get_dialog(tg_id=tg_id)
@@ -320,7 +350,7 @@ async def handle_dialog_voice(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.DIALOGS,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_SENT,
         )
 
         voice_reply = await get_voice_reply(message)
@@ -340,9 +370,20 @@ async def handle_dialog_voice(
         else:
             if mistakes is not None:
                 await message.answer(text=mistakes, parse_mode=ParseMode.HTML)
+                await backend_client.log_to_db(
+                    tg_id=tg_id,
+                    module=ModuleEnum.DIALOGS,
+                    action=ActionEnum.BOT_SENT,
+                )
 
             await message.answer_audio(
                 audio=BufferedInputFile(file=voice, filename="voice1.ogg"),
+            )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.DIALOGS,
+                action=ActionEnum.BOT_SENT,
             )
 
         dialog = await backend_client.get_dialog(tg_id=tg_id)
@@ -385,11 +426,17 @@ async def handle_continue_dialog(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.DIALOGS,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_("One moment..."),
+        )
+
+        await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.DIALOGS,
+                action=ActionEnum.BOT_SENT,
         )
 
         try:
@@ -411,6 +458,12 @@ async def handle_continue_dialog(
 
             await callback_query.message.answer_audio(  # type: ignore[union-attr]
                 audio=BufferedInputFile(file=voice_answer, filename="voice.ogg"),
+            )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.DIALOGS,
+                action=ActionEnum.BOT_SENT,
             )
 
             await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]

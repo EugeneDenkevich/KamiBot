@@ -31,4 +31,5 @@ class CustomMiddleware(BaseMiddleware):
         data["settings"] = settings
         data["bot_client"] = get_bot_client(bot_client_token=settings.bot_client_token)
         data["backend_client"] = await get_backend_client()
+
         return await handler(event, data)

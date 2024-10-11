@@ -97,16 +97,16 @@ class UserRepo():
         await self.session.execute(query)
         await self.session.commit()
 
-    async def get_users(self, tg_ids: List[str]) -> List[User]:
+    async def get_users(self, tg_ids: Optional[List[str]] = None) -> List[User]:
         """
         Get Users from DB
-        
+
         :param tg_ids: Users telegram ids list.
         """
 
         query = select(UserTable)
 
-        if tg_ids:
+        if tg_ids is not None:
             query = query.where(UserTable.tg_id.in_(tg_ids))
 
         result = await self.session.execute(query)

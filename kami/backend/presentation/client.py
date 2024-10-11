@@ -166,7 +166,7 @@ class BackendClient():
 
     async def get_users(
         self,
-        tg_ids: List[str],
+        tg_ids: Optional[List[str]] = None,
     ) -> List[User]:
         async with self.ucf.get_users() as get_users:
             return await get_users(tg_ids=tg_ids)
