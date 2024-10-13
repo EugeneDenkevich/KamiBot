@@ -68,6 +68,7 @@ async def handle_start_onboarding(
             tg_id=tg_id,
             onboarded=True,
         )
+        await message.answer_sticker(StickersEnum.KAMILA_ONBOARDING_START)
         await message.answer(  # type: ignore[union-attr]
             text=_(
                 "Now I'll tell you how to use all my features, "
@@ -114,6 +115,7 @@ async def handle_onboarding_first(
 
         await callback_query.answer()
 
+        await callback_query.message.answer_sticker(StickersEnum.KAMILA_BASE_FUNC)
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
                 "👇At the bottom there is a quick menu with basic functions:\n"
@@ -171,7 +173,7 @@ async def handle_onboarding_second(
 
         await callback_query.answer()
 
-        await callback_query.message.answer_sticker(StickersEnum.KAMILA_MAIN)
+        await callback_query.message.answer_sticker(StickersEnum.KAMILA_ONBOARDING_START)
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
                 "Now I will show you how to use the basic functions. "
