@@ -83,7 +83,7 @@ async def auth_user(
     except UserNotFoundError:
         await state.set_state(RegisterFSM.share_contact)
 
-        await message.answer_sticker(StickersEnum.KAMILA_AUTH)  # type: ignore[arg-type, union-attr]
+        await message.answer_sticker(StickersEnum.KAMILA_MAIN)  # type: ignore[arg-type, union-attr]
         await message.answer(  # type: ignore[union-attr]
             text=_(
                 "Click the 'Share Contact' button\n"
