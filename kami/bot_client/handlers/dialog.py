@@ -66,7 +66,7 @@ async def handle_dialog_command(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.DIALOGS,
-            action=ActionEnum.USER_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         no_dialog = False
@@ -207,6 +207,12 @@ async def handle_topic_selected(
             text=_("One moment..."),
         )
 
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.DIALOGS,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
 
         await callback_query.bot.send_chat_action(  # type: ignore[union-attr]
@@ -277,6 +283,12 @@ async def handle_my_topic_selected(
         )
 
         await message.answer(text=_("One moment..."))
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.DIALOGS,
+            action=ActionEnum.BOT_SENT,
+        )
 
         await state.set_state(DialogFSM.conversation)  # type: ignore[union-attr]
 
@@ -448,6 +460,13 @@ async def handle_continue_dialog(
                     "Choose a topic for the dialogue and start your first dialogue.",
                 ),
             )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.DIALOGS,
+                action=ActionEnum.BOT_SENT,
+            )
+
         else:
             await callback_query.message.bot.send_chat_action(  # type: ignore[union-attr]
                 chat_id=callback_query.message.chat.id,  # type: ignore[union-attr]

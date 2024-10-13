@@ -62,6 +62,12 @@ async def handle_translator_command(
             reply_markup=build_translator_markup(language=settings.translation_language),
         )
 
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.TRANSLATE,
+            action=ActionEnum.BOT_SENT,
+        )
+
 
 @router.callback_query(StartTranslatorCD.filter())
 async def handle_direction_choice(
@@ -92,7 +98,7 @@ async def handle_direction_choice(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.TRANSLATE,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await state.update_data(direction=callback_data.direction)
@@ -109,6 +115,12 @@ async def handle_direction_choice(
                 "❕ If you wish to change the translation direction, press "
                 "the Menu button and select the translation language again.",
             ),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.TRANSLATE,
+            action=ActionEnum.BOT_SENT,
         )
 
         await state.set_state(TranslatorFSM.translating)
@@ -143,7 +155,7 @@ async def handle_translator_text(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.TRANSLATE,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_SENT,
         )
 
         user_data = await state.get_data()
@@ -160,6 +172,12 @@ async def handle_translator_text(
         )
 
         await message.answer(translated_text)
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.TRANSLATE,
+            action=ActionEnum.BOT_SENT,
+        )
 
 
 @router.message(F.voice, TranslatorFSM.translating)
@@ -189,7 +207,7 @@ async def handle_translator_voice(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.TRANSLATE,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_SENT,
         )
 
         user_data = await state.get_data()
@@ -207,3 +225,9 @@ async def handle_translator_voice(
         )
 
         await message.answer(translated_text)
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.TRANSLATE,
+            action=ActionEnum.BOT_SENT,
+        )

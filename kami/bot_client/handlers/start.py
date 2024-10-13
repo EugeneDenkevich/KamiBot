@@ -62,3 +62,9 @@ async def handle_start(
                 )
             ),
         )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.START,
+            action=ActionEnum.BOT_SENT,
+        )
