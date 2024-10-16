@@ -18,7 +18,7 @@ class AdminMiddleware(BaseMiddleware):
         """
         Create custom middleware.
 
-        :param handler: Handler which hadle event.
+        :param handler: Handler which handle event.
         :param event: Event with Telegram data.
         :param data: Additional data.
         :return: Result of the event handling.
