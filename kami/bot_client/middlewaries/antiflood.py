@@ -2,7 +2,7 @@ import datetime
 from typing import Any, Awaitable, Callable, Dict
 
 from aiogram import BaseMiddleware
-from aiogram.types import TelegramObject
+from aiogram.types import Message
 
 
 class AntiFloodMiddleware(BaseMiddleware):
@@ -16,8 +16,8 @@ class AntiFloodMiddleware(BaseMiddleware):
 
     async def __call__(
         self,
-        handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
-        event: TelegramObject,
+        handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
+        event: Message,  # type: ignore[override]
         data: Dict[str, Any],
     ) -> Any:
         """
@@ -28,26 +28,23 @@ class AntiFloodMiddleware(BaseMiddleware):
         :param data: Additional data.
         :return: Result of the event handling or None.
         """
-        if event.message:
-            message = event.message
-            tg_id = message.from_user.id
 
-            current_time = datetime.datetime.now()
+        tg_id = event.from_user.id  # type: ignore[union-attr]
 
-            last_press_time = self.user_last_press_time.get(
-                tg_id,
-                datetime.datetime.min,
-            )
-            time_since_last_press = current_time - last_press_time
-            seconds_since_last_press = time_since_last_press.total_seconds()
+        current_time = datetime.datetime.now()
 
-            if seconds_since_last_press < self.cooldown:
-                self.user_last_press_time[tg_id] = current_time
+        last_press_time = self.user_last_press_time.get(
+            tg_id,
+            datetime.datetime.min,
+        )
+        time_since_last_press = current_time - last_press_time
+        seconds_since_last_press = time_since_last_press.total_seconds()
 
-                return None
-
+        if seconds_since_last_press < self.cooldown:
             self.user_last_press_time[tg_id] = current_time
 
-            return await handler(event, data)
+            return None
 
-        return None
+        self.user_last_press_time[tg_id] = current_time
+
+        return await handler(event, data)

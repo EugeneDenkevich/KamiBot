@@ -35,7 +35,7 @@ def setup_dispatcher(dispatcher: Dispatcher) -> None:
     """
 
     dispatcher.update.middleware(CustomMiddleware())
-    dispatcher.update.middleware(AntiFloodMiddleware())
+    dispatcher.message.middleware(AntiFloodMiddleware())
 
 
 def setup_i18n(
