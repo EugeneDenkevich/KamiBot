@@ -2,6 +2,8 @@ from aiogram import Bot, F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
+from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
+from kami.backend.presentation.client import BackendClient
 from kami.bot_admin.common.multiple_sending import send_text
 from kami.bot_admin.enums.template_type import TemplateTypeEnum
 from kami.bot_admin.keyboards.sending_confirming import (
@@ -49,6 +51,7 @@ async def handle_run_text_sending(
     callback_query: CallbackQuery,
     state: FSMContext,
     bot_client: Bot,
+    backend_client: BackendClient,
 ) -> None:
     """
     Handler for text sending running.
@@ -73,6 +76,12 @@ async def handle_run_text_sending(
             bot=bot_client,
             chat_id=int(user_tg_id),
             text=text,
+        )
+
+        await backend_client.log_to_db(
+            tg_id=user_tg_id,
+            module=ModuleEnum.SENDING,
+            action=ActionEnum.BOT_SENT,
         )
 
     await callback_query.message.answer(

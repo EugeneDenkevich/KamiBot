@@ -9,6 +9,7 @@ class ModuleEnum(StrEnum):
     TRANSLATE = "Translator"
     DIALOGS = "Dialog"
     LANG_TEST = "Language test"
+    SENDING = "Sending"
 
 
 class ActionEnum(StrEnum):

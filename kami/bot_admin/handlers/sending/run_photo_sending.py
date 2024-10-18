@@ -3,6 +3,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 from aiogram.types.input_file import BufferedInputFile
 
+from kami.backend.domain.audit.enums import ActionEnum, ModuleEnum
+from kami.backend.presentation.client import BackendClient
 from kami.bot_admin.common.multiple_sending import send_photo
 from kami.bot_admin.enums.template_type import TemplateTypeEnum
 from kami.bot_admin.keyboards.sending_confirming import (
@@ -62,6 +64,7 @@ async def handle_run_photo_sending(
     callback_query: CallbackQuery,
     state: FSMContext,
     bot_client: Bot,
+    backend_client: BackendClient,
 ) -> None:
     """
     Handler for photo sending running.
@@ -88,6 +91,12 @@ async def handle_run_photo_sending(
             chat_id=int(user_tg_id),
             photo=BufferedInputFile(file=photo, filename="image.jpg"),
             caption=caption,
+        )
+
+        await backend_client.log_to_db(
+            tg_id=user_tg_id,
+            module=ModuleEnum.SENDING,
+            action=ActionEnum.BOT_SENT,
         )
 
     await callback_query.message.answer(

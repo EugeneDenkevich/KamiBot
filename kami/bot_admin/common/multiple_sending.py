@@ -95,6 +95,7 @@ async def send_video_note(
             logging.info(
                  f"Video note was sent: telegram_id: {chat_id}",
             )
+
             if duration < 1:
                 await asyncio.sleep(1 - duration)
 
