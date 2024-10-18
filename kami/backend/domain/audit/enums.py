@@ -14,5 +14,5 @@ class ModuleEnum(StrEnum):
 class ActionEnum(StrEnum):
     BOT_SENT = "Bot sent message"
     USER_SENT = "User sent message"
-    USER_PUSH = "User pysh button"
+    USER_PUSH = "User push button"
     SHARE_CONTACT = "User sharing his contact"

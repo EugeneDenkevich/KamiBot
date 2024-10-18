@@ -68,6 +68,7 @@ async def handle_start_onboarding(
             tg_id=tg_id,
             onboarded=True,
         )
+        await message.answer_sticker(StickersEnum.KAMILA_ONBOARDING_START)
         await message.answer(  # type: ignore[union-attr]
             text=_(
                 "Now I'll tell you how to use all my features, "
@@ -77,6 +78,12 @@ async def handle_start_onboarding(
                 text=_("Cool idea 😊"),
                 step=2,
             ),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
         )
 
 
@@ -109,11 +116,12 @@ async def handle_onboarding_first(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.ONBOARDING,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await callback_query.answer()
 
+        await callback_query.message.answer_sticker(StickersEnum.KAMILA_BASE_FUNC)
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
                 "👇At the bottom there is a quick menu with basic functions:\n"
@@ -122,6 +130,12 @@ async def handle_onboarding_first(
                 "📍Translator\n",
             ),
             reply_markup=build_main_menu_markup(),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
         )
 
         await callback_query.message.answer(  # type: ignore[union-attr]
@@ -136,6 +150,12 @@ async def handle_onboarding_first(
                 step=3,
             ),
             parse_mode=ParseMode.HTML,
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
         )
 
 
@@ -166,17 +186,25 @@ async def handle_onboarding_second(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.ONBOARDING,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await callback_query.answer()
 
-        await callback_query.message.answer_sticker(StickersEnum.KAMILA_MAIN)
+        await callback_query.message.answer_sticker(
+            StickersEnum.KAMILA_ONBOARDING_START,
+        )
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
                 "Now I will show you how to use the basic functions. "
                 "But you can always go through this training again.",
             ),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
         )
 
         await asyncio.sleep(1)
@@ -190,6 +218,13 @@ async def handle_onboarding_second(
 
         try:
             await callback_query.message.answer_video_note(video_file)
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.ONBOARDING,
+                action=ActionEnum.BOT_SENT,
+            )
+
         except TelegramNetworkError:
             logging.error(f"No file {VideoNotesEnum.KAMILA_DIALOG}")
             pass
@@ -203,6 +238,12 @@ async def handle_onboarding_second(
                 text=_("Got it 😉"),
                 step=4,
             ),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
         )
 
 
@@ -233,7 +274,7 @@ async def handle_onboarding_third(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.ONBOARDING,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await callback_query.answer()
@@ -247,6 +288,13 @@ async def handle_onboarding_third(
 
         try:
             await callback_query.message.answer_video_note(video_file)
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.ONBOARDING,
+                action=ActionEnum.BOT_SENT,
+            )
+
         except TelegramNetworkError:
             logging.error(f"No file {VideoNotesEnum.KAMILA_TRANSLATE}")
             pass
@@ -260,6 +308,12 @@ async def handle_onboarding_third(
                 text=_("Got it 😊"),
                 step=5,
             ),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
         )
 
 
@@ -290,7 +344,7 @@ async def handle_onboarding_fourth(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.ONBOARDING,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await callback_query.answer()
@@ -304,6 +358,13 @@ async def handle_onboarding_fourth(
 
         try:
             await callback_query.message.answer_video_note(video_file)
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.ONBOARDING,
+                action=ActionEnum.BOT_SENT,
+            )
+
         except TelegramNetworkError:
             logging.error(f"No file {VideoNotesEnum.KAMILA_LANGUAGE_TEST}")
             pass
@@ -317,6 +378,12 @@ async def handle_onboarding_fourth(
                 text=_("Got it"),
                 step=6,
             ),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
         )
 
 
@@ -347,7 +414,7 @@ async def handle_onboarding_fifth(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.ONBOARDING,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await callback_query.answer()
@@ -365,6 +432,12 @@ async def handle_onboarding_fifth(
                 step=7,
             ),
             parse_mode=ParseMode.HTML,
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
         )
 
 
@@ -395,7 +468,7 @@ async def handle_show_where(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.ONBOARDING,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await callback_query.answer()
@@ -409,6 +482,13 @@ async def handle_show_where(
 
         try:
             await callback_query.message.answer_video_note(video_file)
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.ONBOARDING,
+                action=ActionEnum.BOT_SENT,
+            )
+
         except TelegramNetworkError:
             logging.error(f"No file {VideoNotesEnum.KAMILA_MENU}")
             pass
@@ -418,4 +498,10 @@ async def handle_show_where(
                 "👀 Watch the videonote and everything will become clear.",
             ),
             reply_markup=build_onboarding_step_markup(text=_("Got it")),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.ONBOARDING,
+            action=ActionEnum.BOT_SENT,
         )

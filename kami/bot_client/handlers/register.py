@@ -50,6 +50,12 @@ async def handle_register(
         reply_markup=ReplyKeyboardRemove(),
     )
 
+    await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.AUTH,
+            action=ActionEnum.BOT_SENT,
+    )
+
     await bot_admin.send_message(
         chat_id=settings.admin_id,
         text=(

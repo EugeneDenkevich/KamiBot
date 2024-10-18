@@ -5,6 +5,7 @@ from aiogram.types import BotCommand
 from aiogram.utils.i18n import ConstI18nMiddleware, I18n
 
 from kami.bot_client.handlers import setup_routers
+from kami.bot_client.middlewaries.antiflood import AntiFloodMiddleware
 from kami.bot_client.middlewaries.custom_middlewaries import CustomMiddleware
 from kami.common import get_work_dir
 
@@ -34,6 +35,7 @@ def setup_dispatcher(dispatcher: Dispatcher) -> None:
     """
 
     dispatcher.update.middleware(CustomMiddleware())
+    dispatcher.message.middleware(AntiFloodMiddleware())
 
 
 def setup_i18n(

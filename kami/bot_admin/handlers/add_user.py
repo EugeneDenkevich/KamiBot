@@ -47,7 +47,7 @@ async def handle_add_user(
 
         await bot_client.send_sticker(
             chat_id=callback_data.tg_id,
-            sticker=StickersEnum.KAMILA_DONE,
+            sticker=StickersEnum.KAMILA_REGISTER_COMPLETE,
         )
         await bot_client.send_message(  # type: ignore[union-attr]
             chat_id=callback_data.tg_id,

@@ -62,6 +62,7 @@ async def handle_lang_test(
 
         await state.clear()
 
+        await message.answer_sticker(StickersEnum.KAMILA_FIRST_DIALOG)
         await message.answer(
             text=_(
                 "📑 I'll send you the first example from the test. \n"
@@ -69,6 +70,12 @@ async def handle_lang_test(
                 "then I will send you the next one.",
             ),
             reply_markup=build_lang_test_markup(),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.LANG_TEST,
+            action=ActionEnum.BOT_SENT,
         )
 
 
@@ -101,17 +108,29 @@ async def handle_testing(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.LANG_TEST,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_PUSH,
         )
 
         await callback_query.message.answer(
             text=_("One moment..."),
         )
 
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.LANG_TEST,
+            action=ActionEnum.BOT_SENT,
+        )
+
         await state.set_state(LangTestFSM.lang_testing)
 
         await callback_query.message.answer(
             text=_("Test is creating..."),
+        )
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.LANG_TEST,
+            action=ActionEnum.BOT_SENT,
         )
 
         try:
@@ -123,15 +142,33 @@ async def handle_testing(
                     "Error while test creating: NoAiError",
                 ),
             )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.LANG_TEST,
+                action=ActionEnum.BOT_SENT,
+            )
         else:
             await callback_query.message.answer(
                 text=_("Test was created."),
+            )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.LANG_TEST,
+                action=ActionEnum.BOT_SENT,
             )
 
             current_question = await backend_client.ask_one(tg_id=tg_id)
             await callback_query.message.answer(
                 text=current_question,
                 parse_mode=ParseMode.HTML,
+            )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.LANG_TEST,
+                action=ActionEnum.BOT_SENT,
             )
 
 
@@ -167,7 +204,7 @@ async def handle_lang_test_text(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.LANG_TEST,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_SENT,
         )
 
         await state.set_state(LangTestFSM.lang_testing)
@@ -192,6 +229,12 @@ async def handle_lang_test_text(
                 ).format(rate=rate),
                 reply_markup=build_main_menu_markup(),
             )
+
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.LANG_TEST,
+                action=ActionEnum.BOT_SENT,
+            )
             await message.answer(
                 text=_(
                     "Now i recommend you to practise your speaking skills.",
@@ -199,9 +242,21 @@ async def handle_lang_test_text(
                 reply_markup=build_dialog_after_test_markup(),
             )
 
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.LANG_TEST,
+                action=ActionEnum.BOT_SENT,
+            )
+
             return
 
         await message.answer(text=current_question, parse_mode=ParseMode.HTML)
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.LANG_TEST,
+            action=ActionEnum.BOT_SENT,
+        )
 
 
 @router.message(F.voice, LangTestFSM.lang_testing)
@@ -231,7 +286,7 @@ async def handle_lang_test_voice(
         await backend_client.log_to_db(
             tg_id=tg_id,
             module=ModuleEnum.LANG_TEST,
-            action=ActionEnum.BOT_SENT,
+            action=ActionEnum.USER_SENT,
         )
 
         await state.set_state(LangTestFSM.lang_testing)
@@ -250,5 +305,17 @@ async def handle_lang_test_voice(
                 text=_("Yor result is: {rate}.").format(rate=rate),
             )
 
+            await backend_client.log_to_db(
+                tg_id=tg_id,
+                module=ModuleEnum.LANG_TEST,
+                action=ActionEnum.BOT_SENT,
+            )
+
             return
         await message.answer(text=current_question, parse_mode=ParseMode.HTML)
+
+        await backend_client.log_to_db(
+            tg_id=tg_id,
+            module=ModuleEnum.LANG_TEST,
+            action=ActionEnum.BOT_SENT,
+        )
