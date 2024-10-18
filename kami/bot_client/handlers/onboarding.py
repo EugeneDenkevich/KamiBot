@@ -191,7 +191,9 @@ async def handle_onboarding_second(
 
         await callback_query.answer()
 
-        await callback_query.message.answer_sticker(StickersEnum.KAMILA_ONBOARDING_START)
+        await callback_query.message.answer_sticker(
+            StickersEnum.KAMILA_ONBOARDING_START,
+        )
         await callback_query.message.answer(  # type: ignore[union-attr]
             text=_(
                 "Now I will show you how to use the basic functions. "

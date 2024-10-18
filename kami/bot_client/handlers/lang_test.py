@@ -62,8 +62,6 @@ async def handle_lang_test(
 
         await state.clear()
 
-        was = ["KAMILA_TRANSLATE", "KAMILA_AUTH", "KAMILA_LANGUAGE_TEST",
-               "KAMILA_TRANSLATE", ]
         await message.answer_sticker(StickersEnum.KAMILA_FIRST_DIALOG)
         await message.answer(
             text=_(
